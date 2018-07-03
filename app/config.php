@@ -1,65 +1,30 @@
 ﻿<?php
-  $configs = new HXPHP\System\Configs\Config;
-  ActiveRecord\Connection::$datetime_format = 'Y-m-d H:i:s';
+$configs = new HXPHP\System\Configs\Config;
+ActiveRecord\Connection::$datetime_format = 'Y-m-d H:i:s';
 
-  //Globais
-  $configs->title = 'ADUV';
+//Globais
+$configs->global->models->directory = APP_PATH . 'models' . DS;
 
-  //Configurações de Ambiente - Desenvolvimento
-  $configs->env->add('development');
+$configs->global->views->directory = APP_PATH . 'views' . DS;
+$configs->global->views->extension = '.phtml';
 
-  $configs->env->development->baseURI = '/project-tcc/';
+$configs->global->controllers->directory = APP_PATH . 'controllers' . DS;
+$configs->global->controllers->notFound = 'Error404Controller';
 
-  /*$configs->env->development->database->setConnectionData([
+$configs->title = 'ADUV';
+
+//Configurações de Ambiente - Desenvolvimento
+$configs->env->add('development');
+
+$configs->env->development->baseURI = '/project-tcc/';
+
+$configs->env->development->database->setConnectionData([
     'driver' => env('DB_DRIVER', 'mysql'),
-    'host' => env('MYSQL_HOST', 'mysql'),
-    'user' => env('MYSQL_USER', 'dev'),
-    'password' => env('MYSQL_PASSWORD', 'dev'),
-    'dbname' => env('MYSQL_DATABASE', 'hxphp'),
+    'host' => env('MYSQL_HOST', 'localhost'),
+    'user' => env('MYSQL_ROOT_USER', 'root'),
+    'password' => env('MYSQL_ROOT_PASSWORD', ''),
+    'dbname' => env('MYSQL_DATABASE', 'db_aduv'),
     'charset' => env('MYSQL_CHARSET', 'utf8')
-  ]);*/
-/*
-
-  $configs->env->development->mail->setFrom([
-    'from' => 'Remetente',
-    'from_mail' => 'email@remetente.com.br'
-  ]);
-
-  $configs->env->development->menu->setConfigs([
-    'container' => 'nav',
-    'container_class' => 'navbar navbar-default',
-    'menu_class' => 'nav navbar-nav'
-  ]);
-
-  $configs->env->development->menu->setMenus([
-    'Home/home' => '%siteURL%',
-    'Subpasta/folder-open' => [
-      'Home/home' => '%baseURI%/admin/have-fun/',
-      'Teste/home' => '%baseURI%/admin/index/',
-    ]
-  ]);
-
-  $configs->env->development->auth->setURLs('/hxphp/home/', '/hxphp/login/');
-  $configs->env->development->auth->setURLs('/hxphp/admin/home/', '/hxphp/admin/login/', 'admin');
-
-  //Configurações de Ambiente - Produção
-  $configs->env->add('production');
-
-  $configs->env->production->baseURI = '/';
-
-  $configs->env->production->database->setConnectionData([
-    'driver' => 'mysql',
-    'host' => 'localhost',
-    'user' => 'usuariodobanco',
-    'password' => 'senhadobanco',
-    'dbname' => 'hxphp',
-    'charset' => 'utf8'
-  ]);
-
-  $configs->env->production->mail->setFrom([
-    'from' => 'Remetente',
-    'from_mail' => 'email@remetente.com.br'
-  ]);
- */
+]);
 
 return $configs;
