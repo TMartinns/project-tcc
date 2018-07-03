@@ -1,0 +1,17 @@
+{
+    "name": "project-tcc",
+    "description": "",
+    "type": "project",
+    "homepage": "",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.0.0",
+        "hxphp/framework": "3.0.0"
+    },    
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "discard-changes": "stash",
+        "optimize-autoloader": true
+    }
+}
