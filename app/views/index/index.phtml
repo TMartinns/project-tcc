@@ -1,21 +1,19 @@
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <div class="panel panel-custom">
-            <div class="panel-heading">
-                <a id="logo" href="<?php echo BASE; ?>">
-                    <img class="img-responsive" src="<?php echo IMG; ?>hxphp-logo.png" alt="">
-                </a> <br>
-                <?php echo (isset($this->menu) ? $this->menu : ''); ?>
-            </div>
-            <div class="panel-body">
-                <?php
-                $this->partial('message', array(
-                    'msg' => 'Uhull! Você instalou e configurou o HXPHP Framework com sucesso!'
-                ));
-                ?>
-                <p>
-                    Agora acesse a <a class="btn btn-success btn-xs" href="http://www.hxtutors.com.br/curso/dominando-o-hxphp-framework/" title="Acesse o curso completo sobre HXPHP" target="_blank">área de membros</a> e assista ao nosso curso oficial para dominar completamente esta poderosa ferramenta.
-                </p>
+    <div class="offset-lg-4 col-lg-4 offset-md-3 col-md-6">
+        <div class="card" style="margin-top: 130px">
+            <div class="card-body">
+                <form action="<?php echo BASE;?>usuarios/acessar/" method="post">
+                    <div class="form-group">
+                        <label for="nome_usuario">Nome de usuário</label>
+                        <input type="text" class="form-control" id="nome_usuario"
+                               placeholder="Digite seu nome de usuário aqui...">
+                    </div>
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
+                        <input type="password" class="form-control" id="senha" placeholder="Digite sua senha aqui...">
+                    </div>
+                    <button type="submit" class="btn btn-outline-dark">Acessar</button>
+                </form>
             </div>
         </div>
     </div>
