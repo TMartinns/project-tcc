@@ -1,16 +1,21 @@
 <div class="row">
-    <div class="offset-lg-4 col-lg-4 offset-md-3 col-md-6">
-        <div class="card" style="margin-top: 130px">
+    <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4 text-center">
+        <img class="img-fluid" src="<?php echo IMG; ?>logo_aduv.png">
+    </div>
+</div>
+<div class="row">
+    <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
+        <div class="card">
             <div class="card-body">
-                <form action="<?php echo BASE;?>usuarios/acessar/" method="post">
+                <form action="<?php echo $this->printRelativeURL('acessar');?>" method="post">
                     <div class="form-group">
                         <label for="nome_usuario">Nome de usuário</label>
-                        <input type="text" class="form-control" id="nome_usuario"
+                        <input type="text" class="form-control" name="nome_usuario" id="nome_usuario"
                                placeholder="Digite seu nome de usuário aqui...">
                     </div>
                     <div class="form-group">
                         <label for="senha">Senha</label>
-                        <input type="password" class="form-control" id="senha" placeholder="Digite sua senha aqui...">
+                        <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha aqui...">
                     </div>
                     <button type="submit" class="btn btn-outline-dark">Acessar</button>
                 </form>
