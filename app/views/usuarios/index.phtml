@@ -20,7 +20,8 @@ $this->partial('navTabs');
                         <div class="form-group">
                             <label for="nome">Nome</label>
 
-                            <input required type="text" class="form-control" name="nome" id="nome">
+                            <input required type="text" class="form-control" name="nome" id="nome"
+                                   placeholder="Insira um nome">
                         </div>
 
                         <div class="form-group">
@@ -31,22 +32,33 @@ $this->partial('navTabs');
                         </div>
 
                         <div class="form-group">
-                            <label for="data_nascimento">Data de nascimento</label>
+                            <label for="nome_usuario">Nome de usuário</label>
 
-                            <input required type="text" class="form-control" name="data_nascimento" id="data_nascimento"
-                                   placeholder="Ex: 21/09/1998">
+                            <input required type="text" class="form-control" name="nome_usuario" id="nome_usuario"
+                                   placeholder="Insira um nome de usuário">
                         </div>
 
                         <div class="form-group">
-                            <label for="nome_mae">Nome da mãe</label>
+                            <label for="email">Email</label>
 
-                            <input required type="text" class="form-control" name="nome_mae" id="nome_mae">
+                            <input required type="email" class="form-control" name="email" id="email"
+                                   placeholder="Ex: email@exemplo.com">
                         </div>
 
                         <div class="form-group">
-                            <label for="nome_mae">Nome da mãe</label>
+                            <label>Permissão</label>
 
-                            <input required type="text" class="form-control" name="nome_mae" id="nome_mae">
+                            <br/>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="permissao" id="opcaoCoordenador" value="C">
+                                <label class="form-check-label" for="opcaoCoordenador">Coordenador(a)</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="permissao" id="opcaoOficial" value="O">
+                                <label class="form-check-label" for="opcaoOficial">Oficial de promotoria</label>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
