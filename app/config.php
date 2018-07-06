@@ -1,22 +1,13 @@
 ﻿<?php
 $configs = new HXPHP\System\Configs\Config;
-ActiveRecord\Connection::$datetime_format = 'Y-m-d H:i:s';
-
-//Globais
-$configs->global->models->directory = APP_PATH . 'models' . DS;
-
-$configs->global->views->directory = APP_PATH . 'views' . DS;
-$configs->global->views->extension = '.phtml';
-
-$configs->global->controllers->directory = APP_PATH . 'controllers' . DS;
-$configs->global->controllers->notFound = 'Error404Controller';
 
 $configs->title = 'ADUV';
 
-//Configurações de Ambiente - Desenvolvimento
 $configs->env->add('development');
 
 $configs->env->development->baseURI = '/project-tcc/';
+$configs->env->development->bower = '/project-tcc/public/bower_components/';
+$configs->env->development->js = '/project-tcc/public/js/';
 
 $configs->env->development->database->setConnectionData([
     'driver' => env('DB_DRIVER', 'mysql'),

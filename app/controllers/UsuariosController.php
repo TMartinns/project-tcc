@@ -19,12 +19,12 @@ class UsuariosController extends \HXPHP\System\Controller
     public function indexAction()
     {
         $this->view->setAssets('css',
-            $this->configs->baseURI . 'public/bower_components/gijgo/dist/combined/css/gijgo.min.css');
+            $this->configs->bower . 'gijgo/dist/combined/css/gijgo.min.css');
         $this->view->setAssets('js',
-            $this->configs->baseURI . 'public/bower_components/gijgo/dist/combined/js/gijgo.min.js');
+            $this->configs->bower . 'gijgo/dist/combined/js/gijgo.min.js');
         $this->view->setAssets('js',
-            $this->configs->baseURI . 'public/bower_components/gijgo/dist/combined/js/messages/messages.pt-br.min.js');
+            $this->configs->bower . 'gijgo/dist/combined/js/messages/messages.pt-br.min.js');
         $this->view->setAssets('js',
-            $this->configs->baseURI . 'public/js/datepicker.config.js');
+            $this->configs->js . 'datepicker.config.js');
     }
 }
