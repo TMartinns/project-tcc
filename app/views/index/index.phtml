@@ -1,25 +1,53 @@
-<div class="row">
-    <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4 text-center">
-        <img class="img-fluid" src="<?php echo IMG; ?>logo_aduv.png">
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><?php echo $view_title; ?></title>
+
+    <link rel="shortcut icon" href="<?php echo IMG; ?>favicon_aduv.png" type="image/x-icon">
+    <link rel="stylesheet" href="<?php echo BOWER; ?>bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo CSS; ?>main.css" type="text/css">
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4 text-center">
+            <img class="img-fluid" src="<?php echo IMG; ?>logo_aduv.png">
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <form action="<?php echo $this->printRelativeURL('acessar');?>" method="post">
-                    <div class="form-group">
-                        <label for="nome_usuario">Nome de usuário</label>
-                        <input type="text" class="form-control" name="nome_usuario" id="nome_usuario"
-                               placeholder="Digite seu nome de usuário aqui...">
-                    </div>
-                    <div class="form-group">
-                        <label for="senha">Senha</label>
-                        <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha aqui...">
-                    </div>
-                    <button type="submit" class="btn btn-outline-dark">Acessar</button>
-                </form>
+
+    <div class="row">
+        <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <form action="<?php echo $this->printRelativeURL('acessar'); ?>" method="post">
+                        <div class="form-group">
+                            <label for="nome_usuario">Nome de usuário</label>
+                            <input required type="text" class="form-control" name="nome_usuario" id="nome_usuario">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input required type="password" class="form-control" name="senha" id="senha">
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-dark">Acessar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4 text-center">
+            <hr/>
+
+            ADUV <?php echo date("Y"); ?> &copy; - Todos os direitos reservados
+        </div>
+    </div>
 </div>
+</body>
+</html>

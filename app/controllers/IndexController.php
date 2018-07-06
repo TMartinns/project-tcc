@@ -12,18 +12,20 @@ class IndexController extends \HXPHP\System\Controller
             $configs->auth->after_logout,
             true
         );
-
-        $this->auth->redirectCheck(true);
     }
 
     public function indexAction()
     {
-        $this->view->setHeader('index\header');
-        $this->view->setFooter('index\footer');
+        $this->auth->redirectCheck(true);
+
+        $this->view->setTemplate(false);
     }
 
     public function acessarAction()
     {
+        $this->auth->redirectCheck(true);
+
+        $this->view->setTemplate(false);
         $this->view->setFile('index');
 
         $post = $this->request->post();
@@ -33,5 +35,10 @@ class IndexController extends \HXPHP\System\Controller
         if (password_verify($post['senha'], $usuario->senha)) {
             $this->auth->login($usuario->id_pessoa, $usuario->nome_usuario, $usuario->permissao);
         }
+    }
+
+    public function sairAction()
+    {
+        $this->auth->logout();
     }
 }
