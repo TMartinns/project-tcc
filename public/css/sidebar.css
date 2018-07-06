@@ -1,0 +1,61 @@
+.mCustomScrollBox {
+    padding-top: 20px;
+    width: 250px;
+}
+
+#item-text-center {
+    margin-left: 50px;
+}
+
+@media (min-width: 769px) {
+
+    body {
+        display: flex;
+    }
+
+    #sidebar {
+        margin-top: 55px;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        height: 100vh;
+        background: #fff;
+        color: #fff;
+        transition: all 0.3s;
+    }
+
+    #sidebar.active {
+        left: 0;
+    }
+
+    #container {
+        transition: all 0.3s;
+    }
+
+    #container.move {
+        margin-left: 250px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    #sidebar {
+        margin-top: 55px;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        height: 100vh;
+        z-index: 999;
+        background: #fff;
+        color: #fff;
+        transition: all 0.3s;
+    }
+
+    #sidebar.active {
+        left: 0;
+    }
+
+}

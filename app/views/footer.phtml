@@ -1,14 +1,33 @@
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <hr/>
-            ADUV <?php echo date("Y"); ?> &copy; - Todos os direitos reservados
-        </div>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <hr/>
+
+        ADUV <?php echo date("Y"); ?> &copy; - Todos os direitos reservados
     </div>
 </div>
-<script src ="<?php echo BOWER; ?>jquery/dist/jquery.slim.min.js"></script>
-<script src ="<?php echo BOWER; ?>popper.js/dist/popper.min.js"></script>
-<script src ="<?php echo BOWER; ?>bootstrap/dist/js/bootstrap.min.js"></script>
+</div>
+
+
+<script src="<?php echo BOWER; ?>jquery/dist/jquery.slim.min.js"></script>
+<script src="<?php echo BOWER; ?>popper.js/dist/popper.min.js"></script>
+<script src="<?php echo BOWER; ?>bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?php echo BOWER; ?>malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<?php
+echo $add_js;
+?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal-dark"
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $('#container').toggleClass('move');
+        });
+    });
+</script>
 </body>
 </html>
