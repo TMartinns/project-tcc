@@ -49,9 +49,30 @@ class UsuariosController extends \HXPHP\System\Controller
                 if($callback->status == true) {
                     $this->load('Helpers\Alert', array(
                        'success',
-                       'O cadastro foi completado com sucesso!'
+                       'O cadastro foi completado com sucesso!',
+                        'Uma mensagem com os dados cadastrais do usuário foi enviada ao e-mail informado.'
                     ));
 
+                    $this->load('Services\Email');
+
+                    $this->email->setFrom($this->configs->mail->getFrom());
+
+                    $nome_usuario = $callback->usuario->nome_usuario;
+                    $this->email->send(
+                        $callback->usuario->email,
+                        '[Conta ADUV] Registro de conta completado',
+                        "Você foi registrado com sucesso no sistema ADUV! <br/>
+                        Esse e-mail foi enviado automaticamente pelo nosso sistema para informá-lo de seus dados cadastrais. <br/>
+                        <br/>
+                        -------------------------------------<br/>
+                        Nome de usuário: $nome_usuario <br/>
+                        Senha: $senha <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        Por favor, não responsa essa mensagem. <br/>
+                        Atenciosamente, Suporte ADUV."
+                    );
                 } else {
                     $pessoa = Pessoa::find_by_id($usuario['id_pessoa']);
                     $pessoa->delete();
