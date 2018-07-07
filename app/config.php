@@ -20,4 +20,9 @@ $configs->env->development->database->setConnectionData([
 
 $configs->env->development->auth->setURLs('/project-tcc/home/', '/project-tcc/');
 
+$configs->env->development->mail->setFrom(array(
+    'from' => 'Suporte ADUV',
+    'from_mail' => 'suporte.aduv@gmail.com'
+));
+
 return $configs;
