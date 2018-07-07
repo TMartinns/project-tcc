@@ -30,7 +30,7 @@ class Usuario extends \HXPHP\System\Model
         )
     );
 
-    public function cadastrar(array $post)
+    public static function cadastrar(array $post)
     {
         $callback = new \stdClass;
         $callback->usuario = null;
