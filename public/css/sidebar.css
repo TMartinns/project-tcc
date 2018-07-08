@@ -33,7 +33,7 @@
         transition: all 0.3s;
     }
 
-    #container.move {
+    #container.sidebar-active {
         margin-left: 250px;
     }
 
@@ -57,5 +57,4 @@
     #sidebar.active {
         left: 0;
     }
-
 }

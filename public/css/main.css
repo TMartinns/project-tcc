@@ -1,3 +1,15 @@
 body{
     background-color: whitesmoke;
 }
+
+@media (max-width: 320px) {
+    #input-pesquisar input {
+        width: 85px; !important;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 375px) {
+    #input-pesquisar input {
+        width: 140px; !important;
+    }
+}
