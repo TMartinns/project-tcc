@@ -82,14 +82,14 @@ class UsuariosController extends \HXPHP\System\Controller
                     $pessoa->delete();
                     $this->load('Helpers\Alert', array(
                         'danger',
-                        'Não foi possível completar o cadastro em razão dos seguintes erros:',
+                        'Não foi possível completar o cadastro!',
                         $resposta->errors
                     ));
                 }
             } else {
                 $this->load('Helpers\Alert', array(
                     'danger',
-                    'Não foi possível completar o cadastro em razão dos seguintes erros:',
+                    'Não foi possível completar o cadastro!',
                     $resposta->errors
                 ));
             }
