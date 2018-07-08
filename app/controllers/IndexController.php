@@ -29,11 +29,28 @@ class IndexController extends \HXPHP\System\Controller
         $this->view->setFile('index');
 
         $post = $this->request->post();
-        $nome_usuario = $post['nome_usuario'];
-        $usuario = Usuario::find_by_nome_usuario($nome_usuario);
 
-        if (password_verify($post['senha'], $usuario->senha)) {
-            $this->auth->login($usuario->id_pessoa, $usuario->nome_usuario, $usuario->permissao);
+        if (!empty($post)) {
+            $nome_usuario = $post['nome_usuario'];
+            $usuario = Usuario::find_by_nome_usuario($nome_usuario);
+
+            if (!empty($usuario)) {
+                if (password_verify($post['senha'], $usuario->senha)) {
+                    $this->auth->login($usuario->id_pessoa, $usuario->nome_usuario, $usuario->funcao);
+                } else {
+                    $this->load('Modules\Messages', 'auth');
+                    $this->messages->setBlock('alerts');
+                    $this->load('Helpers\Alert',
+                        $this->messages->getByCode('dados-incorretos')
+                    );
+                }
+            } else {
+                $this->load('Modules\Messages', 'auth');
+                $this->messages->setBlock('alerts');
+                $this->load('Helpers\Alert',
+                    $this->messages->getByCode('usuario-inexistente')
+                );
+            }
         }
     }
 

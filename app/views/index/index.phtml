@@ -21,17 +21,27 @@
 
     <div class="row">
         <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
+            <?php
+            echo (isset($this->alert)) ? $this->alert : '';
+            ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <form action="<?php echo $this->printRelativeURL('acessar'); ?>" method="post">
                         <div class="form-group">
                             <label for="nome_usuario">Nome de usuário</label>
-                            <input required type="text" class="form-control" name="nome_usuario" id="nome_usuario">
+                            <input required type="text" class="form-control" name="nome_usuario" id="nome_usuario"
+                                   placeholder="Insira seu nome de usuário">
                         </div>
 
                         <div class="form-group">
                             <label for="senha">Senha</label>
-                            <input required type="password" class="form-control" name="senha" id="senha">
+                            <input required type="password" class="form-control" name="senha" id="senha"
+                                   placeholder="Insira sua senha">
                         </div>
 
                         <button type="submit" class="btn btn-outline-dark">Acessar</button>
@@ -49,5 +59,8 @@
         </div>
     </div>
 </div>
+
+<script src="<?php echo BOWER; ?>jquery/dist/jquery.slim.min.js"></script>
+<script src="<?php echo BOWER; ?>bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
