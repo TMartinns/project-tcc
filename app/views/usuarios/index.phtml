@@ -1,6 +1,7 @@
 <?php
 echo (isset($this->alert)) ? $this->alert : '';
 
+$this->setPartialsDir('partials' . DS . 'usuarios');
 $this->partial('navTabs');
 ?>
 

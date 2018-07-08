@@ -20,11 +20,6 @@ class UsuariosController extends \HXPHP\System\Controller
         $this->auth->redirectCheck(false);
     }
 
-    public function indexAction()
-    {
-        $this->view->setPartialsDir('partials' . DS . 'usuarios');
-    }
-
     public function cadastrarAction()
     {
         $this->view->setFile('index');
