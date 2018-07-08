@@ -18,7 +18,7 @@ $configs->env->development->database->setConnectionData([
     'charset' => env('MYSQL_CHARSET', 'utf8')
 ]);
 
-$configs->env->development->auth->setURLs('/project-tcc/home/', '/project-tcc/');
+$configs->env->development->auth->setURLs('/project-tcc/inicio/', '/project-tcc/');
 
 $configs->env->development->mail->setFrom(array(
     'from' => 'Suporte ADUV',

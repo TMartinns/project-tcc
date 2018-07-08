@@ -1,6 +1,6 @@
 <?php
 
-class HomeController extends \HXPHP\System\Controller
+class InicioController extends \HXPHP\System\Controller
 {
     public function __construct(\HXPHP\System\Configs\Config $configs = null)
     {
@@ -11,6 +11,10 @@ class HomeController extends \HXPHP\System\Controller
             $configs->auth->after_login,
             $configs->auth->after_logout,
             true
+        );
+
+        $this->load('Helpers\Menu',
+            $this->auth->getUserRole()
         );
 
         $this->auth->redirectCheck(false);
