@@ -1,6 +1,6 @@
 <?php
 echo (isset($this->alert)) ? $this->alert : '';
-$this->setPartialsDir('partials' . DS . 'usuarios');
+
 $this->partial('navTabs');
 ?>
 
@@ -47,17 +47,17 @@ $this->partial('navTabs');
                         </div>
 
                         <div class="form-group">
-                            <label>Permissão</label>
+                            <label>Função</label>
 
                             <br/>
 
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="permissao" id="opcaoCoordenador" value="C">
+                                <input class="form-check-input" type="radio" name="funcao" id="opcaoCoordenador" value="C">
                                 <label class="form-check-label" for="opcaoCoordenador">Coordenador(a)</label>
                             </div>
 
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="permissao" id="opcaoOficial" value="O">
+                                <input class="form-check-input" type="radio" name="funcao" id="opcaoOficial" value="O">
                                 <label class="form-check-label" for="opcaoOficial">Oficial de promotoria</label>
                             </div>
                         </div>

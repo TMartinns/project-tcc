@@ -20,6 +20,11 @@ class UsuariosController extends \HXPHP\System\Controller
         $this->auth->redirectCheck(false);
     }
 
+    public function indexAction()
+    {
+        $this->view->setPartialsDir('partials' . DS . 'usuarios');
+    }
+
     public function cadastrarAction()
     {
         $this->view->setFile('index');
@@ -36,21 +41,21 @@ class UsuariosController extends \HXPHP\System\Controller
                 'cpf' => $post['cpf']
             );
 
-            $callback = Pessoa::cadastrar($pessoa);
+            $resposta = Pessoa::cadastrar($pessoa);
 
-            if($callback->status == true) {
+            if($resposta->status == true) {
                 $senha = $this->configs->random->password();
                 $usuario = array(
                     'nome_usuario' => $post['nome_usuario'],
                     'senha' => password_hash($senha, PASSWORD_DEFAULT),
                     'email' => $post['email'],
-                    'permissao' => $post['permissao'],
-                    'id_pessoa' => $callback->pessoa->id
+                    'funcao' => $post['funcao'],
+                    'id_pessoa' => $resposta->pessoa->id
                 );
 
-                $callback = Usuario::cadastrar($usuario);
+                $resposta = Usuario::cadastrar($usuario);
 
-                if($callback->status == true) {
+                if($resposta->status == true) {
                     $this->load('Helpers\Alert', array(
                        'success',
                        'O cadastro foi completado com sucesso!',
@@ -61,9 +66,9 @@ class UsuariosController extends \HXPHP\System\Controller
 
                     $this->email->setFrom($this->configs->mail->getFrom());
 
-                    $nome_usuario = $callback->usuario->nome_usuario;
+                    $nome_usuario = $resposta->usuario->nome_usuario;
                     $this->email->send(
-                        $callback->usuario->email,
+                        $resposta->usuario->email,
                         '[Conta ADUV] Registro de conta completado',
                         "Você foi registrado com sucesso no sistema ADUV! <br/>
                         Esse e-mail foi enviado automaticamente pelo nosso sistema para informá-lo de seus dados cadastrais. <br/>
@@ -83,14 +88,14 @@ class UsuariosController extends \HXPHP\System\Controller
                     $this->load('Helpers\Alert', array(
                         'danger',
                         'Não foi possível completar o cadastro em razão dos seguintes erros:',
-                        $callback->errors
+                        $resposta->errors
                     ));
                 }
             } else {
                 $this->load('Helpers\Alert', array(
                     'danger',
                     'Não foi possível completar o cadastro em razão dos seguintes erros:',
-                    $callback->errors
+                    $resposta->errors
                 ));
             }
         }
