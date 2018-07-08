@@ -24,25 +24,25 @@ class Pessoa extends \HXPHP\System\Model
 
     public static function cadastrar(array $post)
     {
-        $callback = new \stdClass;
-        $callback->pessoa = null;
-        $callback->status = false;
-        $callback->errors = array();
+        $resposta = new \stdClass;
+        $resposta->pessoa = null;
+        $resposta->status = false;
+        $resposta->errors = array();
 
         $pessoa = self::create($post);
 
         if ($pessoa->is_valid()) {
-            $callback->pessoa = $pessoa;
-            $callback->status = true;
-            return $callback;
+            $resposta->pessoa = $pessoa;
+            $resposta->status = true;
+            return $resposta;
         }
 
         $errors = $pessoa->errors->get_raw_errors();
 
-        foreach ($errors as $field => $message) {
-            array_push($callback->errors, $message[0]);
+        foreach ($errors as $key => $value) {
+            array_push($resposta->errors, $value[0]);
         }
 
-        return $callback;
+        return $resposta;
     }
 }

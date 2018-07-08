@@ -14,8 +14,8 @@ class Usuario extends \HXPHP\System\Model
             'message' => 'O e-mail é um campo obrigatório.'
         ),
         array(
-            'permissao',
-            'message' => 'A permissão é um campo obrigatório.'
+            'funcao',
+            'message' => 'A função é um campo obrigatório.'
         )
     );
 
@@ -32,25 +32,25 @@ class Usuario extends \HXPHP\System\Model
 
     public static function cadastrar(array $post)
     {
-        $callback = new \stdClass;
-        $callback->usuario = null;
-        $callback->status = false;
-        $callback->errors = array();
+        $resposta = new \stdClass;
+        $resposta->usuario = null;
+        $resposta->status = false;
+        $resposta->errors = array();
 
         $usuario = self::create($post);
 
         if($usuario->is_valid()) {
-            $callback->usuario = $usuario;
-            $callback->status = true;
-            return $callback;
+            $resposta->usuario = $usuario;
+            $resposta->status = true;
+            return $resposta;
         }
 
         $errors = $usuario->errors->get_raw_errors();
 
-        foreach ($errors as $field => $message) {
-            array_push($callback->errors, $message[0]);
+        foreach ($errors as $key => $message) {
+            array_push($resposta->errors, $message[0]);
         }
 
-        return $callback;
+        return $resposta;
     }
 }
