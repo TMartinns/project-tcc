@@ -12,22 +12,10 @@
 <script src="<?php echo BOWER; ?>popper.js/dist/popper.min.js"></script>
 <script src="<?php echo BOWER; ?>bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="<?php echo BOWER; ?>malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="<?php echo JS; ?>main.js"></script>
 
 <?php
 echo $add_js;
 ?>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#sidebar").mCustomScrollbar({
-            theme: "minimal-dark"
-        });
-
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-            $('#container').toggleClass('move');
-        });
-    });
-</script>
 </body>
 </html>
