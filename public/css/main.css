@@ -1,5 +1,6 @@
 body{
     background-color: whitesmoke;
+    padding-bottom: 10px;
 }
 
 @media (max-width: 320px) {
