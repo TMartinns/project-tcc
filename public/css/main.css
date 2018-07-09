@@ -3,14 +3,72 @@ body{
     padding-bottom: 10px;
 }
 
-@media (max-width: 320px) {
-    #input-pesquisar input {
-        width: 85px; !important;
+.mCustomScrollBox {
+    padding-top: 20px;
+    width: 250px;
+}
+
+.sidebar-item {
+    margin-left: 10%;
+}
+
+@media (max-width: 425px) {
+    div#input-pesquisar {
+        width: 210px;
+        margin-top: 5px;
+        margin-bottom: 25px;
+        margin-left: 2px;
     }
 }
 
-@media (min-width: 321px) and (max-width: 375px) {
-    #input-pesquisar input {
-        width: 140px; !important;
+@media (min-width: 769px) {
+
+    body {
+        display: flex;
+    }
+
+    #sidebar {
+        margin-top: 55px;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        height: 100vh;
+        background: #fff;
+        color: #fff;
+        transition: all 0.3s;
+    }
+
+    #sidebar.active {
+        left: 0;
+    }
+
+    #container {
+        transition: all 0.3s;
+    }
+
+    #container.sidebar-active {
+        margin-left: 250px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    #sidebar {
+        margin-top: 55px;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        height: 100vh;
+        z-index: 999;
+        background: #fff;
+        color: #fff;
+        transition: all 0.3s;
+    }
+
+    #sidebar.active {
+        left: 0;
     }
 }
