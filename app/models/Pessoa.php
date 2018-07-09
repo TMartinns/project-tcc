@@ -45,4 +45,8 @@ class Pessoa extends \HXPHP\System\Model
 
         return $resposta;
     }
+
+    public static function getPrimeiroNome($id_pessoa) {
+        return explode(" ", self::find_by_id($id_pessoa)->nome)[0];
+    }
 }
