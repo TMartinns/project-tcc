@@ -25,4 +25,27 @@ $configs->env->development->mail->setFrom(array(
     'from_mail' => 'suporte.aduv@gmail.com'
 ));
 
+$configs->env->development->menu->setConfigs(array(
+    'container_id' => 'sidebar',
+    'container_class' => 'navbar navbar-light bg-white border',
+    'menu_item_class' => 'nav-item',
+    'link_before' => '<span class="sidebar-item">',
+    'link_class' => 'nav-link',
+    'link_active_class' => 'active border-top border-bottom border-primary'
+));
+
+$configs->env->development->menu->setMenus(array(
+    'Início/fas fa-home' => '%baseURI%/inicio/',
+    'Diligências/fas fa-tasks' => '%baseURI%/diligencias/',
+    'Veículos/fas fa-car' => '%baseURI%/veiculos/'
+), 'Oficial');
+
+$configs->env->development->menu->setMenus(array(
+    'Início/fas fa-home' => '%baseURI%/inicio/',
+    'Usuários/fas fa-users' => '%baseURI%/usuarios/',
+    'Diligências/fas fa-tasks' => '%baseURI%/diligencias/',
+    'Veículos/fas fa-car' => '%baseURI%/veiculos/',
+    'Relatórios/fas fa-file-alt' => '%baseURI%/relatorios/'
+), 'Coordenador');
+
 return $configs;
