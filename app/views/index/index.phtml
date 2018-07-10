@@ -31,7 +31,7 @@
         <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="<?php echo $this->printRelativeURL('acessar'); ?>" method="post">
+                    <form id="login-form" action="<?php echo $this->printRelativeURL('acessar'); ?>" method="post">
                         <div class="form-group">
                             <label for="nome_usuario">Nome de usuário</label>
                             <input required type="text" class="form-control" name="nome_usuario" id="nome_usuario"
@@ -44,7 +44,10 @@
                                    placeholder="Informe sua senha">
                         </div>
 
-                        <button type="submit" class="btn btn-outline-dark">Acessar</button>
+                        <button class="g-recaptcha btn btn-outline-dark"
+                                data-sitekey="6Ldqc2MUAAAAAO7DtP8Br15Z38YhanEGbT_qmawc" data-callback="onSubmit">
+                            Acessar
+                        </button>
                     </form>
                 </div>
             </div>
@@ -62,5 +65,12 @@
 
 <script src="<?php echo BOWER; ?>jquery/dist/jquery.slim.min.js"></script>
 <script src="<?php echo BOWER; ?>bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+    function onSubmit(token) {
+        document.getElementById('login-form').submit();
+    }
+</script>
 </body>
 </html>
