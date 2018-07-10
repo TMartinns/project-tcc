@@ -13,13 +13,13 @@ class UsuariosController extends \HXPHP\System\Controller
             true
         );
 
+        $this->auth->redirectCheck(false);
+
         $this->load('Helpers\Menu',
             $this->request,
             $this->configs,
             $this->auth->getUserRole()
         );
-
-        $this->auth->redirectCheck(false);
     }
 
     public function cadastrarAction()
