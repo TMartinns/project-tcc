@@ -15,10 +15,11 @@ class IndexController extends \HXPHP\System\Controller
 
         $this->load('Storage\Session');
 
-        $ipBloqueados = $this->session->get('ipBloqueados');
-        if(!is_null($ipBloqueados)) {
-            if (in_array($this->request->server('REMOTE_ADDR'), $ipBloqueados, true)) {
-                $this->view->setPath('blank');
+        $blacklist = $this->session->get('blacklist');
+        
+        if (!is_null($blacklist)) {
+            if (in_array($this->request->server('REMOTE_ADDR'), $blacklist, true)) {
+                $this->redirectTo('blank', false, false);
             }
         }
     }
@@ -40,7 +41,7 @@ class IndexController extends \HXPHP\System\Controller
         $post = $this->request->post();
 
         if (!empty($post)) {
-            if($this->captchaSuccess($post['g-recaptcha-response'])) {
+            if ($this->captchaSuccess($post['g-recaptcha-response'])) {
                 $usuario = Usuario::find_by_nome_usuario($post['nome_usuario']);
 
                 if (!empty($usuario)) {
@@ -61,17 +62,15 @@ class IndexController extends \HXPHP\System\Controller
                     );
                 }
             } else {
-                $this->load('Storage\Session');
+                $blacklist = array($this->request->server('REMOTE_ADDR'));
 
-                $ipBloqueados = array($this->request->server('REMOTE_ADDR'));
-
-                if($this->session->exists('ipBloqueados')) {
-                    $ipBloqueados = array_merge($ipBloqueados, $this->session->get('ipBloqueados'));
+                if ($this->session->exists('blacklist')) {
+                    $blacklist = array_merge($blacklist, $this->session->get('blacklist'));
                 }
 
-                $this->session->set('ipBloqueados', $ipBloqueados);
+                $this->session->set('blacklist', $blacklist);
 
-                $this->view->setPath('blank');
+                $this->redirectTo('blank', false, false);
             }
         }
     }
