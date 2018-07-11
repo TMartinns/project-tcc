@@ -53,4 +53,23 @@ class Usuario extends \HXPHP\System\Model
 
         return $resposta;
     }
+
+    public static function ativar($id, $ativar = true)
+    {
+        $resposta = new \stdClass;
+        $resposta->usuario = null;
+        $resposta->status = false;
+
+        $usuario = self::find_by_id_pessoa($id);
+        $usuario->is_ativo = ($ativar) ? 1 : 0;
+
+        $resposta->usuario = $usuario;
+
+        if($usuario->save(false)) {
+            $resposta->status = true;
+            return $resposta;
+        }
+
+        return $resposta;
+    }
 }

@@ -97,4 +97,34 @@ class UsuariosController extends \HXPHP\System\Controller
             }
         }
     }
+
+    public function desativarAction($id)
+    {
+        $this->view->setFile('index');
+
+        $resposta = Usuario::ativar($id, false);
+        $nome_usuario = $resposta->usuario->nome_usuario;
+        if($resposta->status) {
+            $this->load('Helpers\Alert', array(
+                'danger',
+                'Usuário desativado!',
+                "O usuário <strong>$nome_usuario</strong> foi desativado com sucesso!"
+            ));
+        }
+    }
+
+    public function ativarAction($id)
+    {
+        $this->view->setFile('index');
+
+        $resposta = Usuario::ativar($id);
+        $nome_usuario = $resposta->usuario->nome_usuario;
+        if($resposta->status) {
+            $this->load('Helpers\Alert', array(
+                'success',
+                'Usuário ativado!',
+                "O usuário <strong>$nome_usuario</strong> foi ativado com sucesso!"
+            ));
+        }
+    }
 }
