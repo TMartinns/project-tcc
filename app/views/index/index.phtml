@@ -9,6 +9,14 @@
     <link rel="shortcut icon" href="<?php echo IMG; ?>favicon_aduv.png" type="image/x-icon">
     <link rel="stylesheet" href="<?php echo BOWER; ?>bootstrap/dist/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="<?php echo CSS; ?>main.css" type="text/css">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script>
+        function onSubmit(token) {
+            document.getElementById('loginForm').submit();
+        }
+    </script>
 </head>
 
 <body>
@@ -65,12 +73,5 @@
 
 <script src="<?php echo BOWER; ?>jquery/dist/jquery.slim.min.js"></script>
 <script src="<?php echo BOWER; ?>bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-<script>
-    function onSubmit(token) {
-        document.getElementById('loginForm').submit();
-    }
-</script>
 </body>
 </html>
