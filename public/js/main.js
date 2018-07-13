@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $('#sidebarAppear').on('click', function () {
         $('#sidebar').toggleClass('active');
-        $('#container').toggleClass('sidebar-active');
+        $('#container').toggleClass('sidebarActive');
     });
 
     $('#sidebar a.active').toggleClass('text-primary');
