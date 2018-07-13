@@ -31,7 +31,7 @@
         <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <form id="login-form" action="<?php echo $this->printRelativeURL('acessar'); ?>" method="post">
+                    <form id="loginForm" action="<?php echo $this->printRelativeURL('acessar'); ?>" method="post">
                         <div class="form-group">
                             <label for="nome_usuario">Nome de usuário</label>
                             <input required type="text" class="form-control" name="nome_usuario" id="nome_usuario"
@@ -69,7 +69,7 @@
 
 <script>
     function onSubmit(token) {
-        document.getElementById('login-form').submit();
+        document.getElementById('loginForm').submit();
     }
 </script>
 </body>

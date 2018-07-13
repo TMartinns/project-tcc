@@ -28,6 +28,7 @@ $configs->env->development->mail->setFrom(array(
 $configs->env->development->menu->setConfigs(array(
     'container_id' => 'sidebar',
     'container_class' => 'navbar navbar-light bg-white border',
+    'menu_id' => 'sidebarItens',
     'menu_item_class' => 'nav-item',
     'link_before' => '<span class="sidebar-item">',
     'link_class' => 'nav-link',

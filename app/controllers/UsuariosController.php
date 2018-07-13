@@ -41,7 +41,8 @@ class UsuariosController extends \HXPHP\System\Controller
             $resposta = Pessoa::cadastrar($pessoa);
 
             if($resposta->status == true) {
-                $senha = $this->configs->random->password();
+                $this->load('Services\Random');
+                $senha = $this->random->password();
                 $usuario = array(
                     'nome_usuario' => $post['nome_usuario'],
                     'senha' => password_hash($senha, PASSWORD_DEFAULT),

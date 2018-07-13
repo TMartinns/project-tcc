@@ -3,23 +3,18 @@ $(document).ready(function () {
         theme: "minimal-dark"
     });
 
-    $('#sidebarCollapse').on('click', function () {
+    $('#sidebarAppear').on('click', function () {
         $('#sidebar').toggleClass('active');
         $('#container').toggleClass('sidebar-active');
     });
 
     $('#sidebar a.active').toggleClass('text-primary');
 
-    if(window.matchMedia("(max-width: 425px)").matches) {
-        $('div#input-pesquisar').toggleClass('d-none');
-        $('#menu').prepend("<li class=\"nav-item\">\n" +
-            "                    <div id=\"input-pesquisar\" class=\"input-group\">\n" +
-            "                        <input class=\"form-control\" type=\"search\" placeholder=\"Pesquise aqui\" aria-label=\"\">\n" +
-            "                        <div class=\"input-group-append\">\n" +
-            "                            <button type=\"button\" class=\"btn btn-outline-dark\">\n" +
-            "                                <i class=\"fas fa-search\"></i>\n" +
-            "                            </button>\n" +
-            "                        </div>\n" +
+    if (window.matchMedia("(max-width: 425px)").matches) {
+        $('div#pesquisar').toggleClass('d-none');
+        $('#sidebarItens').prepend("<li class=\"nav-item\">\n" +
+            "                    <div id=\"pesquisar\" class=\"input-group\">\n" +
+            $('div#pesquisar').html() +
             "                    </div>\n" +
             "                </li>");
     }

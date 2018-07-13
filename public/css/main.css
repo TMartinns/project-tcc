@@ -13,7 +13,7 @@ body{
 }
 
 @media (max-width: 425px) {
-    div#input-pesquisar {
+    div#pesquisar {
         width: 210px;
         margin-top: 5px;
         margin-bottom: 25px;

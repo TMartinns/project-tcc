@@ -1,4 +1,4 @@
-$('#data_nascimento').datepicker({
+$('#dataNascimento').datepicker({
     uiLibrary: 'bootstrap4',
     locale: 'pt-br',
     format: 'dd/mm/yyyy',

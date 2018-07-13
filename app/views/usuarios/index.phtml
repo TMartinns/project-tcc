@@ -27,7 +27,7 @@ $this->partial('navTabs');
 </div>
 
 <div class="tab-content">
-    <div class="tab-pane active" id="listar" role="tabpanel" aria-labelledby="listar-tab">
+    <div class="tab-pane active" id="listarUsuarios" role="tabpanel" aria-labelledby="listarUsuariosTab">
         <br/>
 
         <div class="card">
@@ -58,7 +58,8 @@ $this->partial('navTabs');
                             <td><?php echo ($usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria'; ?></td>
                             <td>
                                 <button type='button' class='btn btn-outline-dark' data-toggle='modal'
-                                        data-target='#dadosPessoaisModal'>Visualizar
+                                        data-target='#dadosPessoaisModal'>
+                                    Visualizar
                                 </button>
                             </td>
                             <td><?php
@@ -84,7 +85,7 @@ $this->partial('navTabs');
         </div>
     </div>
 
-    <div class="tab-pane" id="cadastrar" role="tabpanel" aria-labelledby="cadastrar-tab">
+    <div class="tab-pane" id="cadastrarUsuarios" role="tabpanel" aria-labelledby="cadastrarUsuariosTab">
         <br/>
 
         <div class="card">
