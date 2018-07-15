@@ -31,7 +31,7 @@ $configs->env->development->menu->setConfigs(array(
     'menu_id' => 'sidebarItens',
     'menu_item_class' => 'nav-item',
     'link_before' => '<span class="sidebarItem">',
-    'link_class' => 'nav-link',
+    'link_class' => 'nav-link text-dark',
     'link_active_class' => 'active border-top border-bottom border-primary'
 ));
 
