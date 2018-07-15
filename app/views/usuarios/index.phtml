@@ -5,87 +5,106 @@ $this->setPartialsDir('partials' . DS . 'usuarios');
 $this->partial('navTabs');
 ?>
 
-<div class="modal fade" id="dadosPessoaisModal" tabindex="-1" role="dialog" aria-labelledby="dadosPessoaisModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="dadosPessoaisModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="tab-content">
-    <div class="tab-pane active" id="listarUsuarios" role="tabpanel" aria-labelledby="listarUsuariosTab">
+    <div class="tab-pane fade show active" id="listarUsuarios" role="tabpanel" aria-labelledby="listarUsuariosTab">
         <br/>
 
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-hover table-responsive-sm">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Nome de usuário</th>
-                        <th scope="col">E-mail</th>
-                        <th scope="col">Função</th>
-                        <th scope="col">Dados pessoais</th>
-                        <th scope="col">Ações</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    $usuarios = Usuario::all();
-                    foreach ($usuarios as $posicao => $usuario) {
-                        $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
-                        ?>
-                        <tr>
-                            <th scope='row'><?php echo ++$posicao; ?></th>
-                            <td><?php echo $pessoa->nome; ?></td>
-                            <td><?php echo $usuario->nome_usuario; ?></td>
-                            <td><?php echo $usuario->email; ?></td>
-                            <td><?php echo ($usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria'; ?></td>
-                            <td>
-                                <button type='button' class='btn btn-outline-dark' data-toggle='modal'
-                                        data-target='#dadosPessoaisModal'>
-                                    Visualizar
-                                </button>
-                            </td>
-                            <td><?php
-                                if ($usuario->is_ativo == 1) {
-                                    ?>
-                                    <a class='btn btn-outline-danger'
-                                       href='<?php echo $this->getRelativeURL('desativar') . "/$usuario->id_pessoa"; ?>'>Desativar</a>
-                                    <?php
-                                } else {
-                                    ?>
-                                    <a class='btn btn-outline-success'
-                                       href='<?php echo $this->getRelativeURL('ativar') . "/$usuario->id_pessoa"; ?>'>Ativar</a>
-                                    <?php
+        <div class="row">
+            <?php
+            $usuarios = Usuario::all();
+            foreach ($usuarios as $usuario) {
+                $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
+
+                $telefones = Telefone::find_all_by_id_pessoa($pessoa->id);
+
+                $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
+                ?>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card">
+                        <img class="card-img-top fotoUsuario" src="<?php echo IMG; ?>" height="180">
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $pessoa->nome; ?></h5>
+
+                            <p class="card-text"><h6>Nome de usuário</h6><?php echo $usuario->nome_usuario; ?></p>
+
+                            <p class="card-text"><h6>E-mail</h6><?php echo $usuario->email; ?></p>
+
+                            <p class="card-text"><h6>
+                                Função</h6><?php echo ($usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria'; ?>
+                            </p>
+
+                            <div id="dadosPessoais<?php echo $pessoa->id; ?>" class="d-none">
+                                <p class="card-text"><h6>CPF</h6><?php echo $pessoa->cpf; ?></p>
+
+                                <p class="card-text"><h6>Data de
+                                    nascimento</h6><?php echo $pessoa->data_nascimento; ?></p>
+
+                                <p class="card-text"><h6>Nome da mãe</h6><?php echo $pessoa->nome_mae; ?></p>
+
+                                <p class="card-text"><h6>Telefones</h6>
+                                <?php
+                                foreach ($telefones as $key => $telefone) {
+                                    $hr = ($key != count($telefones) - 1) ? "<hr/>" : '';
+                                    echo "<p class='card-text'> ($telefone->ddd) $telefone->numero</p>$hr";
                                 }
-                                ?></td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                    </tbody>
-                </table>
-            </div>
+                                ?>
+                                </p>
+
+                                <p class="card-text"><h6>Endereços</h6>
+                                <?php
+                                foreach ($enderecos as $key => $endereco) {
+                                    $cidade = Cidade::find_by_id($endereco->id_cidade);
+
+                                    $uf = Uf::find_by_id($cidade->id_uf);
+
+                                    $hr = ($key != count($telefones) - 1) ? "<hr/>" : '';
+                                    echo "<p class='card-text'> 
+                                          $endereco->logradouro, $endereco->numero, $endereco->complemento, $endereco->bairro
+                                          <br/>
+                                          $cidade->nome/$uf->uf
+                                          <br/>
+                                          $endereco->cep
+                                          </p>
+                                          $hr";
+                                }
+                                ?>
+                                </p>
+                            </div>
+
+                            <div class="text-center">
+                                <button class="btn btn-outline-dark dadosPessoaisAppear" data-id="<?php echo $pessoa->id; ?>">
+                                    <span><i class="fas fa-arrow-circle-down"></i></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <?php
+                            if ($usuario->is_ativo == 1) {
+                                ?>
+                                <a class="btn btn-outline-danger"
+                                   href="<?php echo $this->getRelativeURL('desativar') . '/' . $usuario->id_pessoa; ?>">Desativar</a>
+                                <?php
+                            } else {
+                                ?>
+                                <a class="btn btn-outline-success"
+                                   href="<?php echo $this->getRelativeURL('ativar') . '/' . $usuario->id_pessoa; ?>">Ativar</a>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <br/>
+                </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
 
-    <div class="tab-pane" id="cadastrarUsuarios" role="tabpanel" aria-labelledby="cadastrarUsuariosTab">
+    <div class="tab-pane fade" id="cadastrarUsuarios" role="tabpanel" aria-labelledby="cadastrarUsuariosTab">
         <br/>
 
         <div class="card">

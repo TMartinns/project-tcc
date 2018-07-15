@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#sidebar").mCustomScrollbar({
+    $('#sidebar').mCustomScrollbar({
         theme: "minimal-dark"
     });
 
@@ -8,9 +8,9 @@ $(document).ready(function () {
         $('#container').toggleClass('sidebarActive');
     });
 
-    $('#sidebar a.active').toggleClass('text-primary');
+    $('#sidebar a.active').toggleClass('text-dark text-primary');
 
-    if (window.matchMedia("(max-width: 425px)").matches) {
+    if (window.matchMedia('(max-width: 425px)').matches) {
         $('div#pesquisar').toggleClass('d-none');
         $('#sidebarItens').prepend("<li class=\"nav-item\">\n" +
             "                    <div id=\"pesquisar\" class=\"input-group\">\n" +
@@ -18,4 +18,12 @@ $(document).ready(function () {
             "                    </div>\n" +
             "                </li>");
     }
+
+    $('button.dadosPessoaisAppear').on('click', function () {
+        var id = $(this).data('id');
+        $('#dadosPessoais' + id).toggleClass('d-none');
+        $(this).filter(function(){
+            return $(this).data('id') === id;
+        }).find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
+    });
 });
