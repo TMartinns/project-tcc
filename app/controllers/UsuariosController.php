@@ -15,6 +15,8 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $this->auth->redirectCheck(false);
 
+        $this->auth->roleCheck(array('C'));
+
         $this->load('Helpers\Menu',
             $this->request,
             $this->configs,
