@@ -3,6 +3,11 @@ body{
     padding-bottom: 10px;
 }
 
+.fotoUsuario {
+    object-fit: cover;
+    object-position: center;
+}
+
 .mCustomScrollBox {
     padding-top: 20px;
     width: 250px;
