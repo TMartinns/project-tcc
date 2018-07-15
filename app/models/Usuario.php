@@ -47,8 +47,8 @@ class Usuario extends \HXPHP\System\Model
 
         $errors = $usuario->errors->get_raw_errors();
 
-        foreach ($errors as $key => $value) {
-            array_push($resposta->errors, $value[0]);
+        foreach ($errors as $key => $message) {
+            array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
