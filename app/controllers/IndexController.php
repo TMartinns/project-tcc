@@ -16,7 +16,7 @@ class IndexController extends \HXPHP\System\Controller
         $this->load('Storage\Session');
 
         $blacklist = $this->session->get('blacklist');
-        
+
         if (!is_null($blacklist)) {
             if (in_array($this->request->server('REMOTE_ADDR'), $blacklist, true)) {
                 $this->redirectTo('blank', false, false);
@@ -45,13 +45,23 @@ class IndexController extends \HXPHP\System\Controller
                 $usuario = Usuario::find_by_nome_usuario($post['nome_usuario']);
 
                 if (!empty($usuario)) {
-                    if (password_verify($post['senha'], $usuario->senha)) {
-                        $this->auth->login($usuario->id_pessoa, $usuario->nome_usuario, $usuario->funcao);
+
+                    if ($usuario->is_ativo == 1) {
+
+                        if (password_verify($post['senha'], $usuario->senha)) {
+                            $this->auth->login($usuario->id_pessoa, $usuario->nome_usuario, $usuario->funcao);
+                        } else {
+                            $this->load('Modules\Messages', 'auth');
+                            $this->messages->setBlock('alerts');
+                            $this->load('Helpers\Alert',
+                                $this->messages->getByCode('dados-incorretos')
+                            );
+                        }
                     } else {
                         $this->load('Modules\Messages', 'auth');
                         $this->messages->setBlock('alerts');
                         $this->load('Helpers\Alert',
-                            $this->messages->getByCode('dados-incorretos')
+                            $this->messages->getByCode('usuario-desativado')
                         );
                     }
                 } else {
