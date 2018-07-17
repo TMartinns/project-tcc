@@ -10,6 +10,15 @@ $this->partial('navTabs');
         <br/>
 
         <div class="row">
+            <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
+                <input type="text" class="form-control" name="pesquisarUsuarios" id="pesquisarUsuarios"
+                       placeholder="Pesquise por usuários aqui">
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="row" id="listaUsuarios">
             <?php
             $usuarios = Usuario::all();
             foreach ($usuarios as $usuario) {
@@ -21,8 +30,6 @@ $this->partial('navTabs');
                 ?>
                 <div class="col-md-4 col-lg-3">
                     <div class="card">
-                        <img class="card-img-top fotoUsuario" src="<?php echo IMG; ?>" height="180">
-
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $pessoa->nome; ?></h5>
 
@@ -73,13 +80,14 @@ $this->partial('navTabs');
                             </div>
 
                             <div class="text-center">
-                                <button class="btn btn-outline-dark dadosPessoaisAppear" data-id="<?php echo $pessoa->id; ?>">
+                                <button class="btn btn-outline-dark dadosPessoaisAppear"
+                                        data-id="<?php echo $pessoa->id; ?>">
                                     <span><i class="fas fa-arrow-circle-down"></i></span>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="card-footer text-center">
+                        <div class="card-footer text-center bg-white">
                             <?php
                             if ($usuario->is_ativo == 1) {
                                 ?>
@@ -108,9 +116,9 @@ $this->partial('navTabs');
         <br/>
 
         <div class="card">
-            <div class="card-body">
-                <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
-                    <form action="<?php echo $this->printRelativeURL('cadastrar'); ?>" method="post">
+            <form action="<?php echo $this->printRelativeURL('cadastrar'); ?>" method="post">
+                <div class="card-body">
+                    <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
                         <div class="form-group">
                             <label for="nome">Nome</label>
 
@@ -155,11 +163,13 @@ $this->partial('navTabs');
                                 <label class="form-check-label" for="opcaoOficial">Oficial de promotoria</label>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+                <div class="card-footer bg-white text-center">
+                    <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

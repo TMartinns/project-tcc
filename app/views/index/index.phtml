@@ -38,8 +38,8 @@
     <div class="row">
         <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
             <div class="card">
-                <div class="card-body">
-                    <form id="loginForm" action="<?php echo $this->printRelativeURL('acessar'); ?>" method="post">
+                <form id="loginForm" action="<?php echo $this->printRelativeURL('acessar'); ?>" method="post">
+                    <div class="card-body">
                         <div class="form-group">
                             <label for="nome_usuario">Nome de usuário</label>
                             <input required type="text" class="form-control" name="nome_usuario" id="nome_usuario"
@@ -51,13 +51,14 @@
                             <input required type="password" class="form-control" name="senha" id="senha"
                                    placeholder="Informe sua senha">
                         </div>
+                    </div>
 
+                    <div class="card-footer text-center bg-white">
                         <button class="g-recaptcha btn btn-outline-dark"
-                                data-sitekey="6Ldqc2MUAAAAAO7DtP8Br15Z38YhanEGbT_qmawc" data-callback="onSubmit">
-                            Acessar
+                                data-sitekey="6Ldqc2MUAAAAAO7DtP8Br15Z38YhanEGbT_qmawc" data-callback="onSubmit">Acessar
                         </button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
