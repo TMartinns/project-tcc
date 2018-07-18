@@ -22,9 +22,6 @@ class UsuariosController extends \HXPHP\System\Controller
             $this->configs,
             $this->auth->getUserRole()
         );
-
-        $this->view->setAssets('js', $configs->bower . 'EasyAutocomplete/dist/jquery.easy-autocomplete.min.js')
-            ->setAssets('css', $configs->bower . 'EasyAutocomplete/dist/easy-autocomplete.min.css');
     }
 
     public function cadastrarAction()
