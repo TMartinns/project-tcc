@@ -31,7 +31,22 @@ $this->partial('navTabs');
                 <div class="col-md-4 col-lg-3">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $pessoa->nome; ?></h5>
+                            <div class="text-center">
+                                <p>
+                                    <img class="rounded-circle avatar bg-dark" src="<?php
+                                    if(is_null($usuario->avatar)) {
+                                        $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                                        echo IMG . "avatars/usuario/$avatar";
+                                    } else {
+                                        echo UPLOADS . "usuarios/$usuario->id_pessoa";
+                                    }
+                                    ?>" width="110" height="110">
+                                </p>
+
+                                <hr/>
+
+                                <h5 class="card-title"><?php echo $pessoa->nome; ?></h5>
+                            </div>
 
                             <p class="card-text"><h6>Nome de usuário</h6><?php echo $usuario->nome_usuario; ?></p>
 
@@ -103,7 +118,6 @@ $this->partial('navTabs');
                             ?>
                         </div>
                     </div>
-
                     <br/>
                 </div>
                 <?php
@@ -171,5 +185,6 @@ $this->partial('navTabs');
                 </div>
             </form>
         </div>
+        <br/>
     </div>
 </div>

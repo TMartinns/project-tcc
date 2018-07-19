@@ -98,6 +98,18 @@ $(document).ready(function () {
                     btnFooter = "<a class='btn btn-outline-success' href='/project-tcc/usuarios/ativar/" + usuario.id_pessoa + "'>Ativar</a>";
                 }
 
+                var avatar = '';
+
+                if (usuario.avatar == null) {
+                    if (usuario.genero == 'M') {
+                        avatar = '/project-tcc/public/img/avatars/usuario/man-' + Math.floor(Math.random() * 34);
+                    } else {
+                        avatar = '/project-tcc/public/img/avatars/usuario/woman-' + Math.floor(Math.random() * 12);
+                    }
+                }else {
+                    avatar = '/project-tcc/public/uploads/usuarios/' + usuario.id_pessoa;
+                }
+
                 var listaUsuarios = $('#listaUsuarios');
 
                 listaUsuarios.removeClass('row');
@@ -105,7 +117,12 @@ $(document).ready(function () {
                 listaUsuarios.html(
                     "<div class='card'>" +
                     "<div class='card-body'>" +
-                    "<div class='text-center'>" +
+                    "<div class='offset-md-4 col-md-4 offset-lg-4 col-lg-4 text-center'>" +
+                    "<p>" +
+                    "<img class='rounded-circle avatar bg-dark' src='" + avatar + "'" +
+                    "width='180' height='180'>" +
+                    "</p>" +
+                    "<hr/>" +
                     "<h5 class='card-title'>" + usuario.nome + "</h5>" +
                     "</div>" +
                     "<div class='row'>" +
@@ -124,9 +141,11 @@ $(document).ready(function () {
                     "</div>" +
                     "</div>" +
                     "<div class='card-footer text-center bg-white'>" + btnFooter + "</div>" +
-                    "</div>"
+                    "</div>" +
+                    "<br/>"
                 );
             }
-        }
+        },
+        adjustWidth: false
     });
 });

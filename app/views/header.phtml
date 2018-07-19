@@ -59,6 +59,20 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarPerfil">
+                    <div class="dropdown-header text-center">
+                        <img class="rounded-circle avatar bg-dark" src="<?php
+                        $usuario = Usuario::find_by_id_pessoa($this->auth->getUserId());
+                        $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
+
+                        if(is_null($usuario->avatar)) {
+                            $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                            echo IMG . "avatars/usuario/$avatar";
+                        }else {
+                            echo UPLOADS . "usuarios/$usuario->id_pessoa";
+                        }
+                        ?>" height="70" width="70">
+                    </div>
+
                     <div class="dropdown-divider"></div>
 
                     <a class="dropdown-item text-danger" href="<?php $this->printRelativeURL('index', false); ?>/sair/">

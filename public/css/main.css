@@ -3,7 +3,7 @@ body{
     padding-bottom: 10px;
 }
 
-.fotoUsuario {
+.avatar {
     object-fit: cover;
     object-position: center;
 }
