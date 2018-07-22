@@ -59,7 +59,9 @@ class UsuariosController extends \HXPHP\System\Controller
                     $this->load('Helpers\Alert', array(
                         'success',
                         'O cadastro foi completado com sucesso!',
-                        'Uma mensagem com os dados cadastrais do usuário foi enviada ao e-mail informado.'
+                        array(
+                            'Uma mensagem com os dados cadastrais do usuário foi enviada ao e-mail informado.'
+                        )
                     ));
 
                     $this->load('Services\Email');
@@ -154,7 +156,7 @@ class UsuariosController extends \HXPHP\System\Controller
                     'nome_usuario' => $usuario->nome_usuario,
                     'email' => $usuario->email,
                     'funcao' => ($usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria',
-                    'avatar' => $usuario->avatar,
+                    'imagem' => $usuario->imagem,
                     'is_ativo' => $usuario->is_ativo,
                     'id_pessoa' => $usuario->id_pessoa,
                     'nome' => $pessoa->nome,
@@ -166,7 +168,7 @@ class UsuariosController extends \HXPHP\System\Controller
                     'enderecos' => array()
                 );
 
-                if(!is_null($telefones)) {
+                if (!is_null($telefones)) {
                     foreach ($telefones as $telefone) {
                         array_push($resposta[$key]['telefones'], array(
                             'ddd' => $telefone->ddd,
@@ -175,7 +177,7 @@ class UsuariosController extends \HXPHP\System\Controller
                     }
                 }
 
-                if(!is_null($enderecos)) {
+                if (!is_null($enderecos)) {
                     foreach ($enderecos as $endereco) {
                         $cidade = Cidade::find_by_id($endereco->id_cidade);
                         $uf = Uf::find_by_id($cidade->id_uf);
