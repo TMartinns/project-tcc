@@ -34,13 +34,15 @@ $this->partial('navTabs');
                             <div class="text-center">
                                 <p>
                                     <img class="rounded-circle avatar bg-dark" src="<?php
-                                    if(is_null($usuario->avatar)) {
+                                    $title = '';
+                                    if(is_null($usuario->imagem)) {
+                                        $title = 'Icon designed by Eucalyp from Flaticon';
                                         $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
-                                        echo IMG . "avatars/usuario/$avatar";
+                                        echo IMG . "avatars/usuarios/$avatar";
                                     } else {
                                         echo UPLOADS . "usuarios/$usuario->id_pessoa";
                                     }
-                                    ?>" width="110" height="110">
+                                    ?>" width="110" height="110" title="<?php echo $title; ?>">
                                 </p>
 
                                 <hr/>

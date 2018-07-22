@@ -98,16 +98,19 @@ $(document).ready(function () {
                     btnFooter = "<a class='btn btn-outline-success' href='/project-tcc/usuarios/ativar/" + usuario.id_pessoa + "'>Ativar</a>";
                 }
 
-                var avatar = '';
+                var imagem = '';
+                var title = '';
 
-                if (usuario.avatar == null) {
+                if (usuario.imagem == null) {
+                    title = 'Icon designed by Eucalyp from Flaticon';
+                    imagem = '/project-tcc/public/img/avatars/usuarios/';
                     if (usuario.genero == 'M') {
-                        avatar = '/project-tcc/public/img/avatars/usuario/man-' + Math.floor(Math.random() * 34);
+                        imagem += 'man-' + Math.floor(Math.random() * 34);
                     } else {
-                        avatar = '/project-tcc/public/img/avatars/usuario/woman-' + Math.floor(Math.random() * 12);
+                        imagem += 'woman-' + Math.floor(Math.random() * 12);
                     }
                 }else {
-                    avatar = '/project-tcc/public/uploads/usuarios/' + usuario.id_pessoa;
+                    imagem = '/project-tcc/public/uploads/usuarios/' + usuario.id_pessoa;
                 }
 
                 var listaUsuarios = $('#listaUsuarios');
@@ -119,8 +122,8 @@ $(document).ready(function () {
                     "<div class='card-body'>" +
                     "<div class='offset-md-4 col-md-4 offset-lg-4 col-lg-4 text-center'>" +
                     "<p>" +
-                    "<img class='rounded-circle avatar bg-dark' src='" + avatar + "'" +
-                    "width='180' height='180'>" +
+                    "<img class='rounded-circle avatar bg-dark' src='" + imagem + "'" +
+                    "width='180' height='180' title='" + title + "'>" +
                     "</p>" +
                     "<hr/>" +
                     "<h5 class='card-title'>" + usuario.nome + "</h5>" +
