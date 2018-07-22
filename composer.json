@@ -6,7 +6,8 @@
     "require": {
         "php": ">=7.0.0",
         "hxphp/framework": "3.0.0",
-        "phpmailer/phpmailer": "^6.0"
+        "phpmailer/phpmailer": "^6.0",
+        "verot/class.upload.php": "dev-master"
     },    
     "minimum-stability": "stable",
     "prefer-stable": true,
