@@ -22,6 +22,53 @@ class VeiculosController extends \HXPHP\System\Controller
             $this->configs,
             $this->auth->getUserRole()
         );
+
+        $this->view->setAssets('js', $this->configs->js . 'modal.config.js');
+    }
+
+    private function imagemUpload($veiculo)
+    {
+        $resposta = new \stdClass();
+        $resposta->veiculo = $veiculo;
+        $resposta->status = false;
+        $resposta->error = '';
+
+        if (isset($_FILES['imagem']) && !empty($_FILES['imagem']['tmp_name'])) {
+            $imagem = new upload($_FILES['imagem'], 'pt_BR');
+
+            if ($imagem->uploaded) {
+                $nomeImagem = md5(uniqid());
+                $imagem->file_new_name_body = $nomeImagem;
+                $imagem->file_new_name_ext = 'png';
+                $imagem->allowed = array('image/jpg', 'image/png', 'image/jpeg');
+
+                $dir_path = ROOT_PATH . DS . 'public' . DS . 'uploads' . DS . 'veiculos' . DS . $veiculo->id . DS;
+
+                $imagem->process($dir_path);
+
+                if ($imagem->processed) {
+                    $imagem->clean();
+
+                    if (!is_null($veiculo->imagem)) {
+                        unlink($dir_path . $veiculo->imagem);
+                    }
+
+                    $veiculo->imagem = $nomeImagem . '.png';
+                    $veiculo->save(false);
+
+                    $resposta->veiculo = $veiculo;
+                    $resposta->status = true;
+
+                    return $resposta;
+                } else {
+                    $resposta->error = $imagem->error;
+
+                    return $resposta;
+                }
+            }
+        } else {
+            return $resposta;
+        }
     }
 
     public function cadastrarAction()
@@ -34,45 +81,28 @@ class VeiculosController extends \HXPHP\System\Controller
             $resposta = Veiculo::cadastrar($post);
 
             if ($resposta->status == true) {
-                if (isset($_FILES['imagem']) && !empty($_FILES['imagem']['tmp_name'])) {
-                    $imagem = new upload($_FILES['imagem']);
+                $resposta = $this->imagemUpload($resposta->veiculo);
 
-                    if ($imagem->uploaded) {
-                        $nome_imagem = md5(uniqid());
-                        $imagem->file_new_name_body = $nome_imagem;
-                        $imagem->file_new_name_ext = 'png';
+                $modelo = $resposta->veiculo->modelo;
 
-                        $dir_path = ROOT_PATH . DS . 'public' . DS . 'uploads' . DS . 'veiculos' . DS . $resposta->veiculo->id . DS;
+                $alertSuccess = array(
+                    'success',
+                    'Veículo cadastrado!',
+                    "O veículo <strong>$modelo</strong> foi cadastrado com sucesso."
+                );
 
-                        $imagem->process($dir_path);
-
-                        if ($imagem->processed) {
-                            $imagem->clean();
-
-                            $this->load('Helpers\Alert', array(
-                                'success',
-                                'O cadastro foi completado com sucesso!'
-                            ));
-
-                            if (!is_null($resposta->veiculo->imagem)) {
-                                unlink($dir_path . $resposta->veiculo->imagem);
-                            }
-
-                            $resposta->veiculo->imagem = $nome_imagem . '.png';
-                            $resposta->veiculo->save(false);
-                        } else {
-                            $this->load('Helpers\Alert', array(
-                                'danger',
-                                'Não foi possível salvar a imagem do veículo!',
-                                $imagem->error
-                            ));
-                        }
+                if($resposta->status == false) {
+                    if(empty($resposta->error)) {
+                        $this->load('Helpers\Alert', $alertSuccess);
+                    } else {
+                        $this->load('Helpers\Alert', array(
+                            'danger',
+                            'Não foi possível salvar a imagem do veículo!',
+                            $resposta->error
+                        ));
                     }
                 } else {
-                    $this->load('Helpers\Alert', array(
-                        'success',
-                        'O cadastro foi completado com sucesso!'
-                    ));
+                    $this->load('Helpers\Alert', $alertSuccess);
                 }
             } else {
                 $this->load('Helpers\Alert', array(
@@ -81,6 +111,79 @@ class VeiculosController extends \HXPHP\System\Controller
                     $resposta->errors
                 ));
             }
+        }
+    }
+
+    public function editarAction($id)
+    {
+        $this->view->setFile('index');
+
+        $post = $this->request->post();
+
+        if (!empty($post)) {
+            $resposta = Veiculo::editar($id, $post);
+
+            if ($resposta->status == true) {
+                $resposta = $this->imagemUpload($resposta->veiculo);
+
+                $modelo = $resposta->veiculo->modelo;
+
+                $alertSuccess = array(
+                    'success',
+                    'Veículo editado!',
+                    "O veículo <strong>$modelo</strong> foi alterado com sucesso."
+                );
+
+                if($resposta->status == false) {
+                    if(empty($resposta->error)) {
+                        $this->load('Helpers\Alert', $alertSuccess);
+                    } else {
+                        $this->load('Helpers\Alert', array(
+                            'danger',
+                            'Não foi possível salvar a imagem do veículo!',
+                            $resposta->error
+                        ));
+                    }
+                } else {
+                    $this->load('Helpers\Alert', $alertSuccess);
+                }
+            } else {
+                $this->load('Helpers\Alert', array(
+                    'danger',
+                    'Não foi possível completar as alterações!',
+                    $resposta->errors
+                ));
+            }
+        }
+    }
+
+    public function desativarAction($id)
+    {
+        $this->view->setFile('index');
+
+        $resposta = Veiculo::ativar($id, false);
+        $modelo = $resposta->veiculo->modelo;
+        if ($resposta->status) {
+            $this->load('Helpers\Alert', array(
+                'danger',
+                'Veículo desativado!',
+                "O veículo <strong>$modelo</strong> foi desativado com sucesso."
+            ));
+        }
+    }
+
+    public function ativarAction($id)
+    {
+        $this->view->setFile('index');
+
+        $resposta = Veiculo::ativar($id);
+        $modelo = $resposta->veiculo->modelo;
+        if ($resposta->status) {
+            $this->load('Helpers\Alert', array(
+                'success',
+                'Veículo ativado!',
+                "O veículo <strong>$modelo</strong> foi ativado com sucesso."
+            ));
         }
     }
 }
