@@ -35,7 +35,7 @@ $this->partial('navTabs');
                                 <p>
                                     <img class="rounded-circle avatar bg-dark" src="<?php
                                     $title = '';
-                                    if(is_null($usuario->imagem)) {
+                                    if (is_null($usuario->imagem)) {
                                         $title = 'Icon designed by Eucalyp from Flaticon';
                                         $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
                                         echo IMG . "avatars/usuarios/$avatar";
@@ -97,8 +97,8 @@ $this->partial('navTabs');
                             </div>
 
                             <div class="text-center">
-                                <button class="btn btn-outline-dark dadosPessoaisAppear"
-                                        data-id="<?php echo $pessoa->id; ?>">
+                                <button class="btn btn-outline-dark dadosPessoaisExpandir"
+                                        data-id="<?php echo $pessoa->id; ?>" title="Expandir">
                                     <span><i class="fas fa-arrow-circle-down"></i></span>
                                 </button>
                             </div>
@@ -146,7 +146,7 @@ $this->partial('navTabs');
                             <label for="cpf">CPF</label>
 
                             <input required type="text" class="form-control" name="cpf" id="cpf"
-                                   placeholder="607.674.070-16">
+                                   placeholder="Insira um número de CPF">
                         </div>
 
                         <div class="form-group">
@@ -160,7 +160,7 @@ $this->partial('navTabs');
                             <label for="email">Email</label>
 
                             <input required type="email" class="form-control" name="email" id="email"
-                                   placeholder="nome@exemplo.com">
+                                   placeholder="Insira um e-mail">
                         </div>
 
                         <div class="form-group">
@@ -179,11 +179,9 @@ $this->partial('navTabs');
                                 <label class="form-check-label" for="opcaoOficial">Oficial de promotoria</label>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="card-footer bg-white text-center">
-                    <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+                        <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+                    </div>
                 </div>
             </form>
         </div>

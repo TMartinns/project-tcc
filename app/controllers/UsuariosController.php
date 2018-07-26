@@ -59,9 +59,7 @@ class UsuariosController extends \HXPHP\System\Controller
                     $this->load('Helpers\Alert', array(
                         'success',
                         'O cadastro foi completado com sucesso!',
-                        array(
-                            'Uma mensagem com os dados cadastrais do usuário foi enviada ao e-mail informado.'
-                        )
+                        'Uma mensagem com os dados cadastrais do usuário foi enviada ao e-mail informado.'
                     ));
 
                     $this->load('Services\Email');
@@ -113,7 +111,7 @@ class UsuariosController extends \HXPHP\System\Controller
             $this->load('Helpers\Alert', array(
                 'danger',
                 'Usuário desativado!',
-                "O usuário <strong>$nome_usuario</strong> foi desativado com sucesso!"
+                "O usuário <strong>$nome_usuario</strong> foi desativado com sucesso."
             ));
         }
     }
@@ -128,7 +126,7 @@ class UsuariosController extends \HXPHP\System\Controller
             $this->load('Helpers\Alert', array(
                 'success',
                 'Usuário ativado!',
-                "O usuário <strong>$nome_usuario</strong> foi ativado com sucesso!"
+                "O usuário <strong>$nome_usuario</strong> foi ativado com sucesso."
             ));
         }
     }
@@ -145,54 +143,98 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $resposta = array();
 
-        foreach ($pessoas as $key => $pessoa) {
+        foreach ($pessoas as $pessoa) {
+            $html = "<div class='card'>
+            <div class='card-body'>
+            <div class='offset-md-4 col-md-4 offset-lg-4 col-lg-4 text-center'>";
+
             $usuario = Usuario::find_by_id_pessoa($pessoa->id);
 
             if (!is_null($usuario)) {
                 $telefones = Telefone::find_all_by_id_pessoa($pessoa->id);
                 $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
 
-                $resposta[$key] = array(
-                    'nome_usuario' => $usuario->nome_usuario,
-                    'email' => $usuario->email,
-                    'funcao' => ($usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria',
-                    'imagem' => $usuario->imagem,
-                    'is_ativo' => $usuario->is_ativo,
-                    'id_pessoa' => $usuario->id_pessoa,
-                    'nome' => $pessoa->nome,
-                    'cpf' => $pessoa->cpf,
-                    'genero' => $pessoa->genero,
-                    'data_nascimento' => (!is_null($pessoa->data_nascimento)) ? $pessoa->data_nascimento : '',
-                    'nome_mae' => (!is_null($pessoa->nome_mae)) ? $pessoa->nome_mae : '',
-                    'telefones' => array(),
-                    'enderecos' => array()
-                );
+                $img = new \stdClass();
+                $img->title = '';
+                if (is_null($usuario->imagem)) {
+                    $img->title = 'Icon designed by Eucalyp from Flaticon';
+                    $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                    $img->src = $this->configs->img . "avatars/usuarios/$avatar";
+                } else {
+                    $img->src = $this->configs->uploads . "usuarios/$usuario->id_pessoa";
+                }
+
+                $usuario->funcao = ($usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria';
+
+                $html .= "<p>
+                    <img class='rounded-circle avatar bg-dark' src='$img->src' width='180' height='180' title='$img->title'>
+                    </p>
+                    <hr/>
+                    <h5 class='card-title'>$pessoa->nome</h5>
+                    </div>
+                    <div class='row'>
+                    <div class='offset-md-2 col-md-4 offset-lg-2 col-lg-4'>
+                    <p class='card-text'><h6>Nome de usuário</h6>$usuario->nome_usuario</p>
+                    <p class='card-text'><h6>E-mail</h6>$usuario->email</p>
+                    <p class='card-text'><h6>Função</h6>$usuario->funcao</p>
+                    <p class='card-text'><h6>CPF</h6>$pessoa->cpf</p>
+                    <p class='card-text'><h6>Data de nascimento</h6>$pessoa->data_nascimento</p>
+                    <p class='card-text'><h6>Nome da mãe</h6>$pessoa->nome_mae</p>
+                    </div>
+                    <div class='col-md-4 col-lg-4'>
+                    <p class='card-text'><h6>Telefones</h6>";
 
                 if (!is_null($telefones)) {
-                    foreach ($telefones as $telefone) {
-                        array_push($resposta[$key]['telefones'], array(
-                            'ddd' => $telefone->ddd,
-                            'numero' => $telefone->numero
-                        ));
+                    foreach ($telefones as $key => $telefone) {
+                        $hr = ($key != count($telefones) - 1) ? "<hr/>" : '';
+                        $html .= "<p class='card-text'> ($telefone->ddd) $telefone->numero</p>$hr";
                     }
                 }
+
+                $html .= "</p>
+                    <p class='card-text'><h6>Enderecos</h6>";
 
                 if (!is_null($enderecos)) {
-                    foreach ($enderecos as $endereco) {
+                    foreach ($enderecos as $key => $endereco) {
                         $cidade = Cidade::find_by_id($endereco->id_cidade);
+
                         $uf = Uf::find_by_id($cidade->id_uf);
 
-                        array_push($resposta[$key]['enderecos'], array(
-                            'logradouro' => $endereco->logradouro,
-                            'numero' => $endereco->numero,
-                            'complemento' => $endereco->complemento,
-                            'cep' => $endereco->cep,
-                            'bairro' => $endereco->bairro,
-                            'cidade' => $cidade->nome,
-                            'uf' => $uf->uf
-                        ));
+                        $hr = ($key != count($telefones) - 1) ? "<hr/>" : '';
+                        $html .= "<p class='card-text'> 
+                            $endereco->logradouro, $endereco->numero, $endereco->complemento, $endereco->bairro
+                            <br/>
+                            $cidade->nome/$uf->uf
+                            <br/>
+                            $endereco->cep
+                            </p>
+                            $hr";
                     }
                 }
+
+                $html .= "</p>
+                    </div>
+                    </div>
+                    </div>
+                    <div class='card-footer text-center bg-white'>";
+
+                if ($usuario->is_ativo == 1) {
+                    $href = $this->getRelativeURL('usuarios', false) . '/desativar/' . $usuario->id_pessoa;
+                    $html .= "<a class='btn btn-outline-danger' href='$href'>Desativar</a>";
+                } else {
+                    $href = $this->getRelativeURL('usuarios', false) . '/ativar/' . $usuario->id_pessoa;
+                    $html .= "<a class='btn btn-outline-success' href='$href'>Ativar</a>";
+                }
+
+                $html .= "</div>
+                    </div>
+                    <br/>";
+
+                $resposta[] = array(
+                    'nome_usuario' => $usuario->nome_usuario,
+                    'nome' => $pessoa->nome,
+                    'html' => $html
+                );
             }
         }
 

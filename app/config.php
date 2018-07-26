@@ -8,6 +8,8 @@ $configs->env->add('development');
 $configs->env->development->baseURI = '/project-tcc/';
 $configs->env->development->bower = '/project-tcc/public/bower_components/';
 $configs->env->development->js = '/project-tcc/public/js/';
+$configs->env->development->img = '/project-tcc/public/img/';
+$configs->env->development->uploads = '/project-tcc/public/uploads/';
 
 $configs->env->development->database->setConnectionData([
     'driver' => env('DB_DRIVER', 'mysql'),
