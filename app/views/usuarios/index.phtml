@@ -37,7 +37,13 @@ $this->partial('navTabs');
                                     $title = '';
                                     if (is_null($usuario->imagem)) {
                                         $title = 'Icon designed by Eucalyp from Flaticon';
-                                        $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                                        $avatar = '';
+                                        if(is_null($pessoa->genero)) {
+                                            $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
+                                            $avatar = $genero[mt_rand(0, 1)];
+                                        } else {
+                                            $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                                        }
                                         echo IMG . "avatars/usuarios/$avatar";
                                     } else {
                                         echo UPLOADS . "usuarios/$usuario->id_pessoa";
