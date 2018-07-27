@@ -22,6 +22,8 @@ class UsuariosController extends \HXPHP\System\Controller
             $this->configs,
             $this->auth->getUserRole()
         );
+
+        $this->view->setAssets('js', $this->configs->js . 'autocomplete.config.js');
     }
 
     public function cadastrarAction()
@@ -158,7 +160,13 @@ class UsuariosController extends \HXPHP\System\Controller
                 $img->title = '';
                 if (is_null($usuario->imagem)) {
                     $img->title = 'Icon designed by Eucalyp from Flaticon';
-                    $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                    $avatar = '';
+                    if(is_null($pessoa->genero)) {
+                        $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
+                        $avatar = $genero[mt_rand(0, 1)];
+                    } else {
+                        $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                    }
                     $img->src = $this->configs->img . "avatars/usuarios/$avatar";
                 } else {
                     $img->src = $this->configs->uploads . "usuarios/$usuario->id_pessoa";
