@@ -13,10 +13,6 @@ body{
     width: 250px;
 }
 
-.sidebarItem {
-    margin-left: 10%;
-}
-
 @media (max-width: 425px) {
     div#pesquisar {
         width: 210px;
