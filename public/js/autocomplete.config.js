@@ -36,3 +36,40 @@ $('#pesquisarUsuarios').easyAutocomplete({
     },
     adjustWidth: false
 });
+
+$('#interessado').easyAutocomplete({
+    url: function (url) {
+        return "/project-tcc/pessoas/getPessoas/";
+    },
+    getValue: function (element) {
+        return element.nome;
+    },
+    ajaxSettings: {
+        dataType: "json",
+        method: "POST",
+        data: {
+            dataType: "json"
+        }
+    },
+    preparePostData: function (data) {
+        data.nome = $("#interessado").val();
+        return data;
+    },
+    requestDelay: 500,
+    template: {
+        type: "description",
+        fields: {
+            description: function (element) {
+                return element.cpf;
+            }
+        }
+    },
+    list: {
+        onClickEvent: function () {
+            var resposta = $('#interessado').getSelectedItemData();
+            $('#idInteressado').val(resposta.id);
+        }
+    },
+    adjustWidth: false,
+    cssClasses: 'w-eac-100-64'
+});

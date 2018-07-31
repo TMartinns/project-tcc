@@ -8,6 +8,10 @@ body{
     object-position: center;
 }
 
+.w-eac-100-64 {
+    width: calc(100% - 64.38px) !important;
+}
+
 .mCustomScrollBox {
     padding-top: 20px;
     width: 250px;
