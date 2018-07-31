@@ -9,17 +9,6 @@ $('#sidebarAppear').on('click', function () {
 
 $('#sidebar a.active').toggleClass('text-dark text-primary');
 
-if (window.matchMedia('(max-width: 425px)').matches) {
-    $('div#pesquisar').toggleClass('d-none');
-    $('#sidebarItens').prepend(
-        "<li class='nav-item'>" +
-        "<div id='pesquisar' class='input-group'>" +
-        $('div#pesquisar').html() +
-        "</div>" +
-        "</li>"
-    );
-}
-
 $('button.dadosPessoaisExpandir').on('click', function () {
     var id = $(this).data('id');
     $('#dadosPessoais' + id).toggleClass('d-none');
@@ -35,4 +24,22 @@ $('button.dadosPessoaisExpandir').on('click', function () {
     }
 
     botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
+});
+
+$('#uf').change(function () {
+    var uf = $(this);
+
+    $.ajax({
+        method: "POST",
+        url: uf.data('url'),
+        data: {id_uf: uf.val()},
+        success: function (resposta) {
+            $('#cidade').empty().append("<option selected value='0'>Selecione uma cidade</option>");
+            var cidades = $.parseJSON(resposta);
+
+            $.each(cidades, function (key, cidade) {
+                $('#cidade').append("<option value='" + cidade.id + "'>" + cidade.nome + "</option>");
+            });
+        }
+    });
 });
