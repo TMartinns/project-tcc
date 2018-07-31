@@ -75,9 +75,9 @@ $this->partial('navTabs');
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="mr-auto btn btn-outline-dark">Salvar alterações</button>
 
-                    <button type="submit" class="btn btn-outline-dark">Salvar alterações</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -177,7 +177,7 @@ $this->partial('navTabs');
         <br/>
 
         <div class="card">
-            <form enctype="multipart/form-data" action="<?php echo $this->printRelativeURL('cadastrar'); ?>"
+            <form enctype="multipart/form-data" action="<?php $this->printRelativeURL('cadastrar'); ?>"
                   method="post">
                 <div class="card-body">
                     <div class="row">
