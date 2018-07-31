@@ -9,4 +9,68 @@ $('#modalEditarVeiculos').on('show.bs.modal', function (event) {
     modal.find('#ano').val(veiculo.ano);
     modal.find('#placa').val(veiculo.placa);
     modal.find('.modal-content form').attr('action', veiculo.action + '/' + veiculo.id);
-})
+});
+
+$('#modalNovoInteressado').find('#botaoCadastrar').click(function () {
+    var modal = $('#modalNovoInteressado');
+
+    var post = {
+        nome: modal.find('#nome').val(),
+        cpf: modal.find('#cpf').val(),
+        data_nascimento: modal.find('#dataNascimento').val(),
+        ddd: modal.find('#ddd').val(),
+        numeroTelefone: modal.find('#numeroTelefone').val(),
+        logradouro: modal.find('#logradouro').val(),
+        numeroEndereco: modal.find('#numeroEndereco').val(),
+        complemento: modal.find('#complemento').val(),
+        cep: modal.find('#cep').val(),
+        bairro: modal.find('#bairro').val(),
+        cidade: modal.find('#cidade').val()
+    };
+
+    $.ajax({
+        method: "POST",
+        url: $(this).data('action'),
+        data: post,
+        success: function (resposta) {
+            var resposta = $.parseJSON(resposta);
+
+            if (resposta.status == true) {
+                $('#interessado').val(resposta.pessoa.nome);
+                $('#idInteressado').val(resposta.pessoa.id);
+
+                modal.modal('hide');
+            } else {
+                modal.find('#alertBody').text('');
+
+                if (modal.find('.alert').hasClass('d-none')) {
+                    modal.find('.alert').removeClass('d-none');
+                }
+                $.each(resposta.errors, function (key, error) {
+                    modal.find('#alertBody').append(error + "<br/>");
+                });
+            }
+        }
+    });
+});
+
+$('#modalNovoInteressado').on('hide.bs.modal', function () {
+    var modal = $(this);
+
+    if (!modal.find('.alert').hasClass('d-none')) {
+        modal.find('.alert').addClass('d-none');
+    }
+
+    modal.find('#nome').val('');
+    modal.find('#cpf').val('');
+    modal.find('#dataNascimento').val('');
+    modal.find('#ddd').val('');
+    modal.find('#numeroTelefone').val('');
+    modal.find('#logradouro').val('');
+    modal.find('#numeroEndereco').val('');
+    modal.find('#complemento').val('');
+    modal.find('#cep').val('');
+    modal.find('#bairro').val('');
+    modal.find('#cidade').empty().append("<option selected value='0'>Selecione um estado antes</option>");
+    modal.find('#uf').val(modal.find('#uf option:first').val());
+});
