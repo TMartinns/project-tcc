@@ -186,8 +186,7 @@ class UsuariosController extends \HXPHP\System\Controller
                     <p class='card-text'><h6>E-mail</h6>$usuario->email</p>
                     <p class='card-text'><h6>Função</h6>$usuario->funcao</p>
                     <p class='card-text'><h6>CPF</h6>$pessoa->cpf</p>
-                    <p class='card-text'><h6>Data de nascimento</h6>$pessoa->data_nascimento</p>
-                    <p class='card-text'><h6>Nome da mãe</h6>$pessoa->nome_mae</p>
+                    <p class='card-text'><h6>Data de nascimento</h6>$pessoa->data_nascimento</p>                  
                     </div>
                     <div class='col-md-4 col-lg-4'>
                     <p class='card-text'><h6>Telefones</h6>";
