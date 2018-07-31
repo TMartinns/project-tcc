@@ -1,0 +1,232 @@
+<?php
+echo (isset($this->alert)) ? $this->alert : '';
+
+$this->setPartialsDir('partials' . DS . 'diligencias');
+$this->partial('navTabs');
+?>
+
+<div id="modalNovoInteressado" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Novo interessado(a)</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="d-none alert alert-danger fade show" role="alert">
+                    <h5 class="alert-heading text-center">Não foi possível completar o cadastro!</h5>
+
+                    <hr/>
+
+                    <div id="alertBody" class="text-center"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+
+                            <input required type="text" class="form-control" name="nome" id="nome"
+                                   placeholder="Insira o nome completo">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+
+                            <input required type="text" class="form-control" name="cpf" id="cpf"
+                                   placeholder="Insira o número de CPF">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="data_nascimento">Data de nascimento</label>
+
+                            <input required type="text" class="form-control" name="data_nascimento" id="dataNascimento"
+                                   placeholder="Insira a data de nascimento">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                <label for="ddd">DDD</label>
+
+                                <input required type="text" class="form-control" name="ddd" id="ddd"
+                                       placeholder="Insira o DDD">
+                            </div>
+
+                            <div class="form-group col">
+                                <label for="numeroTelefone">Número</label>
+
+                                <input required type="text" class="form-control" name="numeroTelefone"
+                                       id="numeroTelefone" placeholder="Insira o número de telefone">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="logradouro">Logradouro</label>
+
+                            <input required type="text" class="form-control" name="logradouro" id="logradouro"
+                                   placeholder="Insira o nome da rua">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numeroEndereco">Número</label>
+
+                            <input required type="text" class="form-control" name="numeroEndereco" id="numeroEndereco"
+                                   placeholder="Insira o número da casa">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="complemento">Complemento</label>
+
+                            <input required type="text" class="form-control" name="complemento" id="complemento"
+                                   placeholder="Insira o complemento">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cep">CEP</label>
+
+                            <input required type="text" class="form-control" name="cep" id="cep"
+                                   placeholder="Insira o CEP">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bairro">Bairro</label>
+
+                            <input required type="text" class="form-control" name="bairro" id="bairro"
+                                   placeholder="Insira o bairro">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="uf">Estado</label>
+
+                                <select class="custom-select" name="uf" id="uf"
+                                        data-url="<?php echo $this->getRelativeURL('cidades', false) . DS . 'getCidades'; ?>">
+                                    <option selected>Selecione um estado</option>
+                                    <?php
+                                    $ufs = Uf::find_by_sql('SELECT * FROM uf ORDER BY uf');
+                                    foreach ($ufs as $uf) {
+                                        echo "<option value=$uf->id>$uf->uf</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group col">
+                                <label for="cidade">Cidade</label>
+
+                                <select class="custom-select" name="cidade" id="cidade">
+                                    <option selected value="0">Selecione um estado antes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="botaoCadastrar" class="mr-auto btn btn-outline-dark"
+                        data-action="<?php echo $this->getRelativeURL('pessoas', false) . DS . 'cadastrar'; ?>">
+                    Cadastrar
+                </button>
+
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="listarDiligencias" role="tabpanel"
+         aria-labelledby="listarDiligenciasTab">
+        <br/>
+
+    </div>
+
+    <div class="tab-pane fade" id="cadastrarDiligencias" role="tabpanel" aria-labelledby="cadastrarDiligenciasTab">
+        <br/>
+
+        <div class="card">
+            <form action="<?php echo $this->printRelativeURL('cadastrar'); ?>" method="post">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="offset-md-2 col-md-4 offset-lg-2 col-lg-4">
+                            <div class="form-group">
+                                <label for="promotoria">Promotoria</label>
+
+                                <input required type="text" class="form-control" name="promotoria" id="promotoria"
+                                       placeholder="Insira a promotoria">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="descricao">Descrição</label>
+
+                                <textarea required class="form-control" name="descricao" id="descricao"
+                                          placeholder="Insira a descrição" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="numero_protocolo">Número de protocolo</label>
+
+                                <input required type="text" class="form-control" name="numero_protocolo"
+                                       id="numero_protocolo"
+                                       placeholder="Insira o número de protocolo">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="interessado">Interessado(a)</label>
+
+                                <div class="w-100">
+                                    <div class="input-group">
+                                        <input required type="text" class="form-control" name="interessado"
+                                               id="interessado"
+                                               placeholder="Insira o interessado">
+
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-dark" data-toggle="modal"
+                                                    data-target="#modalNovoInteressado">Novo
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="idInteressado" id="idInteressado">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label for="renavam">Renavam</label>
+
+                                <input required type="text" class="form-control" name="renavam" id="renavam"
+                                       placeholder="Insira o renavam">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ano">Ano</label>
+
+                                <input required type="text" class="form-control" name="ano" id="ano"
+                                       placeholder="Insira o ano de fabricação">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="placa">Placa</label>
+
+                                <input required type="text" class="form-control" name="placa" id="placa"
+                                       placeholder="Insira a placa de identificação">
+                            </div>
+
+                            <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br/>
+    </div>
+</div>
