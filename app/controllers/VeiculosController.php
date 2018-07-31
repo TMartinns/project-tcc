@@ -37,10 +37,15 @@ class VeiculosController extends \HXPHP\System\Controller
             $imagem = new upload($_FILES['imagem'], 'pt_BR');
 
             if ($imagem->uploaded) {
+                $imagem->allowed = array('image/jpg', 'image/png', 'image/jpeg');
+                $imagem->file_max_size = '1000000';
+
                 $nomeImagem = md5(uniqid());
                 $imagem->file_new_name_body = $nomeImagem;
                 $imagem->file_new_name_ext = 'png';
-                $imagem->allowed = array('image/jpg', 'image/png', 'image/jpeg');
+                $imagem->image_resize = true;
+                $imagem->image_x = 360;
+                $imagem->image_ratio_y = true;
 
                 $dir_path = ROOT_PATH . DS . 'public' . DS . 'uploads' . DS . 'veiculos' . DS . $veiculo->id . DS;
 
