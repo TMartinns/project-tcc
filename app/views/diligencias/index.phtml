@@ -167,7 +167,7 @@ $this->partial('navTabs');
                                 <label for="descricao">Descrição</label>
 
                                 <textarea required class="form-control" name="descricao" id="descricao"
-                                          placeholder="Insira a descrição" rows="3"></textarea>
+                                          placeholder="Insira a descrição" rows="1"></textarea>
                             </div>
 
                             <div class="form-group">
@@ -177,7 +177,9 @@ $this->partial('navTabs');
                                        id="numero_protocolo"
                                        placeholder="Insira o número de protocolo">
                             </div>
+                        </div>
 
+                        <div class="col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label for="interessado">Interessado(a)</label>
 
@@ -197,30 +199,27 @@ $this->partial('navTabs');
 
                                 <input type="hidden" name="idInteressado" id="idInteressado">
                             </div>
+
+                            <div class="form-group">
+                                <label for="tipo">Tipo de diligência</label>
+
+                                <select class="custom-select" name="tipo" id="tipo">
+                                    <option selected>Selecione um tipo de diligência</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="prazo_cumprimento">Prazo para cumprimento</label>
+
+                                <input required type="text" class="form-control" name="prazo_cumprimento"
+                                       id="prazoCumprimento"
+                                       placeholder="Insira a data máxima para o cumprimento">
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="col-md-4 col-lg-4">
-                            <div class="form-group">
-                                <label for="renavam">Renavam</label>
-
-                                <input required type="text" class="form-control" name="renavam" id="renavam"
-                                       placeholder="Insira o renavam">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="ano">Ano</label>
-
-                                <input required type="text" class="form-control" name="ano" id="ano"
-                                       placeholder="Insira o ano de fabricação">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="placa">Placa</label>
-
-                                <input required type="text" class="form-control" name="placa" id="placa"
-                                       placeholder="Insira a placa de identificação">
-                            </div>
-
+                    <div class="row">
+                        <div class="offset-md-2 col-md-4 offset-lg-2 col-lg-4">
                             <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
                         </div>
                     </div>

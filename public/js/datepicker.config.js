@@ -6,3 +6,12 @@ $('#dataNascimento').datepicker({
         return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     }
 });
+
+$('#prazoCumprimento').datepicker({
+    uiLibrary: 'bootstrap4',
+    locale: 'pt-br',
+    format: 'dd/mm/yyyy',
+    minDate: function() {
+        return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    }
+});
