@@ -27,10 +27,12 @@ class PessoasController extends \HXPHP\System\Controller
         $post = $this->request->post();
 
         if(!empty($post)) {
+            $this->load('Services\DateConverter');
+
             $pessoa = array(
                 'nome' => $post['nome'],
                 'cpf' => $post['cpf'],
-                'data_nascimento' => $post['data_nascimento']
+                'data_nascimento' => $this->dateconverter->toMySqlFormat($post['data_nascimento'])
             );
 
             $resposta = Pessoa::cadastrar($pessoa);
