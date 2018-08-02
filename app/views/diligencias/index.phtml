@@ -159,8 +159,16 @@ $this->partial('navTabs');
                             <div class="form-group">
                                 <label for="promotoria">Promotoria</label>
 
-                                <input required type="text" class="form-control" name="promotoria" id="promotoria"
-                                       placeholder="Insira a promotoria">
+                                <select class="custom-select" name="id_promotoria" id="id_promotoria">
+                                    <option selected>Selecione a promotoria</option>
+                                    <?php
+                                    $promotorias = Promotoria::all();
+
+                                    foreach ($promotorias as $promotoria) {
+                                        echo "<option value=$promotoria->id>$promotoria->nome</option>";
+                                    }
+                                    ?>
+                                </select>
                             </div>
 
                             <div class="form-group">
@@ -197,14 +205,21 @@ $this->partial('navTabs');
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="idInteressado" id="idInteressado">
+                                <input type="hidden" name="id_interessado" id="idInteressado">
                             </div>
 
                             <div class="form-group">
                                 <label for="tipo">Tipo de diligência</label>
 
-                                <select class="custom-select" name="tipo" id="tipo">
-                                    <option selected>Selecione um tipo de diligência</option>
+                                <select class="custom-select" name="id_tipo_diligencia" id="id_tipo_diligencia">
+                                    <option selected>Selecione o tipo de diligência</option>
+                                    <?php
+                                    $tiposDiligencias = TipoDiligencia::all();
+
+                                    foreach ($tiposDiligencias as $tipoDiligencia) {
+                                        echo "<option value=$tipoDiligencia->id>$tipoDiligencia->tipo</option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
 
