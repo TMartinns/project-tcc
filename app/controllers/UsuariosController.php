@@ -48,9 +48,8 @@ class UsuariosController extends \HXPHP\System\Controller
                 $this->load('Services\Random');
                 $senha = $this->random->password();
                 $usuario = array(
-                    'nome_usuario' => $post['nome_usuario'],
-                    'senha' => password_hash($senha, PASSWORD_DEFAULT),
                     'email' => $post['email'],
+                    'senha' => password_hash($senha, PASSWORD_DEFAULT),
                     'funcao' => $post['funcao'],
                     'id_pessoa' => $resposta->pessoa->id
                 );
@@ -68,15 +67,13 @@ class UsuariosController extends \HXPHP\System\Controller
 
                     $this->email->setFrom($this->configs->mail->getFrom());
 
-                    $nome_usuario = $resposta->usuario->nome_usuario;
                     $this->email->send(
                         $resposta->usuario->email,
                         '[Conta ADUV] Registro de conta completado',
                         "Você foi registrado com sucesso no sistema ADUV! <br/>
                         Esse e-mail foi enviado automaticamente pelo nosso sistema para informá-lo de seus dados cadastrais. <br/>
                         <br/>
-                        -------------------------------------<br/>
-                        Nome de usuário: $nome_usuario <br/>
+                        -------------------------------------<br/>                      
                         Senha: $senha <br/>
                         <br/>
                         <br/>
@@ -108,12 +105,13 @@ class UsuariosController extends \HXPHP\System\Controller
         $this->view->setFile('index');
 
         $resposta = Usuario::ativar($id, false);
-        $nome_usuario = $resposta->usuario->nome_usuario;
+        $pessoa = Pessoa::find_by_id($resposta->usuario->id);
+
         if ($resposta->status) {
             $this->load('Helpers\Alert', array(
                 'danger',
                 'Usuário desativado!',
-                "O usuário <strong>$nome_usuario</strong> foi desativado com sucesso."
+                "O usuário <strong>$pessoa->nome</strong> foi desativado com sucesso."
             ));
         }
     }
@@ -123,12 +121,13 @@ class UsuariosController extends \HXPHP\System\Controller
         $this->view->setFile('index');
 
         $resposta = Usuario::ativar($id);
-        $nome_usuario = $resposta->usuario->nome_usuario;
+        $pessoa = Pessoa::find_by_id($resposta->usuario->id);
+
         if ($resposta->status) {
             $this->load('Helpers\Alert', array(
                 'success',
                 'Usuário ativado!',
-                "O usuário <strong>$nome_usuario</strong> foi ativado com sucesso."
+                "O usuário <strong>$pessoa->nome</strong> foi ativado com sucesso."
             ));
         }
     }
@@ -181,8 +180,7 @@ class UsuariosController extends \HXPHP\System\Controller
                     <h5 class='card-title'>$pessoa->nome</h5>
                     </div>
                     <div class='row'>
-                    <div class='offset-md-2 col-md-4 offset-lg-2 col-lg-4'>
-                    <p class='card-text'><h6>Nome de usuário</h6>$usuario->nome_usuario</p>
+                    <div class='offset-md-2 col-md-4 offset-lg-2 col-lg-4'>                  
                     <p class='card-text'><h6>E-mail</h6>$usuario->email</p>
                     <p class='card-text'><h6>Função</h6>$usuario->funcao</p>
                     <p class='card-text'><h6>CPF</h6>$pessoa->cpf</p>
@@ -238,7 +236,7 @@ class UsuariosController extends \HXPHP\System\Controller
                     <br/>";
 
                 $resposta[] = array(
-                    'nome_usuario' => $usuario->nome_usuario,
+                    'email' => $usuario->email,
                     'nome' => $pessoa->nome,
                     'html' => $html
                 );

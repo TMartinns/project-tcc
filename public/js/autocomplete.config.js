@@ -21,7 +21,7 @@ $('#pesquisarUsuarios').easyAutocomplete({
         type: "description",
         fields: {
             description: function (element) {
-                return element.nome_usuario;
+                return element.email;
             }
         }
     },

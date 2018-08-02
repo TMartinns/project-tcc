@@ -6,10 +6,6 @@ class Usuario extends \HXPHP\System\Model
 
     static $validates_presence_of = array(
         array(
-            'nome_usuario',
-            'message' => 'O nome de usuário é um campo obrigatório.'
-        ),
-        array(
             'email',
             'message' => 'O e-mail é um campo obrigatório.'
         ),
@@ -20,10 +16,6 @@ class Usuario extends \HXPHP\System\Model
     );
 
     static $validates_uniqueness_of = array(
-        array(
-            'nome_usuario',
-            'message' => 'Já existe um usuário com esse nome de usuário cadastrado.'
-        ),
         array(
             'email',
             'message' => 'Já existe um usuário com esse e-mail cadastrado.'

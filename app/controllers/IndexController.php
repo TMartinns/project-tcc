@@ -42,14 +42,14 @@ class IndexController extends \HXPHP\System\Controller
 
         if (!empty($post)) {
             if ($this->captchaSuccess($post['g-recaptcha-response'])) {
-                $usuario = Usuario::find_by_nome_usuario($post['nome_usuario']);
+                $usuario = Usuario::find_by_email($post['email']);
 
                 if (!empty($usuario)) {
 
                     if ($usuario->is_ativo == 1) {
 
                         if (password_verify($post['senha'], $usuario->senha)) {
-                            $this->auth->login($usuario->id_pessoa, $usuario->nome_usuario, $usuario->funcao);
+                            $this->auth->login($usuario->id_pessoa, $usuario->email, $usuario->funcao);
                         } else {
                             $this->load('Modules\Messages', 'auth');
                             $this->messages->setBlock('alerts');
