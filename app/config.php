@@ -29,12 +29,11 @@ $configs->env->development->mail->setFrom(array(
 
 $configs->env->development->menu->setConfigs(array(
     'container_id' => 'sidebar',
-    'container_class' => 'navbar navbar-light bg-white border',
-    'menu_id' => 'sidebarItens',
+    'container_class' => 'navbar navbar-light bg-white border pt-2 pb-2 pr-0 pl-0',
     'menu_item_class' => 'nav-item mb-4',
     'link_before' => '<span class="ml-3">',
-    'link_class' => 'nav-link text-dark',
-    'link_active_class' => 'active border-top border-bottom border-primary'
+    'link_class' => 'nav-link text-dark pr-3 pl-3',
+    'link_active_class' => 'active'
 ));
 
 $configs->env->development->menu->setMenus(array(
