@@ -160,7 +160,7 @@ class UsuariosController extends \HXPHP\System\Controller
                 if (is_null($usuario->imagem)) {
                     $img->title = 'Icon designed by Eucalyp from Flaticon';
                     $avatar = '';
-                    if(is_null($pessoa->genero)) {
+                    if (is_null($pessoa->genero)) {
                         $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
                         $avatar = $genero[mt_rand(0, 1)];
                     } else {
@@ -225,10 +225,16 @@ class UsuariosController extends \HXPHP\System\Controller
 
                 if ($usuario->is_ativo == 1) {
                     $href = $this->getRelativeURL('usuarios', false) . '/desativar/' . $usuario->id_pessoa;
-                    $html .= "<a class='btn btn-outline-danger' href='$href'>Desativar</a>";
+                    $html .= "<a class='btn btn-outline-danger' href='$href'>
+                        <span><i class='fas fa-lock'></i></span>
+                        Desativar
+                        </a>";
                 } else {
                     $href = $this->getRelativeURL('usuarios', false) . '/ativar/' . $usuario->id_pessoa;
-                    $html .= "<a class='btn btn-outline-success' href='$href'>Ativar</a>";
+                    $html .= "<a class='btn btn-outline-success' href='$href'>
+                        <span><i class='fas fa-lock-open'></i></span>
+                        Ativar
+                        </a>";
                 }
 
                 $html .= "</div>
@@ -241,6 +247,35 @@ class UsuariosController extends \HXPHP\System\Controller
                     'html' => $html
                 );
             }
+        }
+
+        echo json_encode($resposta);
+    }
+
+    public function getUsuariosAtivosAction()
+    {
+        $this->view->setPath('blank', true)
+            ->setFile('index')
+            ->setTemplate(false);
+
+        $nome = $this->request->post('nome');
+
+        $usuarios = Usuario::find_by_sql(
+            "select * from usuarios 
+            inner join pessoas 
+            on usuarios.id_pessoa = pessoas.id 
+            where pessoas.nome like '%$nome%' and usuarios.is_ativo = 1"
+        );
+
+        $resposta = array();
+        foreach ($usuarios as $usuario) {
+            $usuario->funcao = ($usuario->funcao == 'C') ? 'Coordenador(a)' : 'Oficial de promotoria';
+
+            $resposta[] = array(
+                'id' => $usuario->id,
+                'nome' => $usuario->nome,
+                'funcao' => $usuario->funcao
+            );
         }
 
         echo json_encode($resposta);
