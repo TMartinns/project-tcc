@@ -7,11 +7,45 @@ $('#sidebarAppear').on('click', function () {
     $('#container').toggleClass('sidebarActive');
 });
 
-$('#sidebar a.active').toggleClass('text-dark text-primary');
+$('#enviarDiligencias #opcaoEspecifico').click(function () {
+    $('#enviarDiligencias .usuarioEspecifico').toggleClass('d-none');
+});
 
-$('button.dadosPessoaisExpandir').on('click', function () {
+$('#enviarDiligencias #opcaoOficial').click(function () {
+    $('#enviarDiligencias .usuarioEspecifico').toggleClass('d-none');
+});
+
+$(function () {
+    if (window.matchMedia('(min-width: 769px)').matches) {
+        $('#sidebar').addClass('active');
+        $('#container').addClass('sidebarActive');
+    }
+
+    if (window.matchMedia('(max-width: 379px)').matches) {
+        $('#brand').attr('src', '/project-tcc/public/img/favicon.png');
+    }
+});
+
+$('.dadosPessoaisExpandir').on('click', function () {
     var id = $(this).data('id');
     $('#dadosPessoais' + id).toggleClass('d-none');
+
+    var botao = $(this).filter(function () {
+        return $(this).data('id') === id;
+    });
+
+    if (botao.attr('title') == 'Expandir') {
+        botao.attr('title', 'Reduzir');
+    } else {
+        botao.attr('title', 'Expandir');
+    }
+
+    botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
+});
+
+$('.diligenciasExpandir').on('click', function () {
+    var id = $(this).data('id');
+    $('#diligencias' + id).toggleClass('d-none');
 
     var botao = $(this).filter(function () {
         return $(this).data('id') === id;
