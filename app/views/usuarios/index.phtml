@@ -2,7 +2,7 @@
 echo (isset($this->alert)) ? $this->alert : '';
 
 $this->setPartialsDir('partials' . DS . 'usuarios');
-$this->partial('navTabs');
+$this->partial('menu');
 ?>
 
 <div class="tab-content">
@@ -28,7 +28,7 @@ $this->partial('navTabs');
 
                 $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
                 ?>
-                <div class="col-md-4 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <div class="card">
                         <div class="card-body">
                             <div class="text-center">
@@ -38,7 +38,7 @@ $this->partial('navTabs');
                                     if (is_null($usuario->imagem)) {
                                         $title = 'Icon designed by Eucalyp from Flaticon';
                                         $avatar = '';
-                                        if(is_null($pessoa->genero)) {
+                                        if (is_null($pessoa->genero)) {
                                             $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
                                             $avatar = $genero[mt_rand(0, 1)];
                                         } else {
@@ -111,12 +111,18 @@ $this->partial('navTabs');
                             if ($usuario->is_ativo == 1) {
                                 ?>
                                 <a class="btn btn-outline-danger"
-                                   href="<?php echo $this->getRelativeURL('desativar') . '/' . $usuario->id_pessoa; ?>">Desativar</a>
+                                   href="<?php echo $this->getRelativeURL('desativar') . '/' . $usuario->id_pessoa; ?>">
+                                    <span><i class="fas fa-lock"></i></span>
+                                    Desativar
+                                </a>
                                 <?php
                             } else {
                                 ?>
                                 <a class="btn btn-outline-success"
-                                   href="<?php echo $this->getRelativeURL('ativar') . '/' . $usuario->id_pessoa; ?>">Ativar</a>
+                                   href="<?php echo $this->getRelativeURL('ativar') . '/' . $usuario->id_pessoa; ?>">
+                                    <span><i class="fas fa-lock-open"></i></span>
+                                    Ativar
+                                </a>
                                 <?php
                             }
                             ?>
@@ -163,19 +169,22 @@ $this->partial('navTabs');
 
                             <br/>
 
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="funcao" id="opcaoCoordenador"
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" type="radio" name="funcao" id="opcaoCoordenador"
                                        value="C">
-                                <label class="form-check-label" for="opcaoCoordenador">Coordenador(a)</label>
+                                <label class="custom-control-label" for="opcaoCoordenador">Coordenador(a)</label>
                             </div>
 
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="funcao" id="opcaoOficial" value="O">
-                                <label class="form-check-label" for="opcaoOficial">Oficial de promotoria</label>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" type="radio" name="funcao" id="opcaoOficial" value="O">
+                                <label class="custom-control-label" for="opcaoOficial">Oficial de promotoria</label>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+                        <button type="submit" class="btn btn-outline-dark">
+                            <span><i class="fas fa-save"></i></span>
+                            Cadastrar
+                        </button>
                     </div>
                 </div>
             </form>
