@@ -2,7 +2,7 @@
 echo (isset($this->alert)) ? $this->alert : '';
 
 $this->setPartialsDir('partials' . DS . 'veiculos');
-$this->partial('navTabs');
+$this->partial('menu');
 ?>
 
 <div id="modalEditarVeiculos" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -75,9 +75,15 @@ $this->partial('navTabs');
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="mr-auto btn btn-outline-dark">Salvar alterações</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                        <span><i class="fas fa-times"></i></span>
+                        Cancelar
+                    </button>
 
-                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-outline-dark">
+                        <span><i class="fas fa-save"></i></span>
+                        Salvar
+                    </button>
                 </div>
             </form>
         </div>
@@ -93,9 +99,31 @@ $this->partial('navTabs');
             $veiculos = Veiculo::all();
             foreach ($veiculos as $veiculo) {
                 ?>
-                <div class="col-md-4 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <div class="card">
                         <div class="card-body">
+                            <label class="botaoEditarVeiculos">
+                                <?php
+                                $dataVeiculo = array('action' => $this->getRelativeURL('editar'),
+                                    'id' => $veiculo->id,
+                                    'imagem' => $veiculo->imagem,
+                                    'modelo' => $veiculo->modelo,
+                                    'marca' => $veiculo->marca,
+                                    'renavam' => $veiculo->renavam,
+                                    'placa' => $veiculo->placa,
+                                    'ano' => $veiculo->ano,
+                                    'cor' => $veiculo->cor
+                                );
+                                ?>
+
+                                <button type="button" class="btn btn-light bg-white" data-toggle="modal"
+                                        title="Editar"
+                                        data-target="#modalEditarVeiculos"
+                                        data-veiculo='<?php echo json_encode($dataVeiculo); ?>'>
+                                    <span><i class="fas fa-pencil-alt"></i></span>
+                                </button>
+                            </label>
+
                             <div class="text-center">
                                 <p>
                                     <img class="rounded-circle avatar bg-dark" src="<?php
@@ -112,7 +140,7 @@ $this->partial('navTabs');
 
                                 <hr/>
 
-                                <h5 class="card-title"><?php echo $veiculo->modelo; ?></h5>
+                                <h5 class="card-title" title="Modelo"><?php echo $veiculo->modelo; ?></h5>
                             </div>
 
                             <p class="card-text"><h6>Marca</h6><?php echo $veiculo->marca; ?></p>
@@ -126,40 +154,23 @@ $this->partial('navTabs');
                             <p class="card-text"><h6>Cor</h6><?php echo $veiculo->cor; ?></p>
                         </div>
 
-                        <div class="text-center">
-                            <?php
-                            $dataVeiculo = array('action' => $this->getRelativeURL('editar'),
-                                'id' => $veiculo->id,
-                                'imagem' => $veiculo->imagem,
-                                'modelo' => $veiculo->modelo,
-                                'marca' => $veiculo->marca,
-                                'renavam' => $veiculo->renavam,
-                                'placa' => $veiculo->placa,
-                                'ano' => $veiculo->ano,
-                                'cor' => $veiculo->cor
-                            );
-                            ?>
-
-                            <button type="button" class="btn btn-outline-dark" data-toggle="modal" title="Editar"
-                                    data-target="#modalEditarVeiculos"
-                                    data-veiculo='<?php echo json_encode($dataVeiculo); ?>'>
-                                <span><i class="fas fa-pencil-alt"></i></span>
-                            </button>
-                        </div>
-
-                        <br/>
-
                         <div class="card-footer text-center bg-white">
                             <?php
                             if ($veiculo->is_ativo == 1) {
                                 ?>
                                 <a class="btn btn-outline-danger"
-                                   href="<?php echo $this->getRelativeURL('desativar') . '/' . $veiculo->id; ?>">Desativar</a>
+                                   href="<?php echo $this->getRelativeURL('desativar') . '/' . $veiculo->id; ?>">
+                                    <span><i class="fas fa-lock"></i></span>
+                                    Desativar
+                                </a>
                                 <?php
                             } else {
                                 ?>
                                 <a class="btn btn-outline-success"
-                                   href="<?php echo $this->getRelativeURL('ativar') . '/' . $veiculo->id; ?>">Ativar</a>
+                                   href="<?php echo $this->getRelativeURL('ativar') . '/' . $veiculo->id; ?>">
+                                    <span><i class="fas fa-lock-open"></i></span>
+                                    Ativar
+                                </a>
                                 <?php
                             }
                             ?>
@@ -229,7 +240,10 @@ $this->partial('navTabs');
                                        placeholder="Insira a placa de identificação">
                             </div>
 
-                            <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+                            <button type="submit" class="btn btn-outline-dark">
+                                <span><i class="fas fa-save"></i></span>
+                                Cadastrar
+                            </button>
                         </div>
                     </div>
                 </div>
