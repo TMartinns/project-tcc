@@ -1,0 +1,63 @@
+<?php
+$diligencias = null;
+
+if (isset($view_id_tipo_diligencia) && !empty($view_id_tipo_diligencia)) {
+    if (isset($view_status) && !empty($view_status)) {
+        $diligencias = Diligencia::find_all_by_id_tipo_diligencia_and_status($view_id_tipo_diligencia, $view_status);
+    }
+}
+
+if (!is_null($diligencias) || !empty($diligencias)) {
+    foreach ($diligencias as $diligencia) {
+        $mandado = Mandado::find_by_id($diligencia->id_mandado);
+
+        $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);
+
+        $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
+
+        $interessado = Pessoa::find_by_id($mandado->id_interessado);
+
+        $border = '';
+
+        if ($diligencia->status == 'A') {
+            $border = 'warning';
+        } else if ($diligencia->status == 'E') {
+            $border = 'danger';
+        } else {
+            $border = 'success';
+        }
+        ?>
+        <div class="card border border-<?php echo $border; ?>">
+            <div class="card-body">
+                <div class="text-center" title="Número de protocolo">
+                    <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 offset-lg-2 col-lg-4">
+                        <p class="card-text"><h6>Promotoria</h6><?php echo $promotoria->nome; ?></p>
+
+                        <p class="card-text"><h6>Descrição</h6><?php echo $mandado->descricao; ?></p>
+
+                        <p class="card-text"><h6>Interessado(a)</h6><?php echo $interessado->nome; ?></p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <p class="card-text"><h6>Tipo de diligência</h6><?php echo $tipoDiligencia->tipo; ?></p>
+
+                        <p class="card-text"><h6>Prazo para cumprimento</h6><?php
+                        echo $diligencia->prazo_cumprimento->format('d/m/Y');
+                        ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+            </div>
+        </div>
+
+        <br/>
+        <?php
+    }
+}
+?>

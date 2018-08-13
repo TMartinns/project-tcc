@@ -2,7 +2,7 @@
 echo (isset($this->alert)) ? $this->alert : '';
 
 $this->setPartialsDir('partials' . DS . 'diligencias');
-$this->partial('navTabs');
+$this->partial('menu');
 ?>
 
 <div id="modalNovoInteressado" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -45,7 +45,7 @@ $this->partial('navTabs');
                             <label for="data_nascimento">Data de nascimento</label>
 
                             <input required type="text" class="form-control" name="data_nascimento" id="dataNascimento"
-                                   placeholder="Insira a data de nascimento">
+                                   placeholder="Selecione a data de nascimento">
                         </div>
 
                         <div class="form-row">
@@ -130,22 +130,124 @@ $this->partial('navTabs');
             </div>
 
             <div class="modal-footer">
-                <button type="button" id="botaoCadastrar" class="mr-auto btn btn-outline-dark"
-                        data-action="<?php echo $this->getRelativeURL('pessoas', false) . DS . 'cadastrar'; ?>">
-                    Cadastrar
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                    <span><i class="fas fa-times"></i></span>
+                    Cancelar
                 </button>
 
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="botaoCadastrar" class="btn btn-outline-dark"
+                        data-action="<?php echo $this->getRelativeURL('pessoas', false) . DS . 'cadastrar'; ?>">
+                    <span><i class="fas fa-save"></i></span>
+                    Cadastrar
+                </button>
             </div>
         </div>
     </div>
 </div>
 
 <div class="tab-content">
-    <div class="tab-pane fade show active" id="listarDiligencias" role="tabpanel"
-         aria-labelledby="listarDiligenciasTab">
+    <div class="tab-pane fade show active" id="averiguacaoFazenda" role="tabpanel"
+         aria-labelledby="averiguacaoFazendaTab">
         <br/>
 
+        <?php
+        $tipoDiligencia = TipoDiligencia::find_by_tipo('Averiguação em fazenda');
+
+        $this->partial('listarDiligencias', array(
+            'id_tipo_diligencia' => $tipoDiligencia->id
+        ));
+        ?>
+    </div>
+
+    <div class="tab-pane fade" id="averiguacao" role="tabpanel"
+         aria-labelledby="averiguacaoTab">
+        <br/>
+
+        <?php
+        $tipoDiligencia = TipoDiligencia::find_by_tipo('Averiguação');
+
+        $this->partial('listarDiligencias', array(
+            'id_tipo_diligencia' => $tipoDiligencia->id
+        ));
+        ?>
+    </div>
+
+    <div class="tab-pane fade" id="urgente" role="tabpanel"
+         aria-labelledby="urgenteTab">
+        <br/>
+
+        <?php
+        $tipoDiligencia = TipoDiligencia::find_by_tipo('Urgente');
+
+        $this->partial('listarDiligencias', array(
+            'id_tipo_diligencia' => $tipoDiligencia->id
+        ));
+        ?>
+    </div>
+
+    <div class="tab-pane fade" id="notificacaoCidade" role="tabpanel"
+         aria-labelledby="notificacaoCidadeTab">
+        <br/>
+
+        <?php
+        $tipoDiligencia = TipoDiligencia::find_by_tipo('Notificação em outra cidade');
+
+        $this->partial('listarDiligencias', array(
+            'id_tipo_diligencia' => $tipoDiligencia->id
+        ));
+        ?>
+    </div>
+
+    <div class="tab-pane fade" id="notificacao" role="tabpanel"
+         aria-labelledby="notificacaoTab">
+        <br/>
+
+        <?php
+        $tipoDiligencia = TipoDiligencia::find_by_tipo('Notificação');
+
+        $this->partial('listarDiligencias', array(
+            'id_tipo_diligencia' => $tipoDiligencia->id
+        ));
+        ?>
+    </div>
+
+    <div class="tab-pane fade" id="oficioCidade" role="tabpanel"
+         aria-labelledby="oficioCidadeTab">
+        <br/>
+
+        <?php
+        $tipoDiligencia = TipoDiligencia::find_by_tipo('Ofício em outra cidade');
+
+        $this->partial('listarDiligencias', array(
+            'id_tipo_diligencia' => $tipoDiligencia->id
+        ));
+        ?>
+    </div>
+
+    <div class="tab-pane fade" id="oficio" role="tabpanel"
+         aria-labelledby="oficioTab">
+        <br/>
+
+        <?php
+        $tipoDiligencia = TipoDiligencia::find_by_tipo('Ofício');
+
+        $this->partial('listarDiligencias', array(
+            'id_tipo_diligencia' => $tipoDiligencia->id
+        ));
+        ?>
+    </div>
+
+    <div class="tab-pane fade" id="ordemMissao" role="tabpanel"
+         aria-labelledby="ordemMissaoTab">
+        <br/>
+
+        <?php
+        $tipoDiligencia = TipoDiligencia::find_by_tipo('Ordem de missão');
+
+        $this->partial('listarDiligencias', array(
+            'id_tipo_diligencia' => $tipoDiligencia->id
+        ));
+        ?>
     </div>
 
     <div class="tab-pane fade" id="cadastrarDiligencias" role="tabpanel" aria-labelledby="cadastrarDiligenciasTab">
@@ -155,7 +257,7 @@ $this->partial('navTabs');
             <form action="<?php echo $this->printRelativeURL('cadastrar'); ?>" method="post">
                 <div class="card-body">
                     <div class="row">
-                        <div class="offset-md-2 col-md-4 offset-lg-2 col-lg-4">
+                        <div class="col-md-6 offset-lg-2 col-lg-4">
                             <div class="form-group">
                                 <label for="promotoria">Promotoria</label>
 
@@ -187,19 +289,23 @@ $this->partial('navTabs');
                             </div>
                         </div>
 
-                        <div class="col-md-4 col-lg-4">
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="interessado">Interessado(a)</label>
 
                                 <div class="w-100">
                                     <div class="input-group">
-                                        <input required type="text" class="form-control" name="interessado"
+                                        <input required type="text" class="form-control rounded-left rounded-right-0"
+                                               name="interessado"
                                                id="interessado"
                                                placeholder="Insira o interessado">
 
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-outline-dark" data-toggle="modal"
-                                                    data-target="#modalNovoInteressado">Novo
+                                            <button id="botaoNovoInteressado" type="button"
+                                                    class="btn btn-outline-secondary border border-left-0"
+                                                    data-toggle="modal"
+                                                    data-target="#modalNovoInteressado" title="Novo interessado">
+                                                <span><i class="fas fa-user-plus"></i></span>
                                             </button>
                                         </div>
                                     </div>
@@ -228,19 +334,302 @@ $this->partial('navTabs');
 
                                 <input required type="text" class="form-control" name="prazo_cumprimento"
                                        id="prazoCumprimento"
-                                       placeholder="Insira a data máxima para o cumprimento">
+                                       placeholder="Selecione a data máxima para o cumprimento">
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="offset-md-2 col-md-4 offset-lg-2 col-lg-4">
-                            <button type="submit" class="btn btn-outline-dark">Cadastrar</button>
+                        <div class="col-md-6 offset-lg-2 col-lg-4">
+                            <button type="submit" class="btn btn-outline-dark">
+                                <span><i class="fas fa-save"></i></span>
+                                Cadastrar
+                            </button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
         <br/>
+    </div>
+
+    <div class="tab-pane fade" id="enviarDiligencias" role="tabpanel"
+         aria-labelledby="enviarDiligenciasTab">
+        <br/>
+
+        <form action="<?php echo $this->getRelativeURL('enviar'); ?>" method="post">
+            <div id="modalSelecionarOficial" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Destinatário</h5>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="destinatario"
+                                           id="opcaoOficial" value="O" aria-describedby="oficialHelp" checked>
+
+                                    <label class="custom-control-label" for="opcaoOficial">Oficial de promotoria</label>
+
+                                    <small id="oficialHelp" class="form-text text-muted">Essa opção envia para um dos
+                                        oficiais seguindo a regra de envio
+                                    </small>
+                                </div>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="destinatario"
+                                           id="opcaoEspecifico" value="E">
+
+                                    <label class="custom-control-label" for="opcaoEspecifico">Usuário específico</label>
+                                </div>
+                            </div>
+
+                            <div class="usuarioEspecifico form-group d-none">
+                                <label for="">Usuário</label>
+
+                                <input type="text" class="form-control" id="usuarioEspecifico" name="usuarioEspecifico"
+                                       placeholder="Insira o nome do usuário">
+
+                                <input type="hidden" id="idUsuarioEspecifico" name="idUsuarioEspecifico">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                                <span><i class="fas fa-times"></i></span>
+                                Cancelar
+                            </button>
+
+                            <button type="submit" class="btn btn-outline-dark">
+                                <span><i class="fas fa-share-square"></i></span>
+                                Enviar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" data-toggle="modal" data-target="#modalSelecionarOficial" class="btn btn-dark">
+                <span><i class="fas fa-share-square"></i></span>
+                Enviar
+            </button>
+
+            <div class="mt-4 row">
+                <?php
+                $diligencias = Diligencia::find_by_sql("SELECT * FROM diligencias WHERE status IN ('A', 'E')");
+
+                foreach ($diligencias as $diligencia) {
+                    $evento = Evento::find_by_sql("select * from eventos where id_diligencia = $diligencia->id order by data desc limit 1")[0];
+
+                    $eventoRegistro = TipoEvento::find_by_tipo('Registro');
+                    $eventoRecebimento = TipoEvento::find_by_tipo('Recebimento');
+
+                    if ($evento->id_tipo_evento == $eventoRegistro->id || $evento->id_tipo_evento == $eventoRecebimento->id) {
+                        if ($this->auth->getUserId() == $evento->id_autor) {
+                            $mandado = Mandado::find_by_id($diligencia->id_mandado);
+
+                            $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);
+
+                            $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
+
+                            $interessado = Pessoa::find_by_id($mandado->id_interessado);
+                            ?>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card-checkbox">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="diligencias[]"
+                                               id="diligencia<?php echo $diligencia->id; ?>"
+                                               value=<?php echo $diligencia->id; ?>>
+
+                                        <label class="custom-control-label"
+                                               for="diligencia<?php echo $diligencia->id; ?>">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="text-center" title="Número de protocolo">
+                                                        <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
+                                                    </div>
+
+                                                    <p class="card-text"><h6>
+                                                        Promotoria</h6><?php echo $promotoria->nome; ?></p>
+
+                                                    <p class="card-text"><h6>
+                                                        Descrição</h6><?php echo $mandado->descricao; ?></p>
+
+                                                    <p class="card-text"><h6>
+                                                        Interessado(a)</h6><?php echo $interessado->nome; ?></p>
+
+                                                    <p class="card-text"><h6>Tipo de
+                                                        diligência</h6><?php echo $tipoDiligencia->tipo; ?></p>
+
+                                                    <p class="card-text"><h6>Prazo para cumprimento</h6><?php
+                                                    echo $diligencia->prazo_cumprimento->format('d/m/Y');
+                                                    ?></p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <br/>
+                            </div>
+                            <?php
+                        }
+                    }
+                }
+                ?>
+            </div>
+        </form>
+    </div>
+
+    <div class="tab-pane fade" id="receberDiligencias" role="tabpanel"
+         aria-labelledby="receberDiligenciasTab">
+        <br/>
+
+        <div id="modalDadosDiligencia" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p class="card-text" id="promotoria"></p>
+
+                        <p class="card-text" id="descricao"></p>
+
+                        <p class="card-text" id="interessado"></p>
+
+                        <p class="card-text" id="tipoDiligencia"></p>
+
+                        <p class="card-text" id="prazoCumprimento"></p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                            <span><i class="fas fa-times"></i></span>
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="<?php echo $this->getRelativeURL('receber'); ?>" method="post">
+            <button type="submit" class="btn btn-dark">
+                <span><i class="far fa-check-square"></i></span>
+                Receber
+            </button>
+
+            <div class="mt-4 row">
+                <?php
+                $remessas = Remessa::find_all_by_id_destinatario_and_status($this->auth->getUserId(), 'A');
+
+                foreach ($remessas as $remessa) {
+                    $diligencias = Diligencia::find_by_sql(
+                        "select diligencias.*
+                            from diligencias
+                            inner join aux_diligencias_remessas
+                            on diligencias.id = aux_diligencias_remessas.id_diligencia
+                            where aux_diligencias_remessas.id_remessa = $remessa->id"
+                    );
+
+                    $remetente = Pessoa::find_by_id($remessa->id_remetente);
+
+                    $destinatario = Pessoa::find_by_id($remessa->id_destinatario);
+                    ?>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card-checkbox">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="remessas[]"
+                                       id="remessa<?php echo $remessa->id; ?>"
+                                       value=<?php echo $remessa->id; ?>>
+
+                                <label class="custom-control-label"
+                                       for="remessa<?php echo $remessa->id; ?>">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="text-center" title="Número da remessa">
+                                                <h5 class="card-title"><?php echo $remessa->id; ?></h5>
+                                            </div>
+
+                                            <p class="card-text"><h6>
+                                                Data da
+                                                remessa</h6><?php echo $remessa->data->format('d/m/Y H:i:s'); ?></p>
+
+                                            <p class="card-text"><h6>
+                                                Remetente</h6><?php echo $remetente->nome; ?></p>
+
+                                            <p class="card-text"><h6>
+                                                Destinatário</h6><?php echo $destinatario->nome; ?></p>
+
+                                            <p class="card-text"><h6>
+                                                Diligências</h6>
+
+                                            <div id="diligencias<?php echo $remessa->id; ?>" class="d-none">
+                                                <?php
+                                                foreach ($diligencias as $diligencia) {
+                                                    $mandado = Mandado::find_by_id($diligencia->id_mandado);
+
+                                                    $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);
+
+                                                    $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
+
+                                                    $interessado = Pessoa::find_by_id($mandado->id_interessado);
+                                                    ?>
+
+                                                    <p class="card-text">
+                                                        <button type="button" data-toggle="modal"
+                                                                data-target="#modalDadosDiligencia"
+                                                                data-diligencia='<?php echo json_encode(array(
+                                                                    'numeroProtocolo' => $mandado->numero_protocolo,
+                                                                    'promotoria' => $promotoria->nome,
+                                                                    'descricao' => $mandado->descricao,
+                                                                    'interessado' => $interessado->nome,
+                                                                    'tipoDiligencia' => $tipoDiligencia->tipo,
+                                                                    'prazoCumprimento' => $diligencia->prazo_cumprimento->format('d/m/Y')
+                                                                )); ?>'
+                                                                class="btn btn-light bg-white w-100">
+                                                            <div class="text-left">
+                                                                <?php
+                                                                echo $mandado->numero_protocolo;
+                                                                ?>
+                                                            </div>
+                                                        </button>
+                                                    </p>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
+
+                                            <div class="mt-4 text-center">
+                                                <button type="button" class="btn btn-outline-dark diligenciasExpandir"
+                                                        data-id="<?php echo $remessa->id; ?>" title="Expandir">
+                                                    <span><i class="fas fa-arrow-circle-down"></i></span>
+                                                </button>
+                                            </div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <br/>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </form>
     </div>
 </div>
