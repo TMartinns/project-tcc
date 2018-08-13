@@ -1,4 +1,4 @@
-body{
+body {
     background-color: whitesmoke;
     padding-bottom: 10px;
 }
@@ -8,26 +8,91 @@ body{
     object-position: center;
 }
 
-.w-eac-100-64 {
-    width: calc(100% - 64.38px) !important;
+.botaoEditarVeiculos {
+    position: absolute;
+    left: .5rem;
+    top: .5rem;
+    display: block;
+}
+
+#sidebar a.nav-link:hover, #sidebar a.nav-link:focus {
+    color: #343a40;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+#sidebar a.nav-link.active, #sidebar a.nav-link:active {
+    color: #fff !important;
+    text-decoration: none;
+    background-color: #007bff;
+}
+
+.nav-pills .nav-link {
+    border: 1px solid transparent;
+}
+
+.nav-pills .nav-link:hover, .nav-pills .nav-link:focus {
+    border-color: #e9ecef #e9ecef #dee2e6 !important;
+}
+
+.card-checkbox label {
+    display: block;
+}
+
+.card-checkbox label.custom-control-label::before, .card-checkbox label.custom-control-label::after {
+    top: .5rem !important;
+    left: .5rem !important;
+    z-index: 1;
+}
+
+.card-checkbox .custom-control {
+    padding-left: 0;
+}
+
+.rounded-right-0 {
+    border-top-right-radius: 0rem !important;
+    border-bottom-right-radius: 0rem !important;
+}
+
+#botaoNovoInteressado.border {
+    border: 1px solid #ced4da !important;
+}
+
+.gj-datepicker button.btn-outline-secondary:hover {
+    color: #fff !important;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
+.gj-datepicker button.btn-outline-secondary:focus, .gj-datepicker button.btn-outline-secondary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5) !important;
+}
+
+.emAndamentoTab.nav-link.active {
+    color: #fff !important;
+    background-color: #ffc107 !important;
+}
+
+.emEsperaTab.nav-link.active {
+    color: #fff !important;
+    background-color: #dc3545 !important;
+}
+
+.cumpridaTab.nav-link.active {
+    color: #fff !important;
+    background-color: #28a745 !important;
+}
+
+.w-eac-100-46 {
+    width: calc(100% - 46px) !important;
 }
 
 .mCustomScrollBox {
     padding-top: 20px;
-    width: 250px;
-}
-
-@media (max-width: 425px) {
-    div#pesquisar {
-        width: 210px;
-        margin-top: 5px;
-        margin-bottom: 25px;
-        margin-left: 2px;
-    }
+    width: 250px !important;
 }
 
 @media (min-width: 769px) {
-
     body {
         display: flex;
     }
@@ -55,11 +120,9 @@ body{
     #container.sidebarActive {
         margin-left: 250px;
     }
-
 }
 
 @media (max-width: 768px) {
-
     #sidebar {
         margin-top: 55px;
         width: 250px;
