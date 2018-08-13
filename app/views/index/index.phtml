@@ -6,8 +6,10 @@
 
     <title><?php echo $view_title; ?></title>
 
-    <link rel="shortcut icon" href="<?php echo IMG; ?>favicon_aduv.png" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo IMG; ?>favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="<?php echo BOWER; ?>bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo BOWER; ?>font-awesome/web-fonts-with-css/css/fontawesome-all.min.css"
+          type="text/css">
     <link rel="stylesheet" href="<?php echo CSS; ?>main.css" type="text/css">
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -21,9 +23,13 @@
 
 <body>
 <div class="container">
-    <div class="row">
+    <br/>
+
+    <br/>
+
+    <div class="row mb-4 mt-5">
         <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4 text-center">
-            <img class="img-fluid" src="<?php echo IMG; ?>logo_aduv.png">
+            <img class="img-fluid" src="<?php echo IMG; ?>logo.png">
         </div>
     </div>
 
@@ -56,6 +62,7 @@
 
                         <button class="g-recaptcha btn btn-outline-dark"
                                 data-sitekey="6Ldqc2MUAAAAAO7DtP8Br15Z38YhanEGbT_qmawc" data-callback="onSubmit">
+                            <span><i class="fas fa-sign-in-alt"></i></span>
                             Acessar
                         </button>
                     </div>
