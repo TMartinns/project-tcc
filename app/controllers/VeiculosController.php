@@ -85,7 +85,7 @@ class VeiculosController extends \HXPHP\System\Controller
         if (!empty($post)) {
             $resposta = Veiculo::cadastrar($post);
 
-            if ($resposta->status == true) {
+            if ($resposta->status) {
                 $resposta = $this->imagemUpload($resposta->veiculo);
 
                 $modelo = $resposta->veiculo->modelo;
@@ -96,7 +96,7 @@ class VeiculosController extends \HXPHP\System\Controller
                     "O veículo <strong>$modelo</strong> foi cadastrado com sucesso."
                 );
 
-                if($resposta->status == false) {
+                if(!$resposta->status) {
                     if(empty($resposta->error)) {
                         $this->load('Helpers\Alert', $alertSuccess);
                     } else {
@@ -128,7 +128,7 @@ class VeiculosController extends \HXPHP\System\Controller
         if (!empty($post)) {
             $resposta = Veiculo::editar($id, $post);
 
-            if ($resposta->status == true) {
+            if ($resposta->status) {
                 $resposta = $this->imagemUpload($resposta->veiculo);
 
                 $modelo = $resposta->veiculo->modelo;
@@ -139,7 +139,7 @@ class VeiculosController extends \HXPHP\System\Controller
                     "O veículo <strong>$modelo</strong> foi alterado com sucesso."
                 );
 
-                if($resposta->status == false) {
+                if(!$resposta->status) {
                     if(empty($resposta->error)) {
                         $this->load('Helpers\Alert', $alertSuccess);
                     } else {

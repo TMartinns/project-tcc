@@ -44,7 +44,7 @@ class UsuariosController extends \HXPHP\System\Controller
 
             $resposta = Pessoa::cadastrar($pessoa);
 
-            if ($resposta->status == true) {
+            if ($resposta->status) {
                 $this->load('Services\Random');
                 $senha = $this->random->password();
                 $usuario = array(
@@ -56,7 +56,7 @@ class UsuariosController extends \HXPHP\System\Controller
 
                 $resposta = Usuario::cadastrar($usuario);
 
-                if ($resposta->status == true) {
+                if ($resposta->status) {
                     $this->load('Helpers\Alert', array(
                         'success',
                         'O cadastro foi completado com sucesso!',
