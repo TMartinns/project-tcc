@@ -103,23 +103,19 @@ $this->partial('menu');
                     <div class="card">
                         <div class="card-body">
                             <label class="botaoEditarVeiculos">
-                                <?php
-                                $dataVeiculo = array('action' => $this->getRelativeURL('editar'),
-                                    'id' => $veiculo->id,
-                                    'imagem' => $veiculo->imagem,
-                                    'modelo' => $veiculo->modelo,
-                                    'marca' => $veiculo->marca,
-                                    'renavam' => $veiculo->renavam,
-                                    'placa' => $veiculo->placa,
-                                    'ano' => $veiculo->ano,
-                                    'cor' => $veiculo->cor
-                                );
-                                ?>
-
                                 <button type="button" class="btn btn-light bg-white" data-toggle="modal"
                                         title="Editar"
                                         data-target="#modalEditarVeiculos"
-                                        data-veiculo='<?php echo json_encode($dataVeiculo); ?>'>
+                                        data-veiculo='<?php echo json_encode(array('action' => $this->getRelativeURL('editar'),
+                                            'id' => $veiculo->id,
+                                            'imagem' => $veiculo->imagem,
+                                            'modelo' => $veiculo->modelo,
+                                            'marca' => $veiculo->marca,
+                                            'renavam' => $veiculo->renavam,
+                                            'placa' => $veiculo->placa,
+                                            'ano' => $veiculo->ano,
+                                            'cor' => $veiculo->cor
+                                        )); ?>'>
                                     <span><i class="fas fa-pencil-alt"></i></span>
                                 </button>
                             </label>
