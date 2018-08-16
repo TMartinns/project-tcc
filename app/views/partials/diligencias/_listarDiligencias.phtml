@@ -1,10 +1,10 @@
 <?php
 $diligencias = null;
-$id_tipo_diligencia = null;
+$tipoDiligencia = null;
 
-if (isset($view_id_tipo_diligencia) && !empty($view_id_tipo_diligencia)) {
-    $id_tipo_diligencia = $view_id_tipo_diligencia;
-    $diligencias = Diligencia::find_all_by_id_tipo_diligencia($id_tipo_diligencia);
+if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
+    $tipoDiligencia = $view_tipoDiligencia;
+    $diligencias = Diligencia::find_all_by_id_tipo_diligencia($tipoDiligencia);
 }
 
 if (is_null($diligencias) || empty($diligencias)) {
@@ -26,29 +26,29 @@ if (is_null($diligencias) || empty($diligencias)) {
         <div class="offset-md-2 col-md-8 offset-lg-2 col-lg-8">
             <nav class="nav nav-pills flex-column flex-sm-row">
                 <a class="flex-sm-fill text-sm-center emAndamentoTab nav-link text-secondary active"
-                   id="emAndamentoTab<?php echo $id_tipo_diligencia; ?>" data-toggle="pill"
-                   href="#emAndamento<?php echo $id_tipo_diligencia; ?>" role="tab" aria-selected="true">Em
+                   id="emAndamentoTab<?php echo $tipoDiligencia; ?>" data-toggle="pill"
+                   href="#emAndamento<?php echo $tipoDiligencia; ?>" role="tab" aria-selected="true">Em
                     Andamento
                     <span class="badge badge-warning text-white"><?php
-                        echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($id_tipo_diligencia, 'A'));
+                        echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($tipoDiligencia, 'A'));
                         ?></span>
                 </a>
 
                 <a class="flex-sm-fill text-sm-center emEsperaTab nav-link text-secondary"
-                   id="emEsperaTab<?php echo $id_tipo_diligencia; ?>" data-toggle="pill"
-                   href="#emEspera<?php echo $id_tipo_diligencia; ?>"
+                   id="emEsperaTab<?php echo $tipoDiligencia; ?>" data-toggle="pill"
+                   href="#emEspera<?php echo $tipoDiligencia; ?>"
                    role="tab" aria-selected="false">Em Espera
                     <span class="badge badge-danger"><?php
-                        echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($id_tipo_diligencia, 'E'));
+                        echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($tipoDiligencia, 'E'));
                         ?></span>
                 </a>
 
                 <a class="flex-sm-fill text-sm-center cumpridaTab nav-link text-secondary"
-                   id="cumpridaTab<?php echo $id_tipo_diligencia; ?>" data-toggle="pill"
-                   href="#cumprida<?php echo $id_tipo_diligencia; ?>"
+                   id="cumpridaTab<?php echo $tipoDiligencia; ?>" data-toggle="pill"
+                   href="#cumprida<?php echo $tipoDiligencia; ?>"
                    role="tab" aria-selected="false" title="">Cumpridas
                     <span class="badge badge-success"><?php
-                        echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($id_tipo_diligencia, 'C'));
+                        echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($tipoDiligencia, 'C'));
                         ?></span>
                 </a>
             </nav>
@@ -56,42 +56,42 @@ if (is_null($diligencias) || empty($diligencias)) {
     </div>
 
     <div class="tab-content">
-        <div class="tab-pane fade show active" id="emAndamento<?php echo $id_tipo_diligencia; ?>" role="tabpanel"
-             aria-labelledby="emAndamentoTab<?php echo $id_tipo_diligencia; ?>">
+        <div class="tab-pane fade show active" id="emAndamento<?php echo $tipoDiligencia; ?>" role="tabpanel"
+             aria-labelledby="emAndamentoTab<?php echo $tipoDiligencia; ?>">
             <br/>
 
             <?php
-            if (!is_null($id_tipo_diligencia)) {
+            if (!is_null($tipoDiligencia)) {
                 $this->partial('listarDiligenciasPorStatus', array(
-                    'id_tipo_diligencia' => $id_tipo_diligencia,
+                    'tipoDiligencia' => $tipoDiligencia,
                     'status' => 'A'
                 ));
             }
             ?>
         </div>
 
-        <div class="tab-pane fade" id="emEspera<?php echo $id_tipo_diligencia; ?>" role="tabpanel"
-             aria-labelledby="emEsperaTab<?php echo $id_tipo_diligencia; ?>">
+        <div class="tab-pane fade" id="emEspera<?php echo $tipoDiligencia; ?>" role="tabpanel"
+             aria-labelledby="emEsperaTab<?php echo $tipoDiligencia; ?>">
             <br/>
 
             <?php
-            if (!is_null($id_tipo_diligencia)) {
+            if (!is_null($tipoDiligencia)) {
                 $this->partial('listarDiligenciasPorStatus', array(
-                    'id_tipo_diligencia' => $id_tipo_diligencia,
+                    'tipoDiligencia' => $tipoDiligencia,
                     'status' => 'E'
                 ));
             }
             ?>
         </div>
 
-        <div class="tab-pane fade" id="cumprida<?php echo $id_tipo_diligencia; ?>" role="tabpanel"
-             aria-labelledby="cumpridaTab<?php echo $id_tipo_diligencia; ?>">
+        <div class="tab-pane fade" id="cumprida<?php echo $tipoDiligencia; ?>" role="tabpanel"
+             aria-labelledby="cumpridaTab<?php echo $tipoDiligencia; ?>">
             <br/>
 
             <?php
-            if (!is_null($id_tipo_diligencia)) {
+            if (!is_null($tipoDiligencia)) {
                 $this->partial('listarDiligenciasPorStatus', array(
-                    'id_tipo_diligencia' => $id_tipo_diligencia,
+                    'tipoDiligencia' => $tipoDiligencia,
                     'status' => 'C'
                 ));
             }

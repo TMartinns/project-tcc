@@ -42,9 +42,9 @@ $this->partial('menu');
                         </div>
 
                         <div class="form-group">
-                            <label for="data_nascimento">Data de nascimento</label>
+                            <label for="dataNascimento">Data de nascimento</label>
 
-                            <input required type="text" class="form-control" name="data_nascimento" id="dataNascimento"
+                            <input required type="text" class="form-control" name="dataNascimento" id="dataNascimento"
                                    placeholder="Selecione a data de nascimento">
                         </div>
 
@@ -154,7 +154,7 @@ $this->partial('menu');
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Averiguação em fazenda');
 
         $this->partial('listarDiligencias', array(
-            'id_tipo_diligencia' => $tipoDiligencia->id
+            'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
@@ -167,7 +167,7 @@ $this->partial('menu');
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Averiguação');
 
         $this->partial('listarDiligencias', array(
-            'id_tipo_diligencia' => $tipoDiligencia->id
+            'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
@@ -180,7 +180,7 @@ $this->partial('menu');
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Urgente');
 
         $this->partial('listarDiligencias', array(
-            'id_tipo_diligencia' => $tipoDiligencia->id
+            'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
@@ -193,7 +193,7 @@ $this->partial('menu');
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Notificação em outra cidade');
 
         $this->partial('listarDiligencias', array(
-            'id_tipo_diligencia' => $tipoDiligencia->id
+            'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
@@ -206,7 +206,7 @@ $this->partial('menu');
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Notificação');
 
         $this->partial('listarDiligencias', array(
-            'id_tipo_diligencia' => $tipoDiligencia->id
+            'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
@@ -219,7 +219,7 @@ $this->partial('menu');
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Ofício em outra cidade');
 
         $this->partial('listarDiligencias', array(
-            'id_tipo_diligencia' => $tipoDiligencia->id
+            'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
@@ -232,7 +232,7 @@ $this->partial('menu');
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Ofício');
 
         $this->partial('listarDiligencias', array(
-            'id_tipo_diligencia' => $tipoDiligencia->id
+            'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
@@ -245,7 +245,7 @@ $this->partial('menu');
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Ordem de missão');
 
         $this->partial('listarDiligencias', array(
-            'id_tipo_diligencia' => $tipoDiligencia->id
+            'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
@@ -261,7 +261,7 @@ $this->partial('menu');
                             <div class="form-group">
                                 <label for="promotoria">Promotoria</label>
 
-                                <select class="custom-select" name="id_promotoria" id="id_promotoria">
+                                <select class="custom-select" name="promotoria" id="promotoria">
                                     <option selected>Selecione a promotoria</option>
                                     <?php
                                     $promotorias = Promotoria::all();
@@ -281,10 +281,10 @@ $this->partial('menu');
                             </div>
 
                             <div class="form-group">
-                                <label for="numero_protocolo">Número de protocolo</label>
+                                <label for="numeroProtocolo">Número de protocolo</label>
 
-                                <input required type="text" class="form-control" name="numero_protocolo"
-                                       id="numero_protocolo"
+                                <input required type="text" class="form-control" name="numeroProtocolo"
+                                       id="numeroProtocolo"
                                        placeholder="Insira o número de protocolo">
                             </div>
                         </div>
@@ -311,13 +311,13 @@ $this->partial('menu');
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="id_interessado" id="idInteressado">
+                                <input type="hidden" name="idInteressado" id="idInteressado">
                             </div>
 
                             <div class="form-group">
-                                <label for="tipo">Tipo de diligência</label>
+                                <label for="tipoDiligencia">Tipo de diligência</label>
 
-                                <select class="custom-select" name="id_tipo_diligencia" id="id_tipo_diligencia">
+                                <select class="custom-select" name="tipoDiligencia" id="tipoDiligencia">
                                     <option selected>Selecione o tipo de diligência</option>
                                     <?php
                                     $tiposDiligencias = TipoDiligencia::all();
@@ -330,9 +330,9 @@ $this->partial('menu');
                             </div>
 
                             <div class="form-group">
-                                <label for="prazo_cumprimento">Prazo para cumprimento</label>
+                                <label for="prazoCumprimento">Prazo para cumprimento</label>
 
-                                <input required type="text" class="form-control" name="prazo_cumprimento"
+                                <input required type="text" class="form-control" name="prazoCumprimento"
                                        id="prazoCumprimento"
                                        placeholder="Selecione a data máxima para o cumprimento">
                             </div>
@@ -391,7 +391,7 @@ $this->partial('menu');
                             </div>
 
                             <div class="usuarioEspecifico form-group d-none">
-                                <label for="">Usuário</label>
+                                <label for="usuarioEspecifico">Usuário</label>
 
                                 <input type="text" class="form-control" id="usuarioEspecifico" name="usuarioEspecifico"
                                        placeholder="Insira o nome do usuário">

@@ -1,9 +1,9 @@
 <?php
 $diligencias = null;
 
-if (isset($view_id_tipo_diligencia) && !empty($view_id_tipo_diligencia)) {
+if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
     if (isset($view_status) && !empty($view_status)) {
-        $diligencias = Diligencia::find_all_by_id_tipo_diligencia_and_status($view_id_tipo_diligencia, $view_status);
+        $diligencias = Diligencia::find_all_by_id_tipo_diligencia_and_status($view_tipoDiligencia, $view_status);
     }
 }
 

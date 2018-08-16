@@ -43,9 +43,9 @@ class DiligenciasController extends \HXPHP\System\Controller
         if (!empty($post)) {
             $mandado = array(
                 'descricao' => $post['descricao'],
-                'numero_protocolo' => $post['numero_protocolo'],
-                'id_interessado' => $post['id_interessado'],
-                'id_promotoria' => $post['id_promotoria']
+                'numero_protocolo' => $post['numeroProtocolo'],
+                'id_interessado' => $post['idInteressado'],
+                'id_promotoria' => $post['promotoria']
             );
 
             $resposta = Mandado::cadastrar($mandado);
@@ -56,9 +56,9 @@ class DiligenciasController extends \HXPHP\System\Controller
                 $this->load('Services\DateConverter');
 
                 $diligencia = array(
-                    'prazo_cumprimento' => $this->dateconverter->toMySqlFormat($post['prazo_cumprimento']),
+                    'prazo_cumprimento' => $this->dateconverter->toMySqlFormat($post['prazoCumprimento']),
                     'id_mandado' => $resposta->mandado->id,
-                    'id_tipo_diligencia' => $post['id_tipo_diligencia']
+                    'id_tipo_diligencia' => $post['tipoDiligencia']
                 );
 
                 $resposta = Diligencia::cadastrar($diligencia);
@@ -112,9 +112,9 @@ class DiligenciasController extends \HXPHP\System\Controller
         $post = $this->request->post();
 
         if (!empty($post)) {
-            $id_destinatario = (empty($post['idUsuarioEspecifico'])) ? null : $post['idUsuarioEspecifico'];
+            $idDestinatario = (empty($post['idUsuarioEspecifico'])) ? null : $post['idUsuarioEspecifico'];
 
-            if (is_null($id_destinatario) && $post['destinatario'] == 'O') {
+            if (is_null($idDestinatario) && $post['destinatario'] == 'O') {
                 $pessoas = Pessoa::find_by_sql(
                     "SELECT * 
                     FROM pessoas 
@@ -126,14 +126,14 @@ class DiligenciasController extends \HXPHP\System\Controller
 
                 $remessas = Remessa::find_by_sql("SELECT * FROM remessas ORDER BY data DESC");
 
-                $id_destinatario = $pessoas[0]->id;
+                $idDestinatario = $pessoas[0]->id;
 
                 if (!empty($remessas)) {
                     foreach ($remessas as $remessa) {
                         foreach ($pessoas as $key => $pessoa) {
                             if ($remessa->id_destinatario == $pessoa->id) {
                                 if (isset($pessoas[$key + 1])) {
-                                    $id_destinatario = $pessoas[$key + 1]->id;
+                                    $idDestinatario = $pessoas[$key + 1]->id;
                                 }
 
                                 break 2;
@@ -146,7 +146,7 @@ class DiligenciasController extends \HXPHP\System\Controller
             $remessa = array(
                 'data' => date('Y-m-d H:i:s'),
                 'id_remetente' => $this->auth->getUserId(),
-                'id_destinatario' => $id_destinatario
+                'id_destinatario' => $idDestinatario
             );
 
             $resposta = Remessa::cadastrar($remessa);
@@ -180,16 +180,13 @@ class DiligenciasController extends \HXPHP\System\Controller
                             Evento::cadastrar($evento);
                         }
 
-                        $remessa = $resposta->remessa;
-
                         $this->load('Helpers\Alert', array(
                             'success',
-                            'Envio efetuado com sucesso!',
-                            "Todas as diligências selecionadas foram enviadas na remessa <strong>$remessa->id</strong>."
+                            'Envio efetuado!',
+                            "Todas as diligências selecionadas foram enviadas com sucesso."
                         ));
                     } else {
                         $resposta->remessa->delete();
-                        echo "Refresh";
                     }
                 } else {
                     $resposta->remessa->delete();
