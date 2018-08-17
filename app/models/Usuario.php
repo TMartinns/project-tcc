@@ -64,4 +64,15 @@ class Usuario extends \HXPHP\System\Model
 
         return $resposta;
     }
+
+    public static function getAllByIsAtivoAndPessoasNome($isAtivo, $nome)
+    {
+        return self::find_by_sql(
+            "select * 
+            from usuarios 
+            inner join pessoas 
+            on usuarios.id_pessoa = pessoas.id 
+            where pessoas.nome like '%$nome%' and usuarios.is_ativo = $isAtivo"
+        );
+    }
 }

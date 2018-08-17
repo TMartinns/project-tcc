@@ -24,7 +24,7 @@ class Diligencia extends \HXPHP\System\Model
 
         $diligencia = self::create($post);
 
-        if($diligencia->is_valid()) {
+        if ($diligencia->is_valid()) {
             $resposta->diligencia = $diligencia;
             $resposta->status = true;
             return $resposta;
@@ -37,5 +37,16 @@ class Diligencia extends \HXPHP\System\Model
         }
 
         return $resposta;
+    }
+
+    public static function getAllByRemessa($id)
+    {
+        return self::find_by_sql(
+            "select diligencias.*
+            from diligencias
+            inner join aux_diligencias_remessas
+            on diligencias.id = aux_diligencias_remessas.id_diligencia
+            where aux_diligencias_remessas.id_remessa = $id"
+        );
     }
 }

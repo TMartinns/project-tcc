@@ -46,7 +46,20 @@ class Pessoa extends \HXPHP\System\Model
         return $resposta;
     }
 
-    public static function getPrimeiroNome($id_pessoa) {
-        return explode(" ", self::find_by_id($id_pessoa)->nome)[0];
+    public static function getPrimeiroNome($id)
+    {
+        return explode(" ", self::find_by_id($id)->nome)[0];
+    }
+
+    public static function getAllByUsuariosFuncaoAndIsAtivo($funcao, $isAtivo)
+    {
+        return self::find_by_sql(
+            "select pessoas.*
+            from pessoas
+            inner join usuarios
+            on pessoas.id = usuarios.id_pessoa
+            where usuarios.funcao = '$funcao' and usuarios.is_ativo = $isAtivo
+            order by pessoas.nome"
+        );
     }
 }

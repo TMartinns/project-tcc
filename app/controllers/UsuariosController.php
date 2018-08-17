@@ -140,7 +140,9 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $nome = $this->request->post('nome');
 
-        $pessoas = Pessoa::find_by_sql("select * from pessoas where nome like '%$nome%'");
+        $pessoas = Pessoa::all(array(
+            'conditions' => "nome like '%$nome%'"
+        ));
 
         $resposta = array();
 
@@ -260,12 +262,7 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $nome = $this->request->post('nome');
 
-        $usuarios = Usuario::find_by_sql(
-            "select * from usuarios 
-            inner join pessoas 
-            on usuarios.id_pessoa = pessoas.id 
-            where pessoas.nome like '%$nome%' and usuarios.is_ativo = 1"
-        );
+        $usuarios = Usuario::getAllByIsAtivoAndPessoasNome(1, $nome);
 
         $resposta = array();
         foreach ($usuarios as $usuario) {

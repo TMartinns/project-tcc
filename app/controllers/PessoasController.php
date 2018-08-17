@@ -99,7 +99,9 @@ class PessoasController extends \HXPHP\System\Controller
 
         $nome = $this->request->post('nome');
 
-        $pessoas = Pessoa::find_by_sql("select * from pessoas where nome like '%$nome%'");
+        $pessoas = Pessoa::all(array(
+            'conditions' => "nome like '%$nome%'"
+        ));
 
         $resposta = array();
 

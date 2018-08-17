@@ -109,7 +109,10 @@ $this->partial('menu');
                                         data-url="<?php echo $this->getRelativeURL('cidades', false) . DS . 'getCidades'; ?>">
                                     <option selected>Selecione um estado</option>
                                     <?php
-                                    $ufs = Uf::find_by_sql('SELECT * FROM uf ORDER BY uf');
+                                    $ufs = Uf::all(array(
+                                        'order' => 'uf'
+                                    ));
+
                                     foreach ($ufs as $uf) {
                                         echo "<option value=$uf->id>$uf->uf</option>";
                                     }
@@ -422,10 +425,15 @@ $this->partial('menu');
 
             <div class="mt-4 row">
                 <?php
-                $diligencias = Diligencia::find_by_sql("SELECT * FROM diligencias WHERE status IN ('A', 'E')");
+                $diligencias = Diligencia::all(array(
+                    'conditions' => array('status in (?)', array('A', 'E'))
+                ));
 
                 foreach ($diligencias as $diligencia) {
-                    $evento = Evento::find_by_sql("select * from eventos where id_diligencia = $diligencia->id order by data desc limit 1")[0];
+                    $evento = Evento::find_by_id_diligencia($diligencia->id, array(
+                        'order' => 'data desc',
+                        'limit' => 1
+                    ));
 
                     $eventoRegistro = TipoEvento::find_by_tipo('Registro');
                     $eventoRecebimento = TipoEvento::find_by_tipo('Recebimento');
@@ -535,13 +543,7 @@ $this->partial('menu');
                 $remessas = Remessa::find_all_by_id_destinatario_and_status($this->auth->getUserId(), 'A');
 
                 foreach ($remessas as $remessa) {
-                    $diligencias = Diligencia::find_by_sql(
-                        "select diligencias.*
-                            from diligencias
-                            inner join aux_diligencias_remessas
-                            on diligencias.id = aux_diligencias_remessas.id_diligencia
-                            where aux_diligencias_remessas.id_remessa = $remessa->id"
-                    );
+                    $diligencias = Diligencia::getAllByRemessa($remessa->id);
 
                     $remetente = Pessoa::find_by_id($remessa->id_remetente);
 

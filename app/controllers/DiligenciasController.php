@@ -115,16 +115,11 @@ class DiligenciasController extends \HXPHP\System\Controller
             $idDestinatario = (empty($post['idUsuarioEspecifico'])) ? null : $post['idUsuarioEspecifico'];
 
             if (is_null($idDestinatario) && $post['destinatario'] == 'O') {
-                $pessoas = Pessoa::find_by_sql(
-                    "SELECT * 
-                    FROM pessoas 
-                    INNER JOIN usuarios 
-                    ON pessoas.id = usuarios.id_pessoa 
-                    WHERE usuarios.funcao = 'O' AND usuarios.is_ativo = 1
-                    ORDER BY pessoas.nome"
-                );
+                $pessoas = Pessoa::getAllByUsuariosFuncaoAndIsAtivo('O', 1);
 
-                $remessas = Remessa::find_by_sql("SELECT * FROM remessas ORDER BY data DESC");
+                $remessas = Remessa::all(array(
+                    'order' => 'data desc'
+                ));
 
                 $idDestinatario = $pessoas[0]->id;
 
