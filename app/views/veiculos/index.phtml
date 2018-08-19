@@ -20,14 +20,22 @@ $this->partial('menu');
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-4 text-center">
-                                <div class="form-group">
-                                    <label>Imagem do veículo</label>
-                                    <input type="file" name="imagem" id="imagemVeiculo">
+                            <div class="offset-md-3 col-md-6">
+                                <div class="form-group text-center">
+                                    <div class="wrap-custom-file">
+                                        <input type="file" name="imagem" id="imagemEditar" accept=".jpg, .png, .jpeg">
+
+                                        <label for="imagemEditar">
+                                            <span>Imagem do veículo</span>
+
+                                            <i class="fa fa-plus-circle"></i>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-7 ml-auto">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="modelo">Modelo</label>
 
@@ -48,7 +56,9 @@ $this->partial('menu');
                                     <input required type="text" class="form-control" name="cor" id="cor"
                                            value="" placeholder="Insira a cor">
                                 </div>
+                            </div>
 
+                            <div class="col-md-6 ml-auto">
                                 <div class="form-group">
                                     <label for="renavam">Renavam</label>
 
@@ -124,6 +134,7 @@ $this->partial('menu');
                                 <p>
                                     <img class="rounded-circle avatar bg-dark" src="<?php
                                     $title = '';
+
                                     if (is_null($veiculo->imagem)) {
                                         $title = 'Icon designed by Freepik from Flaticon';
                                         $avatar = 'car-' . mt_rand(0, 7);
@@ -189,11 +200,21 @@ $this->partial('menu');
                 <div class="card-body">
                     <div class="row">
                         <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
-                            <div class="form-group">
-                                <label>Imagem do veículo</label>
-                                <input type="file" name="imagem" id="imagemVeiculo">
-                            </div>
+                            <div class="form-group text-center">
+                                <div class="wrap-custom-file">
+                                    <input type="file" name="imagem" id="imagemCadastrar" accept=".jpg, .png, .jpeg">
 
+                                    <label for="imagemCadastrar">
+                                        <span>Imagem do veículo</span>
+
+                                        <i class="fa fa-plus-circle"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 offset-lg-2 col-lg-4">
                             <div class="form-group">
                                 <label for="marca">Marca</label>
 
@@ -214,7 +235,9 @@ $this->partial('menu');
                                 <input required type="text" class="form-control" name="cor" id="cor"
                                        placeholder="Insira a cor">
                             </div>
+                        </div>
 
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="renavam">Renavam</label>
 
@@ -235,7 +258,11 @@ $this->partial('menu');
                                 <input required type="text" class="form-control" name="placa" id="placa"
                                        placeholder="Insira a placa de identificação">
                             </div>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-6 offset-lg-2 col-lg-4">
                             <button type="submit" class="btn btn-outline-dark">
                                 <span><i class="fas fa-save"></i></span>
                                 Cadastrar
