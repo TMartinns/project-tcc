@@ -9,6 +9,15 @@ $('#modalEditarVeiculos').on('show.bs.modal', function (event) {
     modal.find('#ano').val(veiculo.ano);
     modal.find('#placa').val(veiculo.placa);
     modal.find('.modal-content form').attr('action', veiculo.action + '/' + veiculo.id);
+
+    if(veiculo.imagem != null) {
+        modal.find('.wrap-custom-file label').addClass('file-ok')
+            .css('background-image', 'url(/project-tcc/public/uploads/veiculos/' + veiculo.id + '/' + veiculo.imagem + ')');
+    } else {
+        modal.find('.wrap-custom-file label').removeClass('file-ok')
+            .css('background-image', '');
+        modal.find('.wrap-custom-file span').text('Imagem do veículo');
+    }
 });
 
 $('#modalNovoInteressado').find('#botaoCadastrar').click(function () {
