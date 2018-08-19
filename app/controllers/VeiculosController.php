@@ -23,7 +23,12 @@ class VeiculosController extends \HXPHP\System\Controller
             $this->auth->getUserRole()
         );
 
-        $this->view->setAssets('js', $this->configs->js . 'modal.config.js');
+        $this->view->setAssets('css', $this->configs->css . 'wrap-custom-file.css');
+
+        $this->view->setAssets('js', array(
+            $this->configs->js . 'modal.config.js',
+            $this->configs->js . 'wrap-custom-file.js'
+        ));
     }
 
     private function imagemUpload($veiculo)
