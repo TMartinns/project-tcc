@@ -29,8 +29,18 @@ if (!is_null($diligencias) || !empty($diligencias)) {
         ?>
         <div class="card border border-<?php echo $border; ?>">
             <div class="card-body">
-                <div class="text-center" title="Número de protocolo">
-                    <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
+                <div class="row">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-light bg-white">
+                            Eventos
+                        </button>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="text-center" title="Número de protocolo">
+                            <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -53,6 +63,39 @@ if (!is_null($diligencias) || !empty($diligencias)) {
             </div>
 
             <div class="card-footer bg-white">
+                <?php
+                $evento = Evento::find_by_id_diligencia($diligencia->id, array(
+                    'order' => 'data desc'
+                ));
+
+                $pessoa = Pessoa::find_by_id($evento->id_autor);
+                $usuario = Usuario::find_by_id_pessoa($pessoa->id);
+                ?>
+                <p class="card-text">
+                <h6>Posse</h6>
+
+                <img class="rounded-circle avatar bg-dark" src="<?php
+                $title = '';
+                $usuario = Usuario::find_by_id_pessoa($this->auth->getUserId());
+                $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
+
+                if (is_null($usuario->imagem)) {
+                    $title = 'Icon designed by Eucalyp from Flaticon';
+                    $avatar = '';
+                    if (is_null($pessoa->genero)) {
+                        $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
+                        $avatar = $genero[mt_rand(0, 1)];
+                    } else {
+                        $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                    }
+                    echo IMG . "avatars/usuarios/$avatar";
+                } else {
+                    echo UPLOADS . "usuarios/$usuario->id_pessoa/$usuario->imagem";
+                }
+                ?>" height="25" width="25" title="<?php echo $title; ?>">
+
+                <?php echo $pessoa->nome; ?>
+                </p>
             </div>
         </div>
 
