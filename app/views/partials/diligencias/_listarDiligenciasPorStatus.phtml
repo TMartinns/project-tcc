@@ -31,7 +31,24 @@ if (!is_null($diligencias) || !empty($diligencias)) {
             <div class="card-body">
                 <div class="row">
                     <div class="col-4">
-                        <button type="button" class="btn btn-light bg-white">
+                        <?php
+                        $eventos = array();
+
+                        foreach (Evento::find_all_by_id_diligencia($diligencia->id) as $evento) {
+                            $pessoa = Pessoa::find_by_id($evento->id_autor);
+
+                            $tipoEvento = TipoEvento::find_by_id($evento->id_tipo_evento);
+
+                            $eventos[] = array(
+                                $evento->data->format('d/m/Y H:i:s'),
+                                $tipoEvento->tipo,
+                                $pessoa->nome
+                            );
+                        }
+                        ?>
+                        <button type="button" data-toggle="modal" class="btn btn-light bg-white"
+                                data-target="#modalEventos"
+                                data-eventos='<?php echo json_encode($eventos); ?>'>
                             Eventos
                         </button>
                     </div>
