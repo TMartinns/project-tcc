@@ -139,4 +139,8 @@ body {
     #sidebar.active {
         left: 0;
     }
+
+    div.dataTables_wrapper div.dataTables_filter label {
+        margin-left: -25px;
+    }
 }
