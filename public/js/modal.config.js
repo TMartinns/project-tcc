@@ -10,7 +10,7 @@ $('#modalEditarVeiculos').on('show.bs.modal', function (event) {
     modal.find('#placa').val(veiculo.placa);
     modal.find('.modal-content form').attr('action', veiculo.action + '/' + veiculo.id);
 
-    if(veiculo.imagem != null) {
+    if (veiculo.imagem != null) {
         modal.find('.wrap-custom-file label').addClass('file-ok')
             .css('background-image', 'url(/project-tcc/public/uploads/veiculos/' + veiculo.id + '/' + veiculo.imagem + ')');
     } else {
@@ -94,4 +94,18 @@ $('#modalDadosDiligencia').on('show.bs.modal', function (event) {
     modal.find('#interessado').html("<h6>Interessado(a)</h6>" + diligencia.interessado);
     modal.find('#tipoDiligencia').html("<h6>Tipo de diligência</h6>" + diligencia.tipoDiligencia);
     modal.find('#prazoCumprimento').html("<h6>Prazo para cumprimento</h6>" + diligencia.prazoCumprimento);
+});
+
+$('#modalEventos').on('show.bs.modal', function (event) {
+    var eventos = $(event.relatedTarget).data('eventos');
+    var modal = $(this);
+
+    modal.find('#eventos').DataTable({
+        destroy: true,
+        data: eventos,
+        language: {
+            url: '/project-tcc/public/bower_components/DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
+        },
+        order: [[0, 'desc']]
+    });
 });
