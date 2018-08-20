@@ -23,14 +23,19 @@ class DiligenciasController extends \HXPHP\System\Controller
             $this->auth->getUserRole()
         );
 
-        $this->view->setAssets('css', $this->configs->bower . 'gijgo/dist/combined/css/gijgo.min.css');
+        $this->view->setAssets('css', array(
+            $this->configs->bower . 'gijgo/dist/combined/css/gijgo.min.css',
+            $this->configs->bower . 'DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css'
+        ));
 
         $this->view->setAssets('js', array(
             $this->configs->js . 'autocomplete.config.js',
             $this->configs->js . 'modal.config.js',
             $this->configs->bower . 'gijgo/dist/combined/js/gijgo.min.js',
             $this->configs->bower . 'gijgo/dist/combined/js/messages/messages.pt-br.min.js',
-            $this->configs->js . 'datepicker.config.js'
+            $this->configs->js . 'datepicker.config.js',
+            $this->configs->bower . 'DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js',
+            $this->configs->bower . 'DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js'
         ));
     }
 
