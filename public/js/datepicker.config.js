@@ -1,8 +1,6 @@
 $('#dataNascimento').datepicker({
     uiLibrary: 'bootstrap4',
-    modal: true,
     header: true,
-    footer: true,
     iconsLibrary: 'fontawesome',
     locale: 'pt-br',
     format: 'dd/mm/yyyy',
@@ -13,9 +11,7 @@ $('#dataNascimento').datepicker({
 
 $('#prazoCumprimento').datepicker({
     uiLibrary: 'bootstrap4',
-    modal: true,
     header: true,
-    footer: true,
     iconsLibrary: 'fontawesome',
     locale: 'pt-br',
     format: 'dd/mm/yyyy',
