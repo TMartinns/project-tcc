@@ -8,6 +8,25 @@ body {
     object-position: center;
 }
 
+#pesquisar {
+    width: calc(248px - 2rem);
+}
+
+#eac-container-pesquisar {
+    width: calc(248px - 2em);
+    margin-left: 1rem;
+    color: #343a40;
+}
+
+#eac-container-pesquisar .eac-item a {
+    display: block;
+    color: #343a40;
+}
+
+#eac-container-pesquisar .eac-item a:hover {
+    text-decoration: none;
+}
+
 .botaoEditarVeiculos {
     position: absolute;
     left: .5rem;
@@ -90,6 +109,10 @@ body {
 .mCustomScrollBox {
     padding-top: 20px;
     width: 250px !important;
+}
+
+.mCSB_container {
+    height: 100%;
 }
 
 @media (min-width: 769px) {

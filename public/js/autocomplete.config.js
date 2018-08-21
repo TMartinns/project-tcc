@@ -1,42 +1,3 @@
-$('#pesquisarUsuarios').easyAutocomplete({
-    url: function (url) {
-        return "/project-tcc/usuarios/getUsuarios/";
-    },
-    getValue: function (element) {
-        return element.nome;
-    },
-    ajaxSettings: {
-        dataType: "json",
-        method: "POST",
-        data: {
-            dataType: "json"
-        }
-    },
-    preparePostData: function (data) {
-        data.nome = $("#pesquisarUsuarios").val();
-        return data;
-    },
-    requestDelay: 500,
-    template: {
-        type: "description",
-        fields: {
-            description: function (element) {
-                return element.email;
-            }
-        }
-    },
-    list: {
-        onClickEvent: function () {
-            var resposta = $('#pesquisarUsuarios').getSelectedItemData();
-            var listaUsuarios = $('#listaUsuarios');
-
-            listaUsuarios.removeClass('row');
-            listaUsuarios.html(resposta.html);
-        }
-    },
-    adjustWidth: false
-});
-
 $('#interessado').easyAutocomplete({
     url: function (url) {
         return "/project-tcc/pessoas/getPessoas/";
@@ -109,3 +70,50 @@ $('#usuarioEspecifico').easyAutocomplete({
     },
     adjustWidth: false
 });
+
+function pesquisarAutocomplete() {
+    $('#pesquisar').easyAutocomplete({
+        url: function (url) {
+            return "/project-tcc/pesquisas/pesquisar/";
+        },
+        getValue: function (element) {
+            return element.texto;
+        },
+        ajaxSettings: {
+            dataType: "json",
+            method: "POST",
+            data: {
+                dataType: "json"
+            }
+        },
+        preparePostData: function (data) {
+            data.info = $('#pesquisar').val();
+            return data;
+        },
+        requestDelay: 500,
+        template: {
+            type: "links",
+            fields: {
+                link: function (element) {
+                    return element.url;
+                }
+            }
+        },
+        categories: [
+            {
+                listLocation: "usuarios",
+                header: "--Usuários--"
+            },
+            {
+                listLocation: "diligencias",
+                header: "--Diligências--"
+            },
+            {
+                listLocation: "veiculos",
+                header: "--Veículos--"
+
+            }
+        ],
+        adjustWidth: false
+    });
+}
