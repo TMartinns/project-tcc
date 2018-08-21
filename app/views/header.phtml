@@ -42,13 +42,13 @@
 
                 <li class="nav-item dropdown ml-2">
                     <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            data-toggle="dropdown">
                         <?php
                         echo Pessoa::getPrimeiroNome($this->auth->getUserId());
                         ?>
                     </button>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarPerfil">
+                    <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-header text-center">
                             <img class="rounded-circle avatar bg-dark" src="<?php
                             $title = '';

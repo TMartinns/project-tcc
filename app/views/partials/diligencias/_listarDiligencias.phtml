@@ -9,55 +9,45 @@ if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
 
 if (is_null($diligencias) || empty($diligencias)) {
     ?>
-    <div class="alert alert-warning show" role="alert">
+    <div class="alert alert-warning show">
         <h5 class="alert-heading text-center">Nenhuma diligência desse tipo foi emitida até o presente momento.</h5>
     </div>
     <?php
 } else {
     ?>
-    <div class="row mb-2">
-        <div class="offset-md-2 col-md-8 offset-lg-2 col-lg-8">
-            <input type="text" class="form-control" name="pesquisarDiligencias" id="pesquisarDiligencias"
-                   placeholder="">
-        </div>
-    </div>
 
     <div class="row">
         <div class="offset-md-2 col-md-8 offset-lg-2 col-lg-8">
             <nav class="nav nav-pills flex-column flex-sm-row">
-                <a class="flex-sm-fill text-sm-center emAndamentoTab nav-link text-secondary active"
-                   id="emAndamentoTab<?php echo $tipoDiligencia; ?>" data-toggle="pill"
-                   href="#emAndamento<?php echo $tipoDiligencia; ?>" role="tab" aria-selected="true">Em
-                    Andamento
+                <a class="flex-sm-fill text-sm-center emAndamentoTab nav-link text-secondary active" data-toggle="pill"
+                   href="#emAndamento<?php echo $tipoDiligencia; ?>">Em Andamento
                     <span class="badge badge-warning text-white"><?php
                         echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($tipoDiligencia, 'A'));
-                        ?></span>
+                        ?>
+                    </span>
                 </a>
 
-                <a class="flex-sm-fill text-sm-center emEsperaTab nav-link text-secondary"
-                   id="emEsperaTab<?php echo $tipoDiligencia; ?>" data-toggle="pill"
-                   href="#emEspera<?php echo $tipoDiligencia; ?>"
-                   role="tab" aria-selected="false">Em Espera
+                <a class="flex-sm-fill text-sm-center emEsperaTab nav-link text-secondary" data-toggle="pill"
+                   href="#emEspera<?php echo $tipoDiligencia; ?>">Em Espera
                     <span class="badge badge-danger"><?php
                         echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($tipoDiligencia, 'E'));
-                        ?></span>
+                        ?>
+                    </span>
                 </a>
 
-                <a class="flex-sm-fill text-sm-center cumpridaTab nav-link text-secondary"
-                   id="cumpridaTab<?php echo $tipoDiligencia; ?>" data-toggle="pill"
-                   href="#cumprida<?php echo $tipoDiligencia; ?>"
-                   role="tab" aria-selected="false" title="">Cumpridas
+                <a class="flex-sm-fill text-sm-center cumpridaTab nav-link text-secondary" data-toggle="pill"
+                   href="#cumprida<?php echo $tipoDiligencia; ?>">Cumpridas
                     <span class="badge badge-success"><?php
                         echo count(Diligencia::find_all_by_id_tipo_diligencia_and_status($tipoDiligencia, 'C'));
-                        ?></span>
+                        ?>
+                    </span>
                 </a>
             </nav>
         </div>
     </div>
 
     <div class="tab-content">
-        <div class="tab-pane fade show active" id="emAndamento<?php echo $tipoDiligencia; ?>" role="tabpanel"
-             aria-labelledby="emAndamentoTab<?php echo $tipoDiligencia; ?>">
+        <div class="tab-pane fade show active" id="emAndamento<?php echo $tipoDiligencia; ?>">
             <br/>
 
             <?php
@@ -70,8 +60,7 @@ if (is_null($diligencias) || empty($diligencias)) {
             ?>
         </div>
 
-        <div class="tab-pane fade" id="emEspera<?php echo $tipoDiligencia; ?>" role="tabpanel"
-             aria-labelledby="emEsperaTab<?php echo $tipoDiligencia; ?>">
+        <div class="tab-pane fade" id="emEspera<?php echo $tipoDiligencia; ?>">
             <br/>
 
             <?php
@@ -84,8 +73,7 @@ if (is_null($diligencias) || empty($diligencias)) {
             ?>
         </div>
 
-        <div class="tab-pane fade" id="cumprida<?php echo $tipoDiligencia; ?>" role="tabpanel"
-             aria-labelledby="cumpridaTab<?php echo $tipoDiligencia; ?>">
+        <div class="tab-pane fade" id="cumprida<?php echo $tipoDiligencia; ?>">
             <br/>
 
             <?php

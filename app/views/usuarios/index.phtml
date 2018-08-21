@@ -6,19 +6,10 @@ $this->partial('menu');
 ?>
 
 <div class="tab-content">
-    <div class="tab-pane fade show active" id="listarUsuarios" role="tabpanel" aria-labelledby="listarUsuariosTab">
+    <div class="tab-pane fade show active" id="listarUsuarios">
         <br/>
 
         <div class="row">
-            <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4">
-                <input type="text" class="form-control" name="pesquisarUsuarios" id="pesquisarUsuarios"
-                       placeholder="Pesquise por usuários aqui">
-            </div>
-        </div>
-
-        <br/>
-
-        <div class="row" id="listaUsuarios">
             <?php
             $usuarios = Usuario::all();
             foreach ($usuarios as $usuario) {
@@ -84,7 +75,7 @@ $this->partial('menu');
 
                                     $uf = Uf::find_by_id($cidade->id_uf);
 
-                                    $hr = ($key != count($telefones) - 1) ? "<hr/>" : '';
+                                    $hr = ($key != count($enderecos) - 1) ? "<hr/>" : '';
                                     echo "<p class='card-text'> 
                                           $endereco->logradouro, $endereco->numero, $endereco->complemento, $endereco->bairro
                                           <br/>
@@ -111,7 +102,7 @@ $this->partial('menu');
                             if ($usuario->is_ativo == 1) {
                                 ?>
                                 <a class="btn btn-outline-danger"
-                                   href="<?php echo $this->getRelativeURL('desativar') . '/' . $usuario->id_pessoa; ?>">
+                                   href="<?php echo $this->getRelativeURL('desativar') . DS . $usuario->id_pessoa; ?>">
                                     <span><i class="fas fa-lock"></i></span>
                                     Desativar
                                 </a>
@@ -119,7 +110,7 @@ $this->partial('menu');
                             } else {
                                 ?>
                                 <a class="btn btn-outline-success"
-                                   href="<?php echo $this->getRelativeURL('ativar') . '/' . $usuario->id_pessoa; ?>">
+                                   href="<?php echo $this->getRelativeURL('ativar') . DS . $usuario->id_pessoa; ?>">
                                     <span><i class="fas fa-lock-open"></i></span>
                                     Ativar
                                 </a>
@@ -136,7 +127,7 @@ $this->partial('menu');
         </div>
     </div>
 
-    <div class="tab-pane fade" id="cadastrarUsuarios" role="tabpanel" aria-labelledby="cadastrarUsuariosTab">
+    <div class="tab-pane fade" id="cadastrarUsuarios">
         <br/>
 
         <div class="card">

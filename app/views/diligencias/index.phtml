@@ -5,19 +5,19 @@ $this->setPartialsDir('partials' . DS . 'diligencias');
 $this->partial('menu');
 ?>
 
-<div id="modalNovoInteressado" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="modalNovoInteressado" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Novo interessado(a)</h5>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <div class="d-none alert alert-danger fade show" role="alert">
+                <div class="d-none alert alert-danger fade show">
                     <h5 class="alert-heading text-center">Não foi possível completar o cadastro!</h5>
 
                     <hr/>
@@ -148,14 +148,14 @@ $this->partial('menu');
     </div>
 </div>
 
-<div id="modalEventos" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="modalEventos" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="card-title">Eventos ocorridos</h5>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
                 </button>
             </div>
 
@@ -175,8 +175,7 @@ $this->partial('menu');
 </div>
 
 <div class="tab-content">
-    <div class="tab-pane fade show active" id="averiguacaoFazenda" role="tabpanel"
-         aria-labelledby="averiguacaoFazendaTab">
+    <div class="tab-pane fade show active" id="averiguacaoFazenda">
         <br/>
 
         <?php
@@ -188,8 +187,7 @@ $this->partial('menu');
         ?>
     </div>
 
-    <div class="tab-pane fade" id="averiguacao" role="tabpanel"
-         aria-labelledby="averiguacaoTab">
+    <div class="tab-pane fade" id="averiguacao">
         <br/>
 
         <?php
@@ -201,8 +199,7 @@ $this->partial('menu');
         ?>
     </div>
 
-    <div class="tab-pane fade" id="urgente" role="tabpanel"
-         aria-labelledby="urgenteTab">
+    <div class="tab-pane fade" id="urgente">
         <br/>
 
         <?php
@@ -214,8 +211,7 @@ $this->partial('menu');
         ?>
     </div>
 
-    <div class="tab-pane fade" id="notificacaoCidade" role="tabpanel"
-         aria-labelledby="notificacaoCidadeTab">
+    <div class="tab-pane fade" id="notificacaoCidade">
         <br/>
 
         <?php
@@ -227,8 +223,7 @@ $this->partial('menu');
         ?>
     </div>
 
-    <div class="tab-pane fade" id="notificacao" role="tabpanel"
-         aria-labelledby="notificacaoTab">
+    <div class="tab-pane fade" id="notificacao">
         <br/>
 
         <?php
@@ -240,8 +235,7 @@ $this->partial('menu');
         ?>
     </div>
 
-    <div class="tab-pane fade" id="oficioCidade" role="tabpanel"
-         aria-labelledby="oficioCidadeTab">
+    <div class="tab-pane fade" id="oficioCidade">
         <br/>
 
         <?php
@@ -253,8 +247,7 @@ $this->partial('menu');
         ?>
     </div>
 
-    <div class="tab-pane fade" id="oficio" role="tabpanel"
-         aria-labelledby="oficioTab">
+    <div class="tab-pane fade" id="oficio">
         <br/>
 
         <?php
@@ -266,8 +259,7 @@ $this->partial('menu');
         ?>
     </div>
 
-    <div class="tab-pane fade" id="ordemMissao" role="tabpanel"
-         aria-labelledby="ordemMissaoTab">
+    <div class="tab-pane fade" id="ordemMissao">
         <br/>
 
         <?php
@@ -279,7 +271,7 @@ $this->partial('menu');
         ?>
     </div>
 
-    <div class="tab-pane fade" id="cadastrarDiligencias" role="tabpanel" aria-labelledby="cadastrarDiligenciasTab">
+    <div class="tab-pane fade" id="cadastrarDiligencias">
         <br/>
 
         <div class="card">
@@ -382,19 +374,18 @@ $this->partial('menu');
         <br/>
     </div>
 
-    <div class="tab-pane fade" id="enviarDiligencias" role="tabpanel"
-         aria-labelledby="enviarDiligenciasTab">
+    <div class="tab-pane fade" id="enviarDiligencias">
         <br/>
 
         <form action="<?php echo $this->getRelativeURL('enviar'); ?>" method="post">
-            <div id="modalSelecionarOficial" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="modalSelecionarOficial" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Destinatário</h5>
 
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>&times;</span>
                             </button>
                         </div>
 
@@ -402,11 +393,11 @@ $this->partial('menu');
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input type="radio" class="custom-control-input" name="destinatario"
-                                           id="opcaoOficial" value="O" aria-describedby="oficialHelp" checked>
+                                           id="opcaoOficial" value="O" checked>
 
                                     <label class="custom-control-label" for="opcaoOficial">Oficial de promotoria</label>
 
-                                    <small id="oficialHelp" class="form-text text-muted">Essa opção envia para um dos
+                                    <small class="form-text text-muted">Essa opção envia para um dos
                                         oficiais seguindo a regra de envio
                                     </small>
                                 </div>
@@ -420,8 +411,6 @@ $this->partial('menu');
                             </div>
 
                             <div class="usuarioEspecifico form-group d-none">
-                                <label for="usuarioEspecifico">Usuário</label>
-
                                 <input type="text" class="form-control" id="usuarioEspecifico" name="usuarioEspecifico"
                                        placeholder="Insira o nome do usuário">
 
@@ -521,18 +510,17 @@ $this->partial('menu');
         </form>
     </div>
 
-    <div class="tab-pane fade" id="receberDiligencias" role="tabpanel"
-         aria-labelledby="receberDiligenciasTab">
+    <div class="tab-pane fade" id="receberDiligencias">
         <br/>
 
-        <div id="modalDadosDiligencia" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div id="modalDadosDiligencia" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"></h5>
 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
                         </button>
                     </div>
 

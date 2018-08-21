@@ -5,14 +5,14 @@ $this->setPartialsDir('partials' . DS . 'veiculos');
 $this->partial('menu');
 ?>
 
-<div id="modalEditarVeiculos" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="modalEditarVeiculos" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar veículo</h5>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
                 </button>
             </div>
 
@@ -98,7 +98,7 @@ $this->partial('menu');
 </div>
 
 <div class="tab-content">
-    <div class="tab-pane fade show active" id="listarVeiculos" role="tabpanel" aria-labelledby="listarVeiculosTab">
+    <div class="tab-pane fade show active" id="listarVeiculos">
         <br/>
 
         <div class="row" id="listaVeiculos">
@@ -188,7 +188,7 @@ $this->partial('menu');
         </div>
     </div>
 
-    <div class="tab-pane fade" id="cadastrarVeiculos" role="tabpanel" aria-labelledby="cadastrarVeiculosTab">
+    <div class="tab-pane fade" id="cadastrarVeiculos">
         <br/>
 
         <div class="card">
