@@ -102,15 +102,15 @@ function pesquisarAutocomplete() {
         categories: [
             {
                 listLocation: "usuarios",
-                header: "--Usuários--"
+                header: "Usuários"
             },
             {
                 listLocation: "diligencias",
-                header: "--Diligências--"
+                header: "Diligências"
             },
             {
                 listLocation: "veiculos",
-                header: "--Veículos--"
+                header: "Veículos"
 
             }
         ],

@@ -18,6 +18,11 @@ body {
     color: #343a40;
 }
 
+#eac-container-pesquisar ul .eac-category {
+    color: #007bff;
+    font-style: initial;
+}
+
 #eac-container-pesquisar .eac-item a {
     display: block;
     color: #343a40;
