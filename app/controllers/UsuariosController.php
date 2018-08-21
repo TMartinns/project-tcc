@@ -100,6 +100,21 @@ class UsuariosController extends \HXPHP\System\Controller
         }
     }
 
+    public function visualizarAction($id)
+    {
+        $pessoa = Pessoa::find_by_id($id);
+        $usuario = Usuario::find_by_id_pessoa($pessoa->id);
+        $telefones = Telefone::find_all_by_id_pessoa($pessoa->id);
+        $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
+
+        $this->view->setVars(array(
+            'pessoa' => $pessoa,
+            'usuario' => $usuario,
+            'telefones' => $telefones,
+            'enderecos' => $enderecos
+        ));
+    }
+
     public function desativarAction($id)
     {
         $this->view->setFile('index');
@@ -130,128 +145,6 @@ class UsuariosController extends \HXPHP\System\Controller
                 "O usuário <strong>$pessoa->nome</strong> foi ativado com sucesso."
             ));
         }
-    }
-
-    public function getUsuariosAction()
-    {
-        $this->view->setPath('blank', true)
-            ->setFile('index')
-            ->setTemplate(false);
-
-        $nome = $this->request->post('nome');
-
-        $pessoas = Pessoa::all(array(
-            'conditions' => "nome like '%$nome%'"
-        ));
-
-        $resposta = array();
-
-        foreach ($pessoas as $pessoa) {
-            $html = "<div class='card'>
-            <div class='card-body'>
-            <div class='offset-md-4 col-md-4 offset-lg-4 col-lg-4 text-center'>";
-
-            $usuario = Usuario::find_by_id_pessoa($pessoa->id);
-
-            if (!is_null($usuario)) {
-                $telefones = Telefone::find_all_by_id_pessoa($pessoa->id);
-                $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
-
-                $img = new \stdClass();
-                $img->title = '';
-                if (is_null($usuario->imagem)) {
-                    $img->title = 'Icon designed by Eucalyp from Flaticon';
-                    $avatar = '';
-                    if (is_null($pessoa->genero)) {
-                        $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
-                        $avatar = $genero[mt_rand(0, 1)];
-                    } else {
-                        $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
-                    }
-                    $img->src = $this->configs->img . "avatars/usuarios/$avatar";
-                } else {
-                    $img->src = $this->configs->uploads . "usuarios/$usuario->id_pessoa";
-                }
-
-                $usuario->funcao = ($usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria';
-
-                $html .= "<p>
-                    <img class='rounded-circle avatar bg-dark' src='$img->src' width='180' height='180' title='$img->title'>
-                    </p>
-                    <hr/>
-                    <h5 class='card-title'>$pessoa->nome</h5>
-                    </div>
-                    <div class='row'>
-                    <div class='offset-md-2 col-md-4 offset-lg-2 col-lg-4'>                  
-                    <p class='card-text'><h6>E-mail</h6>$usuario->email</p>
-                    <p class='card-text'><h6>Função</h6>$usuario->funcao</p>
-                    <p class='card-text'><h6>CPF</h6>$pessoa->cpf</p>
-                    <p class='card-text'><h6>Data de nascimento</h6>$pessoa->data_nascimento</p>                  
-                    </div>
-                    <div class='col-md-4 col-lg-4'>
-                    <p class='card-text'><h6>Telefones</h6>";
-
-                if (!is_null($telefones)) {
-                    foreach ($telefones as $key => $telefone) {
-                        $hr = ($key != count($telefones) - 1) ? "<hr/>" : '';
-                        $html .= "<p class='card-text'> ($telefone->ddd) $telefone->numero</p>$hr";
-                    }
-                }
-
-                $html .= "</p>
-                    <p class='card-text'><h6>Enderecos</h6>";
-
-                if (!is_null($enderecos)) {
-                    foreach ($enderecos as $key => $endereco) {
-                        $cidade = Cidade::find_by_id($endereco->id_cidade);
-
-                        $uf = Uf::find_by_id($cidade->id_uf);
-
-                        $hr = ($key != count($telefones) - 1) ? "<hr/>" : '';
-                        $html .= "<p class='card-text'> 
-                            $endereco->logradouro, $endereco->numero, $endereco->complemento, $endereco->bairro
-                            <br/>
-                            $cidade->nome/$uf->uf
-                            <br/>
-                            $endereco->cep
-                            </p>
-                            $hr";
-                    }
-                }
-
-                $html .= "</p>
-                    </div>
-                    </div>
-                    </div>
-                    <div class='card-footer text-center bg-white'>";
-
-                if ($usuario->is_ativo == 1) {
-                    $href = $this->getRelativeURL('usuarios', false) . '/desativar/' . $usuario->id_pessoa;
-                    $html .= "<a class='btn btn-outline-danger' href='$href'>
-                        <span><i class='fas fa-lock'></i></span>
-                        Desativar
-                        </a>";
-                } else {
-                    $href = $this->getRelativeURL('usuarios', false) . '/ativar/' . $usuario->id_pessoa;
-                    $html .= "<a class='btn btn-outline-success' href='$href'>
-                        <span><i class='fas fa-lock-open'></i></span>
-                        Ativar
-                        </a>";
-                }
-
-                $html .= "</div>
-                    </div>
-                    <br/>";
-
-                $resposta[] = array(
-                    'email' => $usuario->email,
-                    'nome' => $pessoa->nome,
-                    'html' => $html
-                );
-            }
-        }
-
-        echo json_encode($resposta);
     }
 
     public function getUsuariosAtivosAction()
