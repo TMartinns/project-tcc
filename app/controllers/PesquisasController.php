@@ -19,7 +19,7 @@ class PesquisasController extends \HXPHP\System\Controller
 
     }
 
-    public function pesquisarAction()
+    public function getResultadoAction()
     {
         $this->view->setPath('blank', true)
             ->setFile('index')

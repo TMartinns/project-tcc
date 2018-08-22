@@ -74,7 +74,7 @@ $('#usuarioEspecifico').easyAutocomplete({
 function pesquisarAutocomplete() {
     $('#pesquisar').easyAutocomplete({
         url: function (url) {
-            return "/project-tcc/pesquisas/pesquisar/";
+            return "/project-tcc/pesquisas/getResultado/";
         },
         getValue: function (element) {
             return element.texto;
