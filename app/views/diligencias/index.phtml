@@ -10,10 +10,6 @@ $this->partial('menu');
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Novo interessado(a)</h5>
-
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
             </div>
 
             <div class="modal-body">
@@ -133,7 +129,7 @@ $this->partial('menu');
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                <button type="button" class="cancelar btn btn-outline-danger disabled" title="Aguarde 3 segundos">
                     <span><i class="fas fa-times"></i></span>
                     Cancelar
                 </button>
@@ -378,15 +374,11 @@ $this->partial('menu');
         <br/>
 
         <form action="<?php echo $this->getRelativeURL('enviar'); ?>" method="post">
-            <div id="modalSelecionarOficial" class="modal fade" tabindex="-1">
+            <div id="modalDestinatario" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Destinatário</h5>
-
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span>&times;</span>
-                            </button>
                         </div>
 
                         <div class="modal-body">
@@ -419,7 +411,7 @@ $this->partial('menu');
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                            <button type="button" class="cancelar btn btn-outline-danger disabled" title="Aguarde 3 segundos">
                                 <span><i class="fas fa-times"></i></span>
                                 Cancelar
                             </button>
@@ -433,7 +425,7 @@ $this->partial('menu');
                 </div>
             </div>
 
-            <button type="button" data-toggle="modal" data-target="#modalSelecionarOficial" class="btn btn-dark">
+            <button type="button" data-toggle="modal" data-target="#modalDestinatario" class="btn btn-dark">
                 <span><i class="fas fa-share-square"></i></span>
                 Enviar
             </button>
@@ -517,7 +509,7 @@ $this->partial('menu');
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title"></h5>
+                        <h5 class="modal-title" title="Número de protocolo"></h5>
 
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
@@ -534,13 +526,6 @@ $this->partial('menu');
                         <p class="card-text" id="tipoDiligencia"></p>
 
                         <p class="card-text" id="prazoCumprimento"></p>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
-                            <span><i class="fas fa-times"></i></span>
-                            Fechar
-                        </button>
                     </div>
                 </div>
             </div>

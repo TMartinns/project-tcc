@@ -39,6 +39,13 @@ body {
     display: block;
 }
 
+.botaoQrCode {
+    position: absolute;
+    left: 3.5rem;
+    top: .5rem;
+    display: block;
+}
+
 #sidebar a.nav-link:hover, #sidebar a.nav-link:focus {
     color: #343a40;
     text-decoration: none;

@@ -43,6 +43,23 @@ $('.dadosPessoaisExpandir').on('click', function () {
     botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
 });
 
+$('.dadosVeiculosExpandir').on('click', function () {
+    var id = $(this).data('id');
+    $('#dadosVeiculos' + id).toggleClass('d-none');
+
+    var botao = $(this).filter(function () {
+        return $(this).data('id') === id;
+    });
+
+    if (botao.attr('title') == 'Expandir') {
+        botao.attr('title', 'Reduzir');
+    } else {
+        botao.attr('title', 'Expandir');
+    }
+
+    botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
+});
+
 $('.diligenciasExpandir').on('click', function () {
     var id = $(this).data('id');
     $('#diligencias' + id).toggleClass('d-none');
@@ -78,9 +95,29 @@ $('#uf').change(function () {
     });
 });
 
-$(function() {
+$(function () {
     $('#menu').prepend("<li class='nav-item mb-4 mt-1'>" +
         "<input type='text' class='form-control ml-3' id='pesquisar' placeholder='Pesquisar'>");
 
     pesquisarAutocomplete();
+});
+
+$(function() {
+    var interval = 0;
+    $('.cancelar')
+        .mouseover(function () {
+            var botao = $(this);
+            interval = setInterval(function () {
+                botao.removeClass('disabled');
+                botao.attr('data-dismiss', 'modal');
+                botao.attr('title', 'Pronto');
+            }, 3000);
+        })
+        .mouseout(function () {
+            var botao = $(this);
+            clearInterval(interval);
+            botao.addClass('disabled');
+            botao.attr('data-dismiss', '');
+            botao.attr('title', 'Aguarde 3 segundos');
+        });
 });

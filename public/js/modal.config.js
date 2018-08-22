@@ -1,3 +1,21 @@
+$('#modalEditarVeiculos').modal({
+    backdrop: 'static',
+    keyboard: false,
+    show: false
+});
+
+$('#modalNovoInteressado').modal({
+    backdrop: 'static',
+    keyboard: false,
+    show: false
+});
+
+$('#modalDestinatario').modal({
+    backdrop: 'static',
+    keyboard: false,
+    show: false
+});
+
 $('#modalEditarVeiculos').on('show.bs.modal', function (event) {
     var veiculo = $(event.relatedTarget).data('veiculo');
     var modal = $(this);
@@ -88,7 +106,7 @@ $('#modalDadosDiligencia').on('show.bs.modal', function (event) {
     var diligencia = $(event.relatedTarget).data('diligencia');
     var modal = $(this);
 
-    modal.find('.modal-title').html("Diligência " + diligencia.numeroProtocolo);
+    modal.find('.modal-title').html(diligencia.numeroProtocolo);
     modal.find('#promotoria').html("<h6>Promotoria</h6>" + diligencia.promotoria);
     modal.find('#descricao').html("<h6>Descrição</h6>" + diligencia.descricao);
     modal.find('#interessado').html("<h6>Interessado(a)</h6>" + diligencia.interessado);
@@ -108,4 +126,18 @@ $('#modalEventos').on('show.bs.modal', function (event) {
         },
         order: [[0, 'desc']]
     });
+});
+
+$('#modalQrCode').on('show.bs.modal', function (event) {
+    var modelo = $(event.relatedTarget).data('modelo');
+    var modal = $(this);
+
+    var chl = $(event.relatedTarget).data('id');
+    var chs = "150x150";
+    var cht = "qr";
+
+    var url = "https://chart.googleapis.com/chart?chs=" + chs + "&cht=" + cht + "&chl=" + chl;
+
+    modal.find('.modal-body img').attr('src', url);
+    modal.find('.modal-body small').html("O QR Code do veículo <strong>" + modelo + "</strong> foi gerado com sucesso!");
 });

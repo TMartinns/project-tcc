@@ -10,10 +10,6 @@ $this->partial('menu');
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar veículo</h5>
-
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
             </div>
 
             <form enctype="multipart/form-data" method="post">
@@ -82,7 +78,7 @@ $this->partial('menu');
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                    <button type="button" class="cancelar btn btn-outline-danger disabled" title="Aguarde 3 segundos">
                         <span><i class="fas fa-times"></i></span>
                         Cancelar
                     </button>
@@ -93,6 +89,19 @@ $this->partial('menu');
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalQrCode" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img>
+
+                <small class="form-text form-muted">
+                </small>
+            </div>
         </div>
     </div>
 </div>
@@ -127,6 +136,17 @@ $this->partial('menu');
                                 </button>
                             </label>
 
+                            <label class="botaoQrCode">
+                                <button type="button" class="btn btn-light bg-white"
+                                        title="Gerar QR Code"
+                                        data-id="<?php echo $veiculo->id; ?>"
+                                        data-modelo="<?php echo $veiculo->modelo; ?>"
+                                        data-toggle="modal"
+                                        data-target="#modalQrCode">
+                                    <span><i class="fas fa-qrcode"></i></span>
+                                </button>
+                            </label>
+
                             <div class="text-center">
                                 <p>
                                     <img class="rounded-circle avatar bg-dark" src="<?php
@@ -149,13 +169,22 @@ $this->partial('menu');
 
                             <p class="card-text"><h6>Marca</h6><?php echo $veiculo->marca; ?></p>
 
-                            <p class="card-text"><h6>Renavam</h6><?php echo $veiculo->renavam; ?></p>
-
                             <p class="card-text"><h6>Placa</h6><?php echo $veiculo->placa; ?></p>
 
-                            <p class="card-text"><h6>Ano</h6><?php echo $veiculo->ano; ?></p>
+                            <div id="dadosVeiculos<?php echo $veiculo->id; ?>" class="d-none">
+                                <p class="card-text"><h6>Renavam</h6><?php echo $veiculo->renavam; ?></p>
 
-                            <p class="card-text"><h6>Cor</h6><?php echo $veiculo->cor; ?></p>
+                                <p class="card-text"><h6>Ano</h6><?php echo $veiculo->ano; ?></p>
+
+                                <p class="card-text"><h6>Cor</h6><?php echo $veiculo->cor; ?></p>
+                            </div>
+
+                            <div class="text-center">
+                                <button class="btn btn-outline-dark dadosVeiculosExpandir"
+                                        data-id="<?php echo $veiculo->id; ?>" title="Expandir">
+                                    <span><i class="fas fa-arrow-circle-down"></i></span>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="card-footer text-center bg-white">
