@@ -47,9 +47,10 @@ if (!is_null($diligencias) || !empty($diligencias)) {
                         }
                         ?>
                         <button type="button" data-toggle="modal" class="btn btn-light bg-white"
+                                title="Eventos ocorridos"
                                 data-target="#modalEventos"
                                 data-eventos='<?php echo json_encode($eventos); ?>'>
-                            Eventos
+                            <i class="fas fa-calendar-alt"></i>
                         </button>
                     </div>
 
