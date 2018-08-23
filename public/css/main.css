@@ -39,6 +39,13 @@ body {
     display: block;
 }
 
+.botaoEventosOcorridos {
+    position: absolute;
+    left: .5rem;
+    top: .5rem;
+    display: block;
+}
+
 .botaoQrCode {
     position: absolute;
     left: 3.5rem;

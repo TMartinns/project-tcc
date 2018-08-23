@@ -129,7 +129,8 @@ $this->partial('menu');
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle" title="Aguarde 3 segundos">
+                <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle"
+                        title="Aguarde 3 segundos">
                     <span><i class="fas fa-times"></i></span>
                     Cancelar
                 </button>
@@ -411,7 +412,8 @@ $this->partial('menu');
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle" title="Aguarde 3 segundos">
+                            <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle"
+                                    title="Aguarde 3 segundos">
                                 <span><i class="fas fa-times"></i></span>
                                 Cancelar
                             </button>
@@ -517,15 +519,21 @@ $this->partial('menu');
                     </div>
 
                     <div class="modal-body">
-                        <p class="card-text" id="promotoria"></p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="card-text" id="promotoria"></p>
 
-                        <p class="card-text" id="descricao"></p>
+                                <p class="card-text" id="descricao"></p>
 
-                        <p class="card-text" id="interessado"></p>
+                                <p class="card-text mb-3" id="interessado"></p>
+                            </div>
 
-                        <p class="card-text" id="tipoDiligencia"></p>
+                            <div class="col-md-6">
+                                <p class="card-text" id="tipoDiligencia"></p>
 
-                        <p class="card-text" id="prazoCumprimento"></p>
+                                <p class="card-text" id="prazoCumprimento"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

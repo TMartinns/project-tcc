@@ -29,36 +29,33 @@ if (!is_null($diligencias) || !empty($diligencias)) {
         ?>
         <div class="card border border-<?php echo $border; ?>">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-4">
-                        <?php
-                        $eventos = array();
+                <?php
+                $eventos = array();
 
-                        foreach (Evento::find_all_by_id_diligencia($diligencia->id) as $evento) {
-                            $pessoa = Pessoa::find_by_id($evento->id_autor);
+                foreach (Evento::find_all_by_id_diligencia($diligencia->id) as $evento) {
+                    $pessoa = Pessoa::find_by_id($evento->id_autor);
 
-                            $tipoEvento = TipoEvento::find_by_id($evento->id_tipo_evento);
+                    $tipoEvento = TipoEvento::find_by_id($evento->id_tipo_evento);
 
-                            $eventos[] = array(
-                                $evento->data->format('d/m/Y H:i:s'),
-                                $tipoEvento->tipo,
-                                $pessoa->nome
-                            );
-                        }
-                        ?>
-                        <button type="button" data-toggle="modal" class="btn btn-light bg-white tooltipTitle"
-                                title="Eventos ocorridos"
-                                data-target="#modalEventos"
-                                data-eventos='<?php echo json_encode($eventos); ?>'>
-                            <i class="fas fa-calendar-alt"></i>
-                        </button>
-                    </div>
+                    $eventos[] = array(
+                        $evento->data->format('d/m/Y H:i:s'),
+                        $tipoEvento->tipo,
+                        $pessoa->nome
+                    );
+                }
+                ?>
+                <label class="botaoEventosOcorridos">
+                    <button type="button" data-toggle="modal"
+                            class="btn btn-light bg-white tooltipTitle"
+                            title="Eventos ocorridos"
+                            data-target="#modalEventos"
+                            data-eventos='<?php echo json_encode($eventos); ?>'>
+                        <i class="fas fa-calendar-alt"></i>
+                    </button>
+                </label>
 
-                    <div class="col-4">
-                        <div class="text-center tooltipTitle" title="Número de protocolo">
-                            <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
-                        </div>
-                    </div>
+                <div class="text-center tooltipTitle" title="Número de protocolo">
+                    <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
                 </div>
 
                 <div class="row">
