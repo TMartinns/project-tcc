@@ -15,6 +15,8 @@ $('#enviarDiligencias #opcaoOficial').click(function () {
     $('#enviarDiligencias .usuarioEspecifico').toggleClass('d-none');
 });
 
+$('.tooltipTitle').tooltip();
+
 $(function () {
     if (window.matchMedia('(min-width: 769px)').matches) {
         $('#sidebar').addClass('active');
@@ -34,12 +36,6 @@ $('.dadosPessoaisExpandir').on('click', function () {
         return $(this).data('id') === id;
     });
 
-    if (botao.attr('title') == 'Expandir') {
-        botao.attr('title', 'Reduzir');
-    } else {
-        botao.attr('title', 'Expandir');
-    }
-
     botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
 });
 
@@ -51,12 +47,6 @@ $('.dadosVeiculosExpandir').on('click', function () {
         return $(this).data('id') === id;
     });
 
-    if (botao.attr('title') == 'Expandir') {
-        botao.attr('title', 'Reduzir');
-    } else {
-        botao.attr('title', 'Expandir');
-    }
-
     botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
 });
 
@@ -67,12 +57,6 @@ $('.diligenciasExpandir').on('click', function () {
     var botao = $(this).filter(function () {
         return $(this).data('id') === id;
     });
-
-    if (botao.attr('title') == 'Expandir') {
-        botao.attr('title', 'Reduzir');
-    } else {
-        botao.attr('title', 'Expandir');
-    }
 
     botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
 });
@@ -110,7 +94,6 @@ $(function() {
             interval = setInterval(function () {
                 botao.removeClass('disabled');
                 botao.attr('data-dismiss', 'modal');
-                botao.attr('title', 'Pronto');
             }, 3000);
         })
         .mouseout(function () {
@@ -118,6 +101,21 @@ $(function() {
             clearInterval(interval);
             botao.addClass('disabled');
             botao.attr('data-dismiss', '');
-            botao.attr('title', 'Aguarde 3 segundos');
         });
+});
+
+$(function () {
+    var scanner = new Instascan.Scanner({ video: document.getElementById('QRScanner') });
+    scanner.addListener('scan', function (content) {
+        console.log(content);
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            console.error('No cameras found.');
+        }
+    }).catch(function (e) {
+        console.error(e);
+    });
 });

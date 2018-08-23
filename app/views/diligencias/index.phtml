@@ -129,7 +129,7 @@ $this->partial('menu');
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="cancelar btn btn-outline-danger disabled" title="Aguarde 3 segundos">
+                <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle" title="Aguarde 3 segundos">
                     <span><i class="fas fa-times"></i></span>
                     Cancelar
                 </button>
@@ -319,7 +319,7 @@ $this->partial('menu');
 
                                         <div class="input-group-append">
                                             <button id="botaoNovoInteressado" type="button"
-                                                    class="btn btn-outline-secondary border border-left-0"
+                                                    class="btn btn-outline-secondary border border-left-0 tooltipTitle"
                                                     data-toggle="modal"
                                                     data-target="#modalNovoInteressado" title="Novo interessado">
                                                 <span><i class="fas fa-user-plus"></i></span>
@@ -411,7 +411,7 @@ $this->partial('menu');
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="cancelar btn btn-outline-danger disabled" title="Aguarde 3 segundos">
+                            <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle" title="Aguarde 3 segundos">
                                 <span><i class="fas fa-times"></i></span>
                                 Cancelar
                             </button>
@@ -466,7 +466,7 @@ $this->partial('menu');
                                                for="diligencia<?php echo $diligencia->id; ?>">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <div class="text-center" title="Número de protocolo">
+                                                    <div class="text-center tooltipTitle" title="Número de protocolo">
                                                         <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
                                                     </div>
 
@@ -509,7 +509,7 @@ $this->partial('menu');
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" title="Número de protocolo"></h5>
+                        <h5 class="modal-title tooltipTitle" title="Número de protocolo"></h5>
 
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
@@ -559,7 +559,7 @@ $this->partial('menu');
                                        for="remessa<?php echo $remessa->id; ?>">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="text-center" title="Número da remessa">
+                                            <div class="text-center tooltipTitle" title="Número da remessa">
                                                 <h5 class="card-title"><?php echo $remessa->id; ?></h5>
                                             </div>
 
@@ -614,7 +614,7 @@ $this->partial('menu');
 
                                             <div class="mt-4 text-center">
                                                 <button type="button" class="btn btn-outline-dark diligenciasExpandir"
-                                                        data-id="<?php echo $remessa->id; ?>" title="Expandir">
+                                                        data-id="<?php echo $remessa->id; ?>">
                                                     <span><i class="fas fa-arrow-circle-down"></i></span>
                                                 </button>
                                             </div>

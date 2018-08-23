@@ -18,23 +18,20 @@ if (is_null($diligencias) || empty($diligencias)) {
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
-            <nav class="diligenciasStatus nav nav-pills justify-content-center">
+            <nav class="diligenciasStatus nav nav-pills justify-content-center flex-column flex-sm-row">
                 <a class="emAndamentoTab nav-link text-secondary active" data-toggle="pill"
                    href="#emAndamento<?php echo $tipoDiligencia; ?>">
-                    <i class="fas fa-spinner"></i>
-                    <span>Em Andamento</span>
+                    Em Andamento
                 </a>
 
                 <a class="emEsperaTab nav-link text-secondary" data-toggle="pill"
                    href="#emEspera<?php echo $tipoDiligencia; ?>">
-                    <i class="fas fa-ban"></i>
-                    <span>Em Espera</span>
+                    Em Espera
                 </a>
 
                 <a class="cumpridaTab nav-link text-secondary" data-toggle="pill"
                    href="#cumprida<?php echo $tipoDiligencia; ?>">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Cumpridas</span>
+                    Cumpridas
                 </a>
             </nav>
         </div>

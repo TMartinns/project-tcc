@@ -99,13 +99,6 @@ body {
     box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5) !important;
 }
 
-.diligenciasStatus .nav-link span{
-    display: none;
-}
-.diligenciasStatus .nav-link:hover span{
-    display: inline;
-}
-
 .emAndamentoTab.nav-link.active {
     color: #fff !important;
     background-color: #ffc107 !important;

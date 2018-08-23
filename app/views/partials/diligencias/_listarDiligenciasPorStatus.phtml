@@ -46,7 +46,7 @@ if (!is_null($diligencias) || !empty($diligencias)) {
                             );
                         }
                         ?>
-                        <button type="button" data-toggle="modal" class="btn btn-light bg-white"
+                        <button type="button" data-toggle="modal" class="btn btn-light bg-white tooltipTitle"
                                 title="Eventos ocorridos"
                                 data-target="#modalEventos"
                                 data-eventos='<?php echo json_encode($eventos); ?>'>
@@ -55,7 +55,7 @@ if (!is_null($diligencias) || !empty($diligencias)) {
                     </div>
 
                     <div class="col-4">
-                        <div class="text-center" title="Número de protocolo">
+                        <div class="text-center tooltipTitle" title="Número de protocolo">
                             <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
                         </div>
                     </div>
@@ -92,7 +92,7 @@ if (!is_null($diligencias) || !empty($diligencias)) {
                 <p class="card-text">
                 <h6>Posse</h6>
 
-                <img class="rounded-circle avatar bg-dark" src="<?php
+                <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
                 $title = '';
                 $usuario = Usuario::find_by_id_pessoa($this->auth->getUserId());
                 $pessoa = Pessoa::find_by_id($usuario->id_pessoa);

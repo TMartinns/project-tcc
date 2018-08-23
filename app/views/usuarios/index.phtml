@@ -24,7 +24,7 @@ $this->partial('menu');
                         <div class="card-body">
                             <div class="text-center">
                                 <p>
-                                    <img class="rounded-circle avatar bg-dark" src="<?php
+                                    <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
                                     $title = '';
                                     if (is_null($usuario->imagem)) {
                                         $title = 'Icon designed by Eucalyp from Flaticon';
@@ -91,7 +91,7 @@ $this->partial('menu');
 
                             <div class="text-center">
                                 <button class="btn btn-outline-dark dadosPessoaisExpandir"
-                                        data-id="<?php echo $pessoa->id; ?>" title="Expandir">
+                                        data-id="<?php echo $pessoa->id; ?>">
                                     <span><i class="fas fa-arrow-circle-down"></i></span>
                                 </button>
                             </div>

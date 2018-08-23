@@ -50,7 +50,7 @@
 
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-header text-center">
-                            <img class="rounded-circle avatar bg-dark" src="<?php
+                            <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
                             $title = '';
                             $usuario = Usuario::find_by_id_pessoa($this->auth->getUserId());
                             $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
