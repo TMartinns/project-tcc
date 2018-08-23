@@ -141,3 +141,31 @@ $('#modalQrCode').on('show.bs.modal', function (event) {
     modal.find('.modal-body img').attr('src', url);
     modal.find('.modal-body small').html("O QR Code do veículo <strong>" + modelo + "</strong> foi gerado com sucesso!");
 });
+
+var scanner = null;
+
+$('#modalQRScanner').on('show.bs.modal', function () {
+    scanner = new Instascan.Scanner({
+        video: document.getElementById('qrScanner')
+    });
+
+    scanner.addListener('scan', function (content) {
+        console.log(content);
+    });
+
+    Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            console.error('No cameras found.');
+        }
+    }).catch(function (e) {
+        console.error(e);
+    });
+});
+
+$('#modalQRScanner').on('hide.bs.modal', function() {
+    scanner.stop();
+
+    scanner = null;
+});
