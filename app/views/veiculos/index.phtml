@@ -5,8 +5,8 @@ $this->setPartialsDir('partials' . DS . 'veiculos');
 $this->partial('menu');
 ?>
 
-<div id="modalEditarVeiculos" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+<div id="modalEditarVeiculos" class="modal fade modalSeguro" tabindex="-1">
+    <div class="modal-dialog modal-lg shadow-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar veículo</h5>
@@ -76,13 +76,13 @@ $this->partial('menu');
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle"
+                    <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
                             title="Aguarde 3 segundos">
                         <span><i class="fas fa-times"></i></span>
                         Cancelar
                     </button>
 
-                    <button type="submit" class="btn btn-outline-dark">
+                    <button type="submit" class="btn btn-outline-dark shadow">
                         <span><i class="fas fa-save"></i></span>
                         Salvar
                     </button>
@@ -93,7 +93,7 @@ $this->partial('menu');
 </div>
 
 <div id="modalQrCode" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-sm shadow-lg">
         <div class="modal-content">
             <div class="modal-body text-center">
                 <img>
@@ -115,9 +115,9 @@ $this->partial('menu');
             foreach ($veiculos as $veiculo) {
                 ?>
                 <div class="col-md-6 col-lg-4">
-                    <div class="card">
+                    <div class="card shadow-lg">
                         <div class="card-body">
-                            <label class="botaoEditarVeiculos">
+                            <label class="botaoEditarVeiculos shadow-sm">
                                 <button type="button" class="btn btn-light bg-white tooltipTitle" data-toggle="modal"
                                         title="Editar"
                                         data-target="#modalEditarVeiculos"
@@ -135,7 +135,7 @@ $this->partial('menu');
                                 </button>
                             </label>
 
-                            <label class="botaoQrCode">
+                            <label class="botaoQrCode shadow-sm">
                                 <button type="button" class="btn btn-light bg-white tooltipTitle"
                                         title="Gerar QR Code"
                                         data-id="<?php echo $veiculo->id; ?>"
@@ -148,7 +148,7 @@ $this->partial('menu');
 
                             <div class="text-center">
                                 <p>
-                                    <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
+                                    <img class="rounded-circle avatar bg-dark tooltipTitle shadow-lg" src="<?php
                                     $title = '';
 
                                     if (is_null($veiculo->imagem)) {
@@ -179,7 +179,7 @@ $this->partial('menu');
                             </div>
 
                             <div class="text-center">
-                                <button class="btn btn-outline-dark dadosVeiculosExpandir"
+                                <button class="btn btn-outline-dark shadow dadosVeiculosExpandir"
                                         data-id="<?php echo $veiculo->id; ?>">
                                     <span><i class="fas fa-arrow-circle-down"></i></span>
                                 </button>
@@ -190,7 +190,7 @@ $this->partial('menu');
                             <?php
                             if ($veiculo->is_ativo == 1) {
                                 ?>
-                                <a class="btn btn-outline-danger"
+                                <a class="btn btn-outline-danger shadow"
                                    href="<?php echo $this->getRelativeURL('desativar') . '/' . $veiculo->id; ?>">
                                     <span><i class="fas fa-lock"></i></span>
                                     Desativar
@@ -198,7 +198,7 @@ $this->partial('menu');
                                 <?php
                             } else {
                                 ?>
-                                <a class="btn btn-outline-success"
+                                <a class="btn btn-outline-success shadow"
                                    href="<?php echo $this->getRelativeURL('ativar') . '/' . $veiculo->id; ?>">
                                     <span><i class="fas fa-lock-open"></i></span>
                                     Ativar
@@ -219,7 +219,7 @@ $this->partial('menu');
     <div class="tab-pane fade" id="cadastrarVeiculos">
         <br/>
 
-        <div class="card">
+        <div class="card shadow-lg">
             <form enctype="multipart/form-data" action="<?php $this->printRelativeURL('cadastrar'); ?>"
                   method="post">
                 <div class="card-body">
@@ -285,7 +285,7 @@ $this->partial('menu');
 
                     <div class="row">
                         <div class="col-md-6 offset-lg-2 col-lg-4">
-                            <button type="submit" class="btn btn-outline-dark">
+                            <button type="submit" class="btn btn-outline-dark shadow">
                                 <span><i class="fas fa-save"></i></span>
                                 Cadastrar
                             </button>

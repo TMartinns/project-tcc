@@ -27,7 +27,7 @@ if (!is_null($diligencias) || !empty($diligencias)) {
             $border = 'success';
         }
         ?>
-        <div class="card border border-<?php echo $border; ?>">
+        <div class="card border border-<?php echo $border; ?> shadow-lg">
             <div class="card-body">
                 <?php
                 $eventos = array();
@@ -44,7 +44,7 @@ if (!is_null($diligencias) || !empty($diligencias)) {
                     );
                 }
                 ?>
-                <label class="botaoEventosOcorridos">
+                <label class="botaoEventosOcorridos shadow-sm">
                     <button type="button" data-toggle="modal"
                             class="btn btn-light bg-white tooltipTitle"
                             title="Eventos ocorridos"

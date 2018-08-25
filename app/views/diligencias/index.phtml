@@ -5,8 +5,8 @@ $this->setPartialsDir('partials' . DS . 'diligencias');
 $this->partial('menu');
 ?>
 
-<div id="modalNovoInteressado" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+<div id="modalNovoInteressado" class="modal fade modalSeguro" tabindex="-1">
+    <div class="modal-dialog modal-lg shadow-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Novo interessado(a)</h5>
@@ -129,13 +129,13 @@ $this->partial('menu');
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle"
+                <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
                         title="Aguarde 3 segundos">
                     <span><i class="fas fa-times"></i></span>
                     Cancelar
                 </button>
 
-                <button type="button" id="botaoCadastrar" class="btn btn-outline-dark"
+                <button type="button" id="botaoCadastrar" class="btn btn-outline-dark shadow"
                         data-action="<?php echo $this->getRelativeURL('pessoas', false) . DS . 'cadastrar'; ?>">
                     <span><i class="fas fa-save"></i></span>
                     Cadastrar
@@ -146,7 +146,7 @@ $this->partial('menu');
 </div>
 
 <div id="modalEventos" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg shadow-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="card-title">Eventos ocorridos</h5>
@@ -271,7 +271,7 @@ $this->partial('menu');
     <div class="tab-pane fade" id="cadastrarDiligencias">
         <br/>
 
-        <div class="card">
+        <div class="card shadow-lg">
             <form action="<?php echo $this->printRelativeURL('cadastrar'); ?>" method="post">
                 <div class="card-body">
                     <div class="row">
@@ -359,7 +359,7 @@ $this->partial('menu');
 
                     <div class="row">
                         <div class="col-md-6 offset-lg-2 col-lg-4">
-                            <button type="submit" class="btn btn-outline-dark">
+                            <button type="submit" class="btn btn-outline-dark shadow">
                                 <span><i class="fas fa-save"></i></span>
                                 Cadastrar
                             </button>
@@ -375,8 +375,8 @@ $this->partial('menu');
         <br/>
 
         <form action="<?php echo $this->getRelativeURL('enviar'); ?>" method="post">
-            <div id="modalDestinatario" class="modal fade" tabindex="-1">
-                <div class="modal-dialog modal-sm">
+            <div id="modalDestinatario" class="modal fade modalSeguro" tabindex="-1">
+                <div class="modal-dialog modal-sm shadow-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Destinatário</h5>
@@ -412,13 +412,13 @@ $this->partial('menu');
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle"
+                            <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
                                     title="Aguarde 3 segundos">
                                 <span><i class="fas fa-times"></i></span>
                                 Cancelar
                             </button>
 
-                            <button type="submit" class="btn btn-outline-dark">
+                            <button type="submit" class="btn btn-outline-dark shadow">
                                 <span><i class="fas fa-share-square"></i></span>
                                 Enviar
                             </button>
@@ -427,7 +427,7 @@ $this->partial('menu');
                 </div>
             </div>
 
-            <button type="button" data-toggle="modal" data-target="#modalDestinatario" class="btn btn-dark">
+            <button type="button" data-toggle="modal" data-target="#modalDestinatario" class="btn btn-dark shadow">
                 <span><i class="fas fa-share-square"></i></span>
                 Enviar
             </button>
@@ -466,7 +466,7 @@ $this->partial('menu');
 
                                         <label class="custom-control-label"
                                                for="diligencia<?php echo $diligencia->id; ?>">
-                                            <div class="card">
+                                            <div class="card shadow-lg">
                                                 <div class="card-body">
                                                     <div class="text-center tooltipTitle" title="Número de protocolo">
                                                         <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
@@ -508,7 +508,7 @@ $this->partial('menu');
         <br/>
 
         <div id="modalDadosDiligencia" class="modal fade" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog shadow-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title tooltipTitle" title="Número de protocolo"></h5>
@@ -540,7 +540,7 @@ $this->partial('menu');
         </div>
 
         <form action="<?php echo $this->getRelativeURL('receber'); ?>" method="post">
-            <button type="submit" class="btn btn-dark">
+            <button type="submit" class="btn btn-dark shadow">
                 <span><i class="far fa-check-square"></i></span>
                 Receber
             </button>
@@ -565,7 +565,7 @@ $this->partial('menu');
 
                                 <label class="custom-control-label"
                                        for="remessa<?php echo $remessa->id; ?>">
-                                    <div class="card">
+                                    <div class="card shadow-lg">
                                         <div class="card-body">
                                             <div class="text-center tooltipTitle" title="Número da remessa">
                                                 <h5 class="card-title"><?php echo $remessa->id; ?></h5>
@@ -607,7 +607,7 @@ $this->partial('menu');
                                                                     'tipoDiligencia' => $tipoDiligencia->tipo,
                                                                     'prazoCumprimento' => $diligencia->prazo_cumprimento->format('d/m/Y')
                                                                 )); ?>'
-                                                                class="btn btn-light bg-white w-100">
+                                                                class="btn btn-light bg-white w-100 shadow-sm">
                                                             <div class="text-left">
                                                                 <?php
                                                                 echo $mandado->numero_protocolo;
@@ -621,7 +621,7 @@ $this->partial('menu');
                                             </div>
 
                                             <div class="mt-4 text-center">
-                                                <button type="button" class="btn btn-outline-dark diligenciasExpandir"
+                                                <button type="button" class="btn btn-outline-dark shadow diligenciasExpandir"
                                                         data-id="<?php echo $remessa->id; ?>">
                                                     <span><i class="fas fa-arrow-circle-down"></i></span>
                                                 </button>

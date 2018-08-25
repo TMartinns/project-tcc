@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="menu nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link text-secondary active" id="resultadoUsuarioTab" data-toggle="tab"
            href="#resultadoUsuario">Resultado</a>
@@ -9,11 +9,11 @@
     <div class="tab-pane fade show active" id="resultadoUsuario">
         <br/>
 
-        <div class="card">
+        <div class="card shadow-lg">
             <div class="card-body">
                 <div class="offset-md-4 col-md-4 offset-lg-4 col-lg-4 text-center">
                     <p>
-                        <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
+                        <img class="rounded-circle avatar bg-dark tooltipTitle shadow-lg" src="<?php
                         $title = '';
 
                         if (is_null($view_usuario->imagem)) {
@@ -87,7 +87,7 @@
                 <?php
                 if ($view_usuario->is_ativo == 1) {
                     ?>
-                    <a class="btn btn-outline-danger"
+                    <a class="btn btn-outline-danger shadow"
                        href="<?php echo $this->getRelativeURL('desativar') . DS . $view_usuario->id_pessoa; ?>">
                         <span><i class="fas fa-lock"></i></span>
                         Desativar
@@ -95,7 +95,7 @@
                     <?php
                 } else {
                     ?>
-                    <a class="btn btn-outline-success"
+                    <a class="btn btn-outline-success shadow"
                        href="<?php echo $this->getRelativeURL('ativar') . DS . $view_usuario->id_pessoa; ?>">
                         <span><i class="fas fa-lock-open"></i></span>
                         Ativar

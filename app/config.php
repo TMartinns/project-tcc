@@ -30,7 +30,7 @@ $configs->env->development->mail->setFrom(array(
 
 $configs->env->development->menu->setConfigs(array(
     'container_id' => 'sidebar',
-    'container_class' => 'navbar navbar-light bg-white border pt-2 pb-2 pr-0 pl-0',
+    'container_class' => 'navbar navbar-light bg-white border pt-2 pb-2 pr-0 pl-0 shadow-lg',
     'menu_item_class' => 'nav-item mb-4',
     'link_before' => '<span class="ml-3">',
     'link_class' => 'nav-link text-dark pr-3 pl-3',
