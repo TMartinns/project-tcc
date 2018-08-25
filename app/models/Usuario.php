@@ -22,14 +22,14 @@ class Usuario extends \HXPHP\System\Model
         )
     );
 
-    public static function cadastrar(array $post)
+    public static function cadastrar(array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->usuario = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        $usuario = self::create($post);
+        $usuario = self::create($atributos);
 
         if($usuario->is_valid()) {
             $resposta->usuario = $usuario;

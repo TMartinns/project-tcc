@@ -23,14 +23,14 @@ class Mandado extends \HXPHP\System\Model
         )
     );
 
-    public static function cadastrar(array $post)
+    public static function cadastrar(array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->mandado = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        $mandado = self::create($post);
+        $mandado = self::create($atributos);
 
         if($mandado->is_valid()) {
             $resposta->mandado = $mandado;

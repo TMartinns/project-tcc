@@ -22,14 +22,14 @@ class Pessoa extends \HXPHP\System\Model
         )
     );
 
-    public static function cadastrar(array $post)
+    public static function cadastrar(array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->pessoa = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        $pessoa = self::create($post);
+        $pessoa = self::create($atributos);
 
         if ($pessoa->is_valid()) {
             $resposta->pessoa = $pessoa;

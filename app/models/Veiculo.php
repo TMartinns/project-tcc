@@ -42,14 +42,14 @@ class Veiculo extends \HXPHP\System\Model
         )
     );
 
-    public static function cadastrar(array $post)
+    public static function cadastrar(array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->veiculo = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        $veiculo = self::create($post);
+        $veiculo = self::create($atributos);
 
         if($veiculo->is_valid()) {
             $resposta->veiculo = $veiculo;
@@ -66,34 +66,34 @@ class Veiculo extends \HXPHP\System\Model
         return $resposta;
     }
 
-    public static function editar($id, $post)
+    public static function editar($id, $atributos)
     {
         $resposta = new \stdClass;
         $resposta->veiculo = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        if(in_array('', $post)) {
+        if(in_array('', $atributos)) {
             array_push($resposta->errors, 'Todos os campos são obrigatórios.');
 
             return $resposta;
         }
 
         $veiculo = self::find_by_id($id);
-        $veiculo->marca = $post['marca'];
-        $veiculo->modelo = $post['modelo'];
-        $veiculo->cor = $post['cor'];
-        $veiculo->renavam = $post['renavam'];
-        $veiculo->ano = $post['ano'];
-        $veiculo->placa = $post['placa'];
+        $veiculo->marca = $atributos['marca'];
+        $veiculo->modelo = $atributos['modelo'];
+        $veiculo->cor = $atributos['cor'];
+        $veiculo->renavam = $atributos['renavam'];
+        $veiculo->ano = $atributos['ano'];
+        $veiculo->placa = $atributos['placa'];
 
-        $existeRenavam = self::find_by_renavam($post['renavam']);
+        $existeRenavam = self::find_by_renavam($atributos['renavam']);
 
         if(!is_null($existeRenavam) && $id != $existeRenavam->id) {
             array_push($resposta->errors, 'Já existe um veículo com esse renavam cadastrado.');
         }
 
-        $existePlaca = self::find_by_placa($post['placa']);
+        $existePlaca = self::find_by_placa($atributos['placa']);
 
         if(!is_null($existePlaca) && $id != $existePlaca->id) {
             array_push($resposta->errors, 'Já existe um veículo com essa placa cadastrada.');

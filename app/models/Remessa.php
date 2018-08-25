@@ -11,14 +11,14 @@ class Remessa extends \HXPHP\System\Model
         )
     );
 
-    public static function cadastrar(array $post)
+    public static function cadastrar(array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->remessa = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        $remessa = self::create($post);
+        $remessa = self::create($atributos);
 
         if($remessa->is_valid()) {
             $resposta->remessa = $remessa;

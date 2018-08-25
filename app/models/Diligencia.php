@@ -15,14 +15,14 @@ class Diligencia extends \HXPHP\System\Model
         )
     );
 
-    public static function cadastrar(array $post)
+    public static function cadastrar(array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->diligencia = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        $diligencia = self::create($post);
+        $diligencia = self::create($atributos);
 
         if ($diligencia->is_valid()) {
             $resposta->diligencia = $diligencia;
