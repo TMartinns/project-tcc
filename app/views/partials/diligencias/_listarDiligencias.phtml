@@ -1,82 +1,129 @@
 <?php
 $diligencias = null;
-$tipoDiligencia = null;
 
 if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
-    $tipoDiligencia = $view_tipoDiligencia;
-    $diligencias = Diligencia::find_all_by_id_tipo_diligencia($tipoDiligencia);
+    if (isset($view_status) && !empty($view_status)) {
+        if ($this->auth->getUserRole() == 'C') {
+            $diligencias = Diligencia::find_all_by_id_tipo_diligencia_and_status($view_tipoDiligencia, $view_status);
+        } else {
+            $diligencias = Diligencia::getAllByTipoDiligenciaAndStatusAndEventosAutor(
+                $view_tipoDiligencia,
+                $view_status,
+                $this->auth->getUserId()
+            );
+        }
+    }
 }
 
-if (is_null($diligencias) || empty($diligencias)) {
-    ?>
-    <div class="alert alert-warning show shadow-lg">
-        <h5 class="alert-heading text-center">Nenhuma diligência desse tipo foi emitida até o presente momento.</h5>
-    </div>
-    <?php
-} else {
-    ?>
+if (!empty($diligencias)) {
+    foreach ($diligencias as $diligencia) {
+        $mandado = Mandado::find_by_id($diligencia->id_mandado);
 
-    <div class="row">
-        <div class="col-md-12 col-lg-12">
-            <nav class="diligenciasStatus nav nav-pills justify-content-center flex-column flex-sm-row">
-                <a class="emAndamentoTab nav-link text-secondary active" data-toggle="pill"
-                   href="#emAndamento<?php echo $tipoDiligencia; ?>">
-                    Em Andamento
-                </a>
+        $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);
 
-                <a class="emEsperaTab nav-link text-secondary" data-toggle="pill"
-                   href="#emEspera<?php echo $tipoDiligencia; ?>">
-                    Em Espera
-                </a>
+        $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
 
-                <a class="cumpridaTab nav-link text-secondary" data-toggle="pill"
-                   href="#cumprida<?php echo $tipoDiligencia; ?>">
-                    Cumpridas
-                </a>
-            </nav>
-        </div>
-    </div>
+        $interessado = Pessoa::find_by_id($mandado->id_interessado);
 
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="emAndamento<?php echo $tipoDiligencia; ?>">
-            <br/>
+        $border = '';
 
-            <?php
-            if (!is_null($tipoDiligencia)) {
-                $this->partial('listarDiligenciasPorStatus', array(
-                    'tipoDiligencia' => $tipoDiligencia,
-                    'status' => 'A'
+        if ($diligencia->status == 'A') {
+            $border = 'warning';
+        } else if ($diligencia->status == 'E') {
+            $border = 'danger';
+        } else {
+            $border = 'success';
+        }
+        ?>
+        <div class="card border border-<?php echo $border; ?> shadow-lg">
+            <div class="card-body">
+                <?php
+                $eventos = array();
+
+                foreach (Evento::find_all_by_id_diligencia($diligencia->id) as $evento) {
+                    $pessoa = Pessoa::find_by_id($evento->id_autor);
+
+                    $tipoEvento = TipoEvento::find_by_id($evento->id_tipo_evento);
+
+                    $eventos[] = array(
+                        $evento->data->format('d/m/Y H:i:s'),
+                        $tipoEvento->tipo,
+                        $pessoa->nome
+                    );
+                }
+                ?>
+                <label class="botaoEventosOcorridos shadow-sm">
+                    <button type="button" data-toggle="modal"
+                            class="btn btn-light bg-white tooltipTitle"
+                            title="Eventos ocorridos"
+                            data-target="#modalEventos"
+                            data-eventos='<?php echo json_encode($eventos); ?>'>
+                        <i class="fas fa-calendar-alt"></i>
+                    </button>
+                </label>
+
+                <div class="text-center tooltipTitle" title="Número de protocolo">
+                    <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 offset-lg-2 col-lg-4">
+                        <p class="card-text"><h6>Promotoria</h6><?php echo $promotoria->nome; ?></p>
+
+                        <p class="card-text"><h6>Descrição</h6><?php echo $mandado->descricao; ?></p>
+
+                        <p class="card-text"><h6>Interessado(a)</h6><?php echo $interessado->nome; ?></p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <p class="card-text"><h6>Tipo de diligência</h6><?php echo $tipoDiligencia->tipo; ?></p>
+
+                        <p class="card-text"><h6>Prazo para cumprimento</h6><?php
+                        echo $diligencia->prazo_cumprimento->format('d/m/Y');
+                        ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <?php
+                $evento = Evento::find_by_id_diligencia($diligencia->id, array(
+                    'order' => 'data desc'
                 ));
-            }
-            ?>
+
+                $pessoa = Pessoa::find_by_id($evento->id_autor);
+                $usuario = Usuario::find_by_id_pessoa($pessoa->id);
+                ?>
+                <p class="card-text">
+                <h6>Posse</h6>
+
+                <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
+                $title = '';
+                $usuario = Usuario::find_by_id_pessoa($this->auth->getUserId());
+                $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
+
+                if (is_null($usuario->imagem)) {
+                    $title = 'Icon designed by Eucalyp from Flaticon';
+                    $avatar = '';
+                    if (is_null($pessoa->genero)) {
+                        $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
+                        $avatar = $genero[mt_rand(0, 1)];
+                    } else {
+                        $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                    }
+                    echo IMG . "avatars/usuarios/$avatar";
+                } else {
+                    echo UPLOADS . "usuarios/$usuario->id_pessoa/$usuario->imagem";
+                }
+                ?>" height="25" width="25" title="<?php echo $title; ?>">
+
+                <?php echo $pessoa->nome; ?>
+                </p>
+            </div>
         </div>
 
-        <div class="tab-pane fade" id="emEspera<?php echo $tipoDiligencia; ?>">
-            <br/>
-
-            <?php
-            if (!is_null($tipoDiligencia)) {
-                $this->partial('listarDiligenciasPorStatus', array(
-                    'tipoDiligencia' => $tipoDiligencia,
-                    'status' => 'E'
-                ));
-            }
-            ?>
-        </div>
-
-        <div class="tab-pane fade" id="cumprida<?php echo $tipoDiligencia; ?>">
-            <br/>
-
-            <?php
-            if (!is_null($tipoDiligencia)) {
-                $this->partial('listarDiligenciasPorStatus', array(
-                    'tipoDiligencia' => $tipoDiligencia,
-                    'status' => 'C'
-                ));
-            }
-            ?>
-        </div>
-    </div>
-    <?php
+        <br/>
+        <?php
+    }
 }
 ?>

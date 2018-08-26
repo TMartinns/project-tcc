@@ -178,7 +178,7 @@ $this->partial('menu');
         <?php
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Averiguação em fazenda');
 
-        $this->partial('listarDiligencias', array(
+        $this->partial('subMenu', array(
             'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
@@ -190,7 +190,7 @@ $this->partial('menu');
         <?php
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Averiguação');
 
-        $this->partial('listarDiligencias', array(
+        $this->partial('subMenu', array(
             'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
@@ -202,7 +202,7 @@ $this->partial('menu');
         <?php
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Urgente');
 
-        $this->partial('listarDiligencias', array(
+        $this->partial('subMenu', array(
             'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
@@ -214,7 +214,7 @@ $this->partial('menu');
         <?php
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Notificação em outra cidade');
 
-        $this->partial('listarDiligencias', array(
+        $this->partial('subMenu', array(
             'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
@@ -226,7 +226,7 @@ $this->partial('menu');
         <?php
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Notificação');
 
-        $this->partial('listarDiligencias', array(
+        $this->partial('subMenu', array(
             'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
@@ -238,7 +238,7 @@ $this->partial('menu');
         <?php
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Ofício em outra cidade');
 
-        $this->partial('listarDiligencias', array(
+        $this->partial('subMenu', array(
             'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
@@ -250,7 +250,7 @@ $this->partial('menu');
         <?php
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Ofício');
 
-        $this->partial('listarDiligencias', array(
+        $this->partial('subMenu', array(
             'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
@@ -262,114 +262,121 @@ $this->partial('menu');
         <?php
         $tipoDiligencia = TipoDiligencia::find_by_tipo('Ordem de missão');
 
-        $this->partial('listarDiligencias', array(
+        $this->partial('subMenu', array(
             'tipoDiligencia' => $tipoDiligencia->id
         ));
         ?>
     </div>
 
-    <div class="tab-pane fade" id="cadastrarDiligencias">
-        <br/>
+    <?php
+    if($this->auth->getUserRole() == 'C') {
+        ?>
+        <div class="tab-pane fade" id="cadastrarDiligencias">
+            <br/>
 
-        <div class="card shadow-lg">
-            <form action="<?php echo $this->printRelativeURL('cadastrar'); ?>" method="post">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 offset-lg-2 col-lg-4">
-                            <div class="form-group">
-                                <label for="promotoria">Promotoria</label>
+            <div class="card shadow-lg">
+                <form action="<?php echo $this->printRelativeURL('cadastrar'); ?>" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 offset-lg-2 col-lg-4">
+                                <div class="form-group">
+                                    <label for="promotoria">Promotoria</label>
 
-                                <select class="custom-select" name="promotoria" id="promotoria">
-                                    <option selected>Selecione a promotoria</option>
-                                    <?php
-                                    $promotorias = Promotoria::all();
+                                    <select class="custom-select" name="promotoria" id="promotoria">
+                                        <option selected>Selecione a promotoria</option>
+                                        <?php
+                                        $promotorias = Promotoria::all();
 
-                                    foreach ($promotorias as $promotoria) {
-                                        echo "<option value=$promotoria->id>$promotoria->nome</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="descricao">Descrição</label>
-
-                                <textarea required class="form-control" name="descricao" id="descricao"
-                                          placeholder="Insira a descrição" rows="1"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="numeroProtocolo">Número de protocolo</label>
-
-                                <input required type="text" class="form-control" name="numeroProtocolo"
-                                       id="numeroProtocolo"
-                                       placeholder="Insira o número de protocolo">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label for="interessado">Interessado(a)</label>
-
-                                <div class="w-100">
-                                    <div class="input-group">
-                                        <input required type="text" class="form-control rounded-left rounded-right-0"
-                                               name="interessado"
-                                               id="interessado"
-                                               placeholder="Insira o interessado">
-
-                                        <div class="input-group-append">
-                                            <button id="botaoNovoInteressado" type="button"
-                                                    class="btn btn-outline-secondary border border-left-0 tooltipTitle"
-                                                    data-toggle="modal"
-                                                    data-target="#modalNovoInteressado" title="Novo interessado">
-                                                <span><i class="fas fa-user-plus"></i></span>
-                                            </button>
-                                        </div>
-                                    </div>
+                                        foreach ($promotorias as $promotoria) {
+                                            echo "<option value=$promotoria->id>$promotoria->nome</option>";
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
 
-                                <input type="hidden" name="idInteressado" id="idInteressado">
+                                <div class="form-group">
+                                    <label for="descricao">Descrição</label>
+
+                                    <textarea required class="form-control" name="descricao" id="descricao"
+                                              placeholder="Insira a descrição" rows="1"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="numeroProtocolo">Número de protocolo</label>
+
+                                    <input required type="text" class="form-control" name="numeroProtocolo"
+                                           id="numeroProtocolo"
+                                           placeholder="Insira o número de protocolo">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="tipoDiligencia">Tipo de diligência</label>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="interessado">Interessado(a)</label>
 
-                                <select class="custom-select" name="tipoDiligencia" id="tipoDiligencia">
-                                    <option selected>Selecione o tipo de diligência</option>
-                                    <?php
-                                    $tiposDiligencias = TipoDiligencia::all();
+                                    <div class="w-100">
+                                        <div class="input-group">
+                                            <input required type="text"
+                                                   class="form-control rounded-left rounded-right-0"
+                                                   name="interessado"
+                                                   id="interessado"
+                                                   placeholder="Insira o interessado">
 
-                                    foreach ($tiposDiligencias as $tipoDiligencia) {
-                                        echo "<option value=$tipoDiligencia->id>$tipoDiligencia->tipo</option>";
-                                    }
-                                    ?>
-                                </select>
+                                            <div class="input-group-append">
+                                                <button id="botaoNovoInteressado" type="button"
+                                                        class="btn btn-outline-secondary border border-left-0 tooltipTitle"
+                                                        data-toggle="modal"
+                                                        data-target="#modalNovoInteressado" title="Novo interessado">
+                                                    <span><i class="fas fa-user-plus"></i></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="idInteressado" id="idInteressado">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="tipoDiligencia">Tipo de diligência</label>
+
+                                    <select class="custom-select" name="tipoDiligencia" id="tipoDiligencia">
+                                        <option selected>Selecione o tipo de diligência</option>
+                                        <?php
+                                        $tiposDiligencias = TipoDiligencia::all();
+
+                                        foreach ($tiposDiligencias as $tipoDiligencia) {
+                                            echo "<option value=$tipoDiligencia->id>$tipoDiligencia->tipo</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="prazoCumprimento">Prazo para cumprimento</label>
+
+                                    <input required type="text" class="form-control" name="prazoCumprimento"
+                                           id="prazoCumprimento"
+                                           placeholder="Selecione a data máxima para o cumprimento">
+                                </div>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="prazoCumprimento">Prazo para cumprimento</label>
-
-                                <input required type="text" class="form-control" name="prazoCumprimento"
-                                       id="prazoCumprimento"
-                                       placeholder="Selecione a data máxima para o cumprimento">
+                        <div class="row">
+                            <div class="col-md-6 offset-lg-2 col-lg-4">
+                                <button type="submit" class="btn btn-outline-dark shadow">
+                                    <span><i class="fas fa-save"></i></span>
+                                    Cadastrar
+                                </button>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 offset-lg-2 col-lg-4">
-                            <button type="submit" class="btn btn-outline-dark shadow">
-                                <span><i class="fas fa-save"></i></span>
-                                Cadastrar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
+            <br/>
         </div>
-        <br/>
-    </div>
+        <?php
+    }
+    ?>
 
     <div class="tab-pane fade" id="enviarDiligencias">
         <br/>

@@ -1,0 +1,87 @@
+<?php
+$diligencias = null;
+$tipoDiligencia = null;
+
+if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
+    $tipoDiligencia = $view_tipoDiligencia;
+
+    if($this->auth->getUserRole() == 'C') {
+        $diligencias = Diligencia::find_all_by_id_tipo_diligencia($tipoDiligencia);
+    } else {
+        $diligencias = Diligencia::getAllByTipoDiligenciaAndEventosAutor($tipoDiligencia, $this->auth->getUserId());
+    }
+}
+
+if (empty($diligencias)) {
+    ?>
+    <div class="alert alert-warning show shadow-lg">
+        <h5 class="alert-heading text-center">Nenhuma diligência desse tipo foi emitida até o momento.</h5>
+    </div>
+    <?php
+} else {
+    ?>
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <nav class="diligenciasStatus nav nav-pills justify-content-center flex-column flex-sm-row">
+                <a class="emAndamentoTab nav-link text-secondary active" data-toggle="pill"
+                   href="#emAndamento<?php echo $tipoDiligencia; ?>">
+                    Em Andamento
+                </a>
+
+                <a class="emEsperaTab nav-link text-secondary" data-toggle="pill"
+                   href="#emEspera<?php echo $tipoDiligencia; ?>">
+                    Em Espera
+                </a>
+
+                <a class="cumpridaTab nav-link text-secondary" data-toggle="pill"
+                   href="#cumprida<?php echo $tipoDiligencia; ?>">
+                    Cumpridas
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="emAndamento<?php echo $tipoDiligencia; ?>">
+            <br/>
+
+            <?php
+            if (!empty($tipoDiligencia)) {
+                $this->partial('listarDiligencias', array(
+                    'tipoDiligencia' => $tipoDiligencia,
+                    'status' => 'A'
+                ));
+            }
+            ?>
+        </div>
+
+        <div class="tab-pane fade" id="emEspera<?php echo $tipoDiligencia; ?>">
+            <br/>
+
+            <?php
+            if (!empty($tipoDiligencia)) {
+                $this->partial('listarDiligencias', array(
+                    'tipoDiligencia' => $tipoDiligencia,
+                    'status' => 'E'
+                ));
+            }
+            ?>
+        </div>
+
+        <div class="tab-pane fade" id="cumprida<?php echo $tipoDiligencia; ?>">
+            <br/>
+
+            <?php
+            if (!empty($tipoDiligencia)) {
+                $this->partial('listarDiligencias', array(
+                    'tipoDiligencia' => $tipoDiligencia,
+                    'status' => 'C'
+                ));
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+}
+?>
