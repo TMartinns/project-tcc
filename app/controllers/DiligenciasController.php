@@ -29,7 +29,6 @@ class DiligenciasController extends \HXPHP\System\Controller
         ));
 
         $this->view->setAssets('js', array(
-            $this->configs->js . 'modal.config.js',
             $this->configs->bower . 'gijgo/dist/combined/js/gijgo.min.js',
             $this->configs->bower . 'gijgo/dist/combined/js/messages/messages.pt-br.min.js',
             $this->configs->js . 'datepicker.config.js',
