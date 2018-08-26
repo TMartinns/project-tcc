@@ -101,8 +101,8 @@ class VeiculosController extends \HXPHP\System\Controller
                     "O veículo <strong>$modelo</strong> foi cadastrado com sucesso."
                 );
 
-                if(!$resposta->status) {
-                    if(empty($resposta->error)) {
+                if (!$resposta->status) {
+                    if (empty($resposta->error)) {
                         $this->load('Helpers\Alert', $alertSuccess);
                     } else {
                         $this->load('Helpers\Alert', array(
@@ -124,13 +124,13 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
-    public function editarAction($id)
+    public function editarAction($id = null)
     {
         $this->view->setFile('index');
 
         $post = $this->request->post();
 
-        if (!empty($post)) {
+        if (!empty($post) && !empty(filter_var($id, FILTER_VALIDATE_INT))) {
             $resposta = Veiculo::editar($id, $post);
 
             if ($resposta->status) {
@@ -144,8 +144,8 @@ class VeiculosController extends \HXPHP\System\Controller
                     "O veículo <strong>$modelo</strong> foi alterado com sucesso."
                 );
 
-                if(!$resposta->status) {
-                    if(empty($resposta->error)) {
+                if (!$resposta->status) {
+                    if (empty($resposta->error)) {
                         $this->load('Helpers\Alert', $alertSuccess);
                     } else {
                         $this->load('Helpers\Alert', array(
@@ -167,33 +167,80 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
-    public function desativarAction($id)
+    public function registrarUsoVeiculoAction($id = null)
     {
-        $this->view->setFile('index');
 
-        $resposta = Veiculo::ativar($id, false);
-        $modelo = $resposta->veiculo->modelo;
-        if ($resposta->status) {
-            $this->load('Helpers\Alert', array(
-                'danger',
-                'Veículo desativado!',
-                "O veículo <strong>$modelo</strong> foi desativado com sucesso."
+        $this->view->setPath('blank', true)
+            ->setFile('index')
+            ->setTemplate(false);
+
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            VeiculoUtilizado::cadastrar(array(
+                'data_inicio' => date('Y-m-d H:i:s'),
+                'id_veiculo' => $id,
+                'id_oficial' => $this->auth->getUserId()
             ));
         }
     }
 
-    public function ativarAction($id)
+    public function desativarAction($id = null)
     {
         $this->view->setFile('index');
 
-        $resposta = Veiculo::ativar($id);
-        $modelo = $resposta->veiculo->modelo;
-        if ($resposta->status) {
-            $this->load('Helpers\Alert', array(
-                'success',
-                'Veículo ativado!',
-                "O veículo <strong>$modelo</strong> foi ativado com sucesso."
-            ));
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $resposta = Veiculo::ativar($id, false);
+
+            $modelo = $resposta->veiculo->modelo;
+
+            if ($resposta->status) {
+                $this->load('Helpers\Alert', array(
+                    'danger',
+                    'Veículo desativado!',
+                    "O veículo <strong>$modelo</strong> foi desativado com sucesso."
+                ));
+            }
         }
+    }
+
+    public function ativarAction($id = null)
+    {
+        $this->view->setFile('index');
+
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $resposta = Veiculo::ativar($id);
+
+            $modelo = $resposta->veiculo->modelo;
+
+            if ($resposta->status) {
+                $this->load('Helpers\Alert', array(
+                    'success',
+                    'Veículo ativado!',
+                    "O veículo <strong>$modelo</strong> foi ativado com sucesso."
+                ));
+            }
+        }
+    }
+
+    public function getVeiculoAction($id = null)
+    {
+        $this->view->setPath('blank', false)
+            ->setFile('index')
+            ->setTemplate(false);
+
+        $resposta = array();
+
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $veiculo = Veiculo::find_by_id_and_is_ativo($id, 1);
+
+            if (!empty($veiculo)) {
+                $resposta = array(
+                    'id' => $veiculo->id,
+                    'modelo' => $veiculo->modelo,
+                    'imagem' => $veiculo->imagem
+                );
+            }
+        }
+
+        echo json_encode($resposta);
     }
 }

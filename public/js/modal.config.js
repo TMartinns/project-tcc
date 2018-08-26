@@ -1,16 +1,4 @@
-$('#modalEditarVeiculos').modal({
-    backdrop: 'static',
-    keyboard: false,
-    show: false
-});
-
-$('#modalNovoInteressado').modal({
-    backdrop: 'static',
-    keyboard: false,
-    show: false
-});
-
-$('#modalDestinatario').modal({
+$('.modalSeguro').modal({
     backdrop: 'static',
     keyboard: false,
     show: false
@@ -144,13 +132,52 @@ $('#modalQrCode').on('show.bs.modal', function (event) {
 
 var scanner = null;
 
-$('#modalQRScanner').on('show.bs.modal', function () {
+$('#modalRegistraUsoVeiculo').on('show.bs.modal', function () {
+    var modal = $(this);
+
     scanner = new Instascan.Scanner({
         video: document.getElementById('qrScanner')
     });
 
     scanner.addListener('scan', function (content) {
-        console.log(content);
+        $.ajax({
+            method: 'GET',
+            url: '/project-tcc/veiculos/getVeiculo/' + content,
+            success: function (resposta) {
+                var veiculo = $.parseJSON(resposta);
+
+                if (veiculo != "") {
+                    modal.modal('hide');
+
+                    modal = $('#modalConfirmaRegistro').modal('show');
+
+                    modal.find('#veiculo').html(veiculo.modelo)
+                        .tooltip();
+                    modal.find('button#confirmaRegistro').attr('data-veiculo', veiculo.id);
+
+                    var title = '';
+                    var src = '/project-tcc/public/uploads/veiculos/' + veiculo.id + '/' + veiculo.imagem;
+
+                    if (veiculo.imagem == null) {
+                        title = 'Icon designed by Freepik from Flaticon';
+                        var avatar = 'car-' + Math.floor(Math.random() * 8);
+                        src = '/project-tcc/public/img/avatars/veiculos/' + avatar;
+                    }
+
+                    modal.find('.modal-body img').attr('src', src)
+                        .tooltip().attr('data-original-title', title);
+                } else {
+                    modal.find('.modal-footer small').addClass('text-danger')
+                        .text('Veículo desativado ou inexistente! ' +
+                            'Por favor, contate a coordenadoria para obter mais informações.');
+
+                    setTimeout(function () {
+                        modal.find('.modal-footer small').removeClass('text-danger')
+                            .text('Posicione o QR Code próximo da câmera para que ele possa ser lido.');
+                    }, 10 * 1000);
+                }
+            }
+        });
     });
 
     Instascan.Camera.getCameras().then(function (cameras) {
@@ -164,8 +191,37 @@ $('#modalQRScanner').on('show.bs.modal', function () {
     });
 });
 
-$('#modalQRScanner').on('hide.bs.modal', function() {
+$('#modalRegistraUsoVeiculo').on('hide.bs.modal', function () {
     scanner.stop();
 
     scanner = null;
+
+    $(this).find('.modal-footer small').removeClass('text-danger')
+        .text('Posicione o QR Code próximo da câmera para que ele possa ser lido.');
+});
+
+$('#modalConfirmaRegistro').find('button#confirmaRegistro').click(function () {
+    var modal = $('#modalConfirmaRegistro');
+    var veiculo = $(this).data('veiculo');
+    var url = $(this).data('url');
+
+    $.ajax({
+        method: 'GET',
+        url: url + veiculo,
+        success: function (resposta) {
+            modal.modal('hide');
+
+            $('#modalResultadoRegistro').modal('show');
+        }
+    });
+});
+
+$('#modalConfirmaRegistro').on('hide.bs.modal', function () {
+    var modal = $(this);
+
+    modal.find('#veiculo').html('');
+    modal.find('button#confirmaRegistro').attr('data-veiculo', '')
+        .removeData('veiculo');
+    modal.find('.modal-body img').attr('src', '')
+        .attr('data-original-title', '');
 });

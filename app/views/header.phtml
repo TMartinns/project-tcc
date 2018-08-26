@@ -23,8 +23,8 @@
 <body style="padding-top: 83px">
 <div class="container-fluid">
     <div id="container">
-        <nav class="navbar fixed-top navbar-expand navbar-light bg-white border">
-            <button type="button" id="sidebarAppear" class="btn btn-outline-dark">
+        <nav class="navbar fixed-top navbar-expand navbar-light bg-white border shadow-lg">
+            <button type="button" id="sidebarAppear" class="btn btn-outline-dark shadow">
                 <i class="fas fa-bars"></i>
             </button>
 
@@ -33,14 +33,14 @@
             </a>
 
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item">
+                <li class="nav-item shadow">
                     <button type="button" class="btn btn-outline-dark">
                         <i class="fas fa-bell fa-1x"></i>
                         <span class="badge badge-primary">0</span>
                     </button>
                 </li>
 
-                <li class="nav-item dropdown ml-2">
+                <li class="nav-item dropdown ml-2 shadow">
                     <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown">
                         <?php
@@ -48,9 +48,9 @@
                         ?>
                     </button>
 
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-right shadow-lg">
                         <div class="dropdown-header text-center">
-                            <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
+                            <img class="rounded-circle avatar bg-dark tooltipTitle shadow-lg" src="<?php
                             $title = '';
                             $usuario = Usuario::find_by_id_pessoa($this->auth->getUserId());
                             $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
@@ -87,8 +87,8 @@
         echo (isset($this->menu)) ? $this->menu->getMenu() : '';
         ?>
 
-        <div id="modalQRScanner" class="modal fade" tabindex="-1">
-            <div class="modal-dialog modal-sm">
+        <div id="modalRegistraUsoVeiculo" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-sm shadow-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Registrar uso do veículo</h5>
@@ -97,12 +97,63 @@
                             <span>&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" style="padding: 0;">
+                    <div class="modal-body p-0">
                         <video id="qrScanner" width="100%" height="auto" style="margin-bottom: -.40rem;"></video>
                     </div>
 
                     <div class="modal-footer text-center">
                         <small>Posicione o QR Code próximo da câmera para que ele possa ser lido.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalConfirmaRegistro" class="modal fade modalSeguro" tabindex="-1">
+            <div class="modal-dialog modal-sm shadow-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="card-title">Você tem certeza?</h5>
+                    </div>
+
+                    <div class="modal-body text-center">
+                        <small>
+                            Você está prestes a registrar que usará o veículo abaixo.
+                        </small>
+
+                        <p>
+                            <img class="rounded-circle avatar bg-dark shadow-lg mt-3" width="70"
+                                 height="70">
+                        </p>
+
+                        <h5 id="veiculo" title="Modelo"></h5>
+                    </div>
+
+                    <div class="modal-footer bg-white">
+                        <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
+                                title="Aguarde 3 segundos">
+                            <span><i class="fas fa-thumbs-down"></i></span>
+                            Não
+                        </button>
+
+                        <button type="button" id="confirmaRegistro" class="btn btn-outline-success shadow"
+                                data-url="<?php echo $this->getRelativeURL('veiculos', false) . DS . 'registrarUsoVeiculo' . DS; ?>">
+                            <span><i class="fas fa-thumbs-up"></i></span>
+                            Sim
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalResultadoRegistro" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-sm shadow-lg">
+                <div class="modal-content">
+                    <div class="modal-body text-center text-success rounded">
+                        <span><i class="far fa-check-circle fa-5x"></i></span>
+
+                        <br/>
+
+                        Feito!
                     </div>
                 </div>
             </div>

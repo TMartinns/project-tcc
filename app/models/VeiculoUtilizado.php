@@ -6,6 +6,6 @@ class VeiculoUtilizado extends \HXPHP\System\Model
 
     public static function cadastrar(array $atributos)
     {
-        return self::create($atributos)->is_valid();
+        self::create($atributos);
     }
 }
