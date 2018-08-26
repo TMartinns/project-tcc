@@ -188,4 +188,13 @@ class UsuariosController extends \HXPHP\System\Controller
 
         echo json_encode($resposta);
     }
+
+    public function getUsuarioFuncaoAction()
+    {
+        $this->view->setPath('blank', false)
+            ->setFile('index')
+            ->setTemplate(false);
+
+        echo json_encode($this->auth->getUserRole());
+    }
 }
