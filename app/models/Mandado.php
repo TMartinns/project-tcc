@@ -23,6 +23,13 @@ class Mandado extends \HXPHP\System\Model
         )
     );
 
+    static $validates_uniqueness_of = array(
+        array(
+            'numero_protocolo',
+            'message' => 'Já existe uma diligência com esse número de protocolo cadastrado.'
+        )
+    );
+
     public static function cadastrar(array $atributos)
     {
         $resposta = new \stdClass;
