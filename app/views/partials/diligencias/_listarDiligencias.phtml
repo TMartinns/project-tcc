@@ -99,8 +99,6 @@ if (!empty($diligencias)) {
 
                 <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
                 $title = '';
-                $usuario = Usuario::find_by_id_pessoa($this->auth->getUserId());
-                $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
 
                 if (is_null($usuario->imagem)) {
                     $title = 'Icon designed by Eucalyp from Flaticon';
