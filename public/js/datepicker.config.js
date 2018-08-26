@@ -1,4 +1,4 @@
-$('#dataNascimento').datepicker({
+$('#modalNovoInteressado #dataNascimento').datepicker({
     uiLibrary: 'bootstrap4',
     header: true,
     iconsLibrary: 'fontawesome',
@@ -9,7 +9,7 @@ $('#dataNascimento').datepicker({
     }
 });
 
-$('#prazoCumprimento').datepicker({
+$('#cadastrarDiligencias #prazoCumprimento').datepicker({
     uiLibrary: 'bootstrap4',
     header: true,
     iconsLibrary: 'fontawesome',
