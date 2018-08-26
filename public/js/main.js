@@ -83,17 +83,18 @@ $(function () {
         url: '/project-tcc/usuarios/getUsuarioFuncao/',
         success: function(resposta) {
             var funcao = $.parseJSON(resposta);
-            if(funcao == 'C') {
-                $('#menu').prepend("<li class='nav-item mb-4 mt-1'>" +
-                    "<input type='text' class='form-control ml-3 shadow' id='pesquisar' placeholder='Pesquisar...'>");
 
-                pesquisarAutocomplete();
-            } else if(funcao == 'O') {
+            if(funcao == 'O') {
                 $('#menu li').last().find('.nav-link').attr('data-toggle', 'modal')
                     .attr('data-target', '#modalRegistraUsoVeiculo');
             }
         }
     });
+
+    $('#menu').prepend("<li class='nav-item mb-4 mt-1'>" +
+        "<input type='text' class='form-control ml-3 shadow' id='pesquisar' placeholder='Pesquisar...'>");
+
+    pesquisarAutocomplete();
 });
 
 $(function() {

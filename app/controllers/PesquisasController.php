@@ -15,7 +15,7 @@ class PesquisasController extends \HXPHP\System\Controller
 
         $this->auth->redirectCheck(false);
 
-        $this->auth->roleCheck(array('C'));
+        $this->auth->roleCheck(array('C', 'O'));
 
     }
 
@@ -29,11 +29,13 @@ class PesquisasController extends \HXPHP\System\Controller
 
         $usuarios = array();
 
-        foreach(Usuario::getAllByEmailOrPessoasNome($info, $info) as $usuario) {
-            $usuarios[] = array(
-                'texto' => $usuario->nome,
-                'url' => $this->view->getRelativeURL('usuarios', false) . DS . 'visualizar' . DS . $usuario->id
-            );
+        if($this->auth->getUserRole() == 'C') {
+            foreach (Usuario::getAllByEmailOrPessoasNome($info, $info) as $usuario) {
+                $usuarios[] = array(
+                    'texto' => $usuario->nome,
+                    'url' => $this->view->getRelativeURL('usuarios', false) . DS . 'visualizar' . DS . $usuario->id
+                );
+            }
         }
 
         $diligencias = array();
@@ -51,13 +53,15 @@ class PesquisasController extends \HXPHP\System\Controller
 
         $veiculos = array();
 
-        foreach (Veiculo::all(array(
-            'conditions' => "modelo like '%$info%' or renavam like '%$info%' or placa like '%$info%'"
-        )) as $veiculo) {
-            $veiculos[] = array(
-                'texto' => $veiculo->modelo,
-                'url' => $this->view->getRelativeURL('veiculos', false) . DS . 'visualizar' . DS . $veiculo->id
-            );
+        if($this->auth->getUserRole() == 'C') {
+            foreach (Veiculo::all(array(
+                'conditions' => "modelo like '%$info%' or renavam like '%$info%' or placa like '%$info%'"
+            )) as $veiculo) {
+                $veiculos[] = array(
+                    'texto' => $veiculo->modelo,
+                    'url' => $this->view->getRelativeURL('veiculos', false) . DS . 'visualizar' . DS . $veiculo->id
+                );
+            }
         }
 
         echo json_encode(array(
