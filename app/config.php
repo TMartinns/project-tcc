@@ -40,7 +40,7 @@ $configs->env->development->menu->setConfigs(array(
 $configs->env->development->menu->setMenus(array(
     'Início/fas fa-home' => '%baseURI%/inicio/',
     'Diligências/fas fa-tasks' => '%baseURI%/diligencias/',
-    'Veículos/fas fa-car' => '%baseURI%/veiculos/'
+    'Registrar uso do veículo/fas fa-car' => '#'
 ), 'Oficial');
 
 $configs->env->development->menu->setMenus(array(
