@@ -22,21 +22,23 @@ class CidadesController extends \HXPHP\System\Controller
         );
     }
 
-    public function getCidadesAction()
+    public function getCidadesAction($id = null)
     {
         $this->view->setPath('blank', true)
             ->setFile('index')
             ->setTemplate(false);
 
-        $cidades = Cidade::find_all_by_id_uf($this->request->post());
-
         $resposta = array();
 
-        foreach ($cidades as $cidade) {
-            $resposta[] = array(
-                'id' => $cidade->id,
-                'nome' => $cidade->nome
-            );
+        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $cidades = Cidade::find_all_by_id_uf($id);
+
+            foreach ($cidades as $cidade) {
+                $resposta[] = array(
+                    'id' => $cidade->id,
+                    'nome' => $cidade->nome
+                );
+            }
         }
 
         echo json_encode($resposta);

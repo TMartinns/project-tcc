@@ -65,9 +65,8 @@ $('#uf').change(function () {
     var uf = $(this);
 
     $.ajax({
-        method: "POST",
-        url: uf.data('url'),
-        data: {id_uf: uf.val()},
+        method: 'get',
+        url: uf.data('url') + '/' + uf.val(),
         success: function (resposta) {
             $('#cidade').empty().append("<option selected value='0'>Selecione uma cidade</option>");
             var cidades = $.parseJSON(resposta);

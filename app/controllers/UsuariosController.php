@@ -100,50 +100,65 @@ class UsuariosController extends \HXPHP\System\Controller
         }
     }
 
-    public function visualizarAction($id)
+    public function visualizarAction($id = null)
     {
-        $pessoa = Pessoa::find_by_id($id);
-        $usuario = Usuario::find_by_id_pessoa($pessoa->id);
-        $telefones = Telefone::find_all_by_id_pessoa($pessoa->id);
-        $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
+        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $pessoa = Pessoa::find_by_id($id);
 
-        $this->view->setVars(array(
-            'pessoa' => $pessoa,
-            'usuario' => $usuario,
-            'telefones' => $telefones,
-            'enderecos' => $enderecos
-        ));
-    }
+            if(!empty($pessoa)) {
+                $usuario = Usuario::find_by_id_pessoa($pessoa->id);
+                $telefones = Telefone::find_all_by_id_pessoa($pessoa->id);
+                $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
 
-    public function desativarAction($id)
-    {
-        $this->view->setFile('index');
-
-        $resposta = Usuario::ativar($id, false);
-        $pessoa = Pessoa::find_by_id($resposta->usuario->id);
-
-        if ($resposta->status) {
-            $this->load('Helpers\Alert', array(
-                'danger',
-                'Usuário desativado!',
-                "O usuário <strong>$pessoa->nome</strong> foi desativado com sucesso."
-            ));
+                $this->view->setVars(array(
+                    'pessoa' => $pessoa,
+                    'usuario' => $usuario,
+                    'telefones' => $telefones,
+                    'enderecos' => $enderecos
+                ));
+            } else {
+                $this->view->setFile('index');
+            }
+        } else {
+            $this->view->setFile('index');
         }
     }
 
-    public function ativarAction($id)
+    public function desativarAction($id = null)
     {
         $this->view->setFile('index');
 
-        $resposta = Usuario::ativar($id);
-        $pessoa = Pessoa::find_by_id($resposta->usuario->id);
+        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $resposta = Usuario::ativar($id, false);
 
-        if ($resposta->status) {
-            $this->load('Helpers\Alert', array(
-                'success',
-                'Usuário ativado!',
-                "O usuário <strong>$pessoa->nome</strong> foi ativado com sucesso."
-            ));
+            $pessoa = Pessoa::find_by_id($resposta->usuario->id);
+
+            if ($resposta->status) {
+                $this->load('Helpers\Alert', array(
+                    'danger',
+                    'Usuário desativado!',
+                    "O usuário <strong>$pessoa->nome</strong> foi desativado com sucesso."
+                ));
+            }
+        }
+    }
+
+    public function ativarAction($id = null)
+    {
+        $this->view->setFile('index');
+
+        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $resposta = Usuario::ativar($id);
+
+            $pessoa = Pessoa::find_by_id($resposta->usuario->id);
+
+            if ($resposta->status) {
+                $this->load('Helpers\Alert', array(
+                    'success',
+                    'Usuário ativado!',
+                    "O usuário <strong>$pessoa->nome</strong> foi ativado com sucesso."
+                ));
+            }
         }
     }
 
@@ -155,17 +170,20 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $nome = $this->request->post('nome');
 
-        $usuarios = Usuario::getAllByIsAtivoAndPessoasNome(1, $nome);
-
         $resposta = array();
-        foreach ($usuarios as $usuario) {
-            $usuario->funcao = ($usuario->funcao == 'C') ? 'Coordenador(a)' : 'Oficial de promotoria';
 
-            $resposta[] = array(
-                'id' => $usuario->id,
-                'nome' => $usuario->nome,
-                'funcao' => $usuario->funcao
-            );
+        if(!empty($nome)) {
+            $usuarios = Usuario::getAllByIsAtivoAndPessoasNome(1, $nome);
+
+            foreach ($usuarios as $usuario) {
+                $usuario->funcao = ($usuario->funcao == 'C') ? 'Coordenador(a)' : 'Oficial de promotoria';
+
+                $resposta[] = array(
+                    'id' => $usuario->id,
+                    'nome' => $usuario->nome,
+                    'funcao' => $usuario->funcao
+                );
+            }
         }
 
         echo json_encode($resposta);
