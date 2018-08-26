@@ -206,12 +206,10 @@ $('#modalConfirmaRegistro').find('button#confirmaRegistro').click(function () {
     var url = $(this).data('url');
 
     $.ajax({
-        method: 'GET',
         url: url + veiculo,
         success: function (resposta) {
-            modal.modal('hide');
-
-            $('#modalResultadoRegistro').modal('show');
+            modal.find('.modal-footer div').first().removeClass('d-none');
+            modal.find('.modal-footer div').last().addClass('d-none');
         }
     });
 });
@@ -224,4 +222,6 @@ $('#modalConfirmaRegistro').on('hide.bs.modal', function () {
         .removeData('veiculo');
     modal.find('.modal-body img').attr('src', '')
         .attr('data-original-title', '');
+    modal.find('.modal-footer div').first().addClass('d-none');
+    modal.find('.modal-footer div').last().removeClass('d-none');
 });

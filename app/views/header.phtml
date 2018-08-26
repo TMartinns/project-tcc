@@ -102,7 +102,9 @@
                     </div>
 
                     <div class="modal-footer text-center">
-                        <small>Posicione o QR Code próximo da câmera para que ele possa ser lido.</small>
+                        <small class="form-text form-muted">Posicione o QR Code próximo da câmera para que ele possa ser
+                            lido.
+                        </small>
                     </div>
                 </div>
             </div>
@@ -116,7 +118,7 @@
                     </div>
 
                     <div class="modal-body text-center">
-                        <small>
+                        <small class="form-text form-muted">
                             Você está prestes a registrar que usará o veículo abaixo.
                         </small>
 
@@ -129,33 +131,29 @@
                     </div>
 
                     <div class="modal-footer bg-white">
-                        <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
-                                title="Aguarde 3 segundos">
-                            <span><i class="fas fa-thumbs-down"></i></span>
-                            Não
-                        </button>
+                        <div class="text-center d-none">
+                            <span class="text-success">Registro efetuado com sucesso!</span>
 
-                        <button type="button" id="confirmaRegistro" class="btn btn-outline-success shadow"
-                                data-url="<?php echo $this->getRelativeURL('veiculos', false) . DS . 'registrarUsoVeiculo' . DS; ?>">
-                            <span><i class="fas fa-thumbs-up"></i></span>
-                            Sim
-                        </button>
+                            <button type="button" class="btn btn-outline-success shadow" data-dismiss="modal">
+                                <span><i class="fas fa-times"></i></span>
+                                Fechar
+                            </button>
+                        </div>
+
+                        <div>
+                            <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
+                                    title="Aguarde 3 segundos">
+                                <span><i class="fas fa-thumbs-down"></i></span>
+                                Não
+                            </button>
+
+                            <button type="button" id="confirmaRegistro" class="btn btn-outline-success shadow"
+                                    data-url="<?php echo $this->getRelativeURL('veiculos', false) . DS . 'registrarUsoVeiculo' . DS; ?>">
+                                <span><i class="fas fa-thumbs-up"></i></span>
+                                Sim
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div id="modalResultadoRegistro" class="modal fade" tabindex="-1">
-            <div class="modal-dialog modal-sm shadow-lg">
-                <div class="modal-content">
-                    <div class="modal-body text-center text-success rounded">
-                        <span><i class="far fa-check-circle fa-5x"></i></span>
-
-                        <br/>
-
-                        Feito!
-                    </div>
-                </div>
-            </div>
-        </div>
-
