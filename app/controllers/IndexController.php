@@ -35,8 +35,12 @@ class IndexController extends \HXPHP\System\Controller
     {
         $this->auth->redirectCheck(true);
 
-        $this->view->setTemplate(false);
-        $this->view->setFile('index');
+        $this->view->setTemplate(false)
+            ->setFile('index');
+
+        $this->request->setCustomFilters(array(
+            'email' => FILTER_VALIDATE_EMAIL
+        ));
 
         $post = $this->request->post();
 
@@ -45,28 +49,32 @@ class IndexController extends \HXPHP\System\Controller
                 $usuario = Usuario::find_by_email($post['email']);
 
                 if (!empty($usuario)) {
-
                     if ($usuario->is_ativo == 1) {
-
                         if (password_verify($post['senha'], $usuario->senha)) {
                             $this->auth->login($usuario->id_pessoa, $usuario->email, $usuario->funcao);
                         } else {
                             $this->load('Modules\Messages', 'auth');
+
                             $this->messages->setBlock('alerts');
+
                             $this->load('Helpers\Alert',
                                 $this->messages->getByCode('dados-incorretos')
                             );
                         }
                     } else {
                         $this->load('Modules\Messages', 'auth');
+
                         $this->messages->setBlock('alerts');
+
                         $this->load('Helpers\Alert',
                             $this->messages->getByCode('usuario-desativado')
                         );
                     }
                 } else {
                     $this->load('Modules\Messages', 'auth');
+
                     $this->messages->setBlock('alerts');
+
                     $this->load('Helpers\Alert',
                         $this->messages->getByCode('usuario-inexistente')
                     );
