@@ -15,8 +15,6 @@ class VeiculosController extends \HXPHP\System\Controller
 
         $this->auth->redirectCheck(false);
 
-        $this->auth->roleCheck(array('C'));
-
         $this->load('Helpers\Menu',
             $this->request,
             $this->configs,
@@ -82,6 +80,8 @@ class VeiculosController extends \HXPHP\System\Controller
 
     public function cadastrarAction()
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         $post = $this->request->post();
@@ -125,6 +125,8 @@ class VeiculosController extends \HXPHP\System\Controller
 
     public function editarAction($id = null)
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         $post = $this->request->post();
@@ -168,6 +170,7 @@ class VeiculosController extends \HXPHP\System\Controller
 
     public function registrarUsoVeiculoAction($id = null)
     {
+        $this->auth->roleCheck(array('O'));
 
         $this->view->setPath('blank', true)
             ->setFile('index')
@@ -184,6 +187,8 @@ class VeiculosController extends \HXPHP\System\Controller
 
     public function desativarAction($id = null)
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
@@ -203,6 +208,8 @@ class VeiculosController extends \HXPHP\System\Controller
 
     public function ativarAction($id = null)
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
@@ -222,6 +229,8 @@ class VeiculosController extends \HXPHP\System\Controller
 
     public function getVeiculoAction($id = null)
     {
+        $this->auth->roleCheck(array('O'));
+
         $this->view->setPath('blank', false)
             ->setFile('index')
             ->setTemplate(false);

@@ -15,8 +15,6 @@ class DiligenciasController extends \HXPHP\System\Controller
 
         $this->auth->redirectCheck(false);
 
-        $this->auth->roleCheck(array('C', 'O'));
-
         $this->load('Helpers\Menu',
             $this->request,
             $this->configs,
@@ -39,6 +37,8 @@ class DiligenciasController extends \HXPHP\System\Controller
 
     public function cadastrarAction()
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         $post = $this->request->post();
@@ -103,6 +103,8 @@ class DiligenciasController extends \HXPHP\System\Controller
 
     public function enviarAction()
     {
+        $this->auth->roleCheck(array('C', 'O'));
+
         $this->view->setFile('index');
 
         $this->request->setCustomFilters(array(
@@ -207,6 +209,8 @@ class DiligenciasController extends \HXPHP\System\Controller
 
     public function receberAction()
     {
+        $this->auth->roleCheck(array('C', 'O'));
+
         $this->view->setFile('index');
 
         $this->request->setCustomFilters(array(
