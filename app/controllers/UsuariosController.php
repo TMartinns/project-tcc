@@ -15,8 +15,6 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $this->auth->redirectCheck(false);
 
-        $this->auth->roleCheck(array('C'));
-
         $this->load('Helpers\Menu',
             $this->request,
             $this->configs,
@@ -28,6 +26,8 @@ class UsuariosController extends \HXPHP\System\Controller
 
     public function cadastrarAction()
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         $this->request->setCustomFilters(array(
@@ -102,6 +102,8 @@ class UsuariosController extends \HXPHP\System\Controller
 
     public function visualizarAction($id = null)
     {
+        $this->auth->roleCheck(array('C'));
+
         if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
             $pessoa = Pessoa::find_by_id($id);
 
@@ -126,6 +128,8 @@ class UsuariosController extends \HXPHP\System\Controller
 
     public function desativarAction($id = null)
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
@@ -145,6 +149,8 @@ class UsuariosController extends \HXPHP\System\Controller
 
     public function ativarAction($id = null)
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
@@ -164,6 +170,8 @@ class UsuariosController extends \HXPHP\System\Controller
 
     public function getUsuariosAtivosAction()
     {
+        $this->auth->roleCheck(array('C', 'O'));
+
         $this->view->setPath('blank', true)
             ->setFile('index')
             ->setTemplate(false);
@@ -191,6 +199,8 @@ class UsuariosController extends \HXPHP\System\Controller
 
     public function getUsuarioFuncaoAction()
     {
+        $this->auth->roleCheck(array('C', 'O'));
+
         $this->view->setPath('blank', false)
             ->setFile('index')
             ->setTemplate(false);
