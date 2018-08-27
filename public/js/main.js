@@ -8,11 +8,11 @@ $('#sidebarAppear').on('click', function () {
 });
 
 $('#enviarDiligencias #opcaoEspecifico').click(function () {
-    $('#enviarDiligencias .usuarioEspecifico').toggleClass('d-none');
+    $('#enviarDiligencias .usuarioEspecifico').removeClass('d-none');
 });
 
 $('#enviarDiligencias #opcaoOficial').click(function () {
-    $('#enviarDiligencias .usuarioEspecifico').toggleClass('d-none');
+    $('#enviarDiligencias .usuarioEspecifico').addClass('d-none');
 });
 
 $('.tooltipTitle').tooltip();

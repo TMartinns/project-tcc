@@ -184,6 +184,12 @@ class UsuariosController extends \HXPHP\System\Controller
             $usuarios = Usuario::getAllByIsAtivoAndPessoasNome(1, $nome);
 
             foreach ($usuarios as $usuario) {
+                if($this->auth->getUserRole() == 'O') {
+                    if($usuario->funcao == 'O') {
+                        continue;
+                    }
+                }
+
                 $usuario->funcao = ($usuario->funcao == 'C') ? 'Coordenador(a)' : 'Oficial de promotoria';
 
                 $resposta[] = array(
