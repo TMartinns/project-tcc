@@ -45,6 +45,25 @@ class PesquisasController extends \HXPHP\System\Controller
         )) as $mandado) {
             $diligencia = Diligencia::find_by_id_mandado($mandado->id);
 
+            if ($this->auth->getUserRole() == 'O') {
+                $eventos = Evento::find_all_by_id_diligencia($diligencia->id);
+
+                $registros = false;
+                foreach ($eventos as $evento) {
+                    if ($evento->id_autor == $this->auth->getUserId()) {
+                        $registros = true;
+                    }
+
+                    if ($registros) {
+                        break;
+                    }
+                }
+
+                if (!$registros) {
+                    continue;
+                }
+            }
+
             $diligencias[] = array(
                 'texto' => $mandado->numero_protocolo,
                 'url' => $this->view->getRelativeURL('diligencias', false) . DS . 'visualizar' . DS . $diligencia->id
