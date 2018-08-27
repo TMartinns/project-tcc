@@ -39,6 +39,25 @@ class Diligencia extends \HXPHP\System\Model
         return $resposta;
     }
 
+    public static function editarStatus($id, $status)
+    {
+        $resposta = new \stdClass;
+        $resposta->diligencia = null;
+        $resposta->status = false;
+
+        $diligencia = self::find_by_id($id);
+        $diligencia->status = $status;
+
+        if($diligencia->save(false)) {
+            $resposta->diligencia = $diligencia;
+            $resposta->status = true;
+
+            return $resposta;
+        }
+
+        return $resposta;
+    }
+
     public static function getAllByRemessa($id)
     {
         return self::find_by_sql(
