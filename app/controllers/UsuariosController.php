@@ -24,6 +24,11 @@ class UsuariosController extends \HXPHP\System\Controller
         $this->view->setAssets('js', $this->configs->js . 'autocomplete.config.js');
     }
 
+    public function indexAction()
+    {
+        $this->auth->roleCheck(array('C'));
+    }
+
     public function cadastrarAction()
     {
         $this->auth->roleCheck(array('C'));

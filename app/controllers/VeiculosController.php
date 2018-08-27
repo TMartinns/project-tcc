@@ -28,6 +28,11 @@ class VeiculosController extends \HXPHP\System\Controller
         ));
     }
 
+    public function indexAction()
+    {
+        $this->auth->roleCheck(array('C'));
+    }
+
     private function imagemUpload($veiculo)
     {
         $resposta = new \stdClass();

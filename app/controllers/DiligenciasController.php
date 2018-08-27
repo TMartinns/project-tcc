@@ -35,6 +35,11 @@ class DiligenciasController extends \HXPHP\System\Controller
         ));
     }
 
+    public function indexAction()
+    {
+        $this->auth->roleCheck(array('C', 'O'));
+    }
+
     public function cadastrarAction()
     {
         $this->auth->roleCheck(array('C'));
