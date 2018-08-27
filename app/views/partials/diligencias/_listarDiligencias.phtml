@@ -9,21 +9,21 @@ if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
 
 if (!empty($diligencias)) {
     foreach ($diligencias as $diligencia) {
-        if($this->auth->getUserRole() == 'O') {
+        if ($this->auth->getUserRole() == 'O') {
             $eventos = Evento::find_all_by_id_diligencia($diligencia->id);
 
             $registros = false;
-            foreach($eventos as $evento) {
-                if($evento->id_autor == $this->auth->getUserId()) {
+            foreach ($eventos as $evento) {
+                if ($evento->id_autor == $this->auth->getUserId()) {
                     $registros = true;
                 }
 
-                if($registros) {
+                if ($registros) {
                     break;
                 }
             }
 
-            if(!$registros) {
+            if (!$registros) {
                 continue;
             }
         }
@@ -97,37 +97,82 @@ if (!empty($diligencias)) {
             </div>
 
             <div class="card-footer bg-white">
-                <?php
-                $evento = Evento::find_by_id_diligencia($diligencia->id, array(
-                    'order' => 'data desc'
-                ));
+                <div class="row">
+                    <div class="col-sm-4">
+                        <?php
+                        $evento = Evento::find_by_id_diligencia($diligencia->id, array(
+                            'order' => 'data desc'
+                        ));
 
-                $pessoa = Pessoa::find_by_id($evento->id_autor);
-                $usuario = Usuario::find_by_id_pessoa($pessoa->id);
-                ?>
-                <p class="card-text">
-                <h6>Posse</h6>
+                        $pessoaPosse = Pessoa::find_by_id($evento->id_autor);
+                        $usuarioPosse = Usuario::find_by_id_pessoa($pessoaPosse->id);
+                        ?>
+                        <p class="card-text">
+                        <h6>Posse</h6>
 
-                <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
-                $title = '';
+                        <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
+                        $title = '';
 
-                if (is_null($usuario->imagem)) {
-                    $title = 'Icon designed by Eucalyp from Flaticon';
-                    $avatar = '';
-                    if (is_null($pessoa->genero)) {
-                        $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
-                        $avatar = $genero[mt_rand(0, 1)];
-                    } else {
-                        $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
-                    }
-                    echo IMG . "avatars/usuarios/$avatar";
-                } else {
-                    echo UPLOADS . "usuarios/$usuario->id_pessoa/$usuario->imagem";
-                }
-                ?>" height="25" width="25" title="<?php echo $title; ?>">
+                        if (is_null($usuarioPosse->imagem)) {
+                            $title = 'Icon designed by Eucalyp from Flaticon';
+                            $avatar = '';
+                            if (is_null($pessoaPosse->genero)) {
+                                $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
+                                $avatar = $genero[mt_rand(0, 1)];
+                            } else {
+                                $avatar = ($pessoaPosse->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                            }
+                            echo IMG . "avatars/usuarios/$avatar";
+                        } else {
+                            echo UPLOADS . "usuarios/$usuarioPosse->id_pessoa/$usuarioPosse->imagem";
+                        }
+                        ?>" height="25" width="25" title="<?php echo $title; ?>">
 
-                <?php echo $pessoa->nome; ?>
-                </p>
+                        <?php echo $pessoaPosse->nome; ?>
+                        </p>
+                    </div>
+
+                    <div class="col-sm-4 text-center mt-sm-2 mt-lg-2 mt-md-2">
+                        <?php
+                        if ($pessoaPosse->id == $this->auth->getUserId()) {
+                            if ($this->auth->getUserRole() == 'C') {
+                                ?>
+                                <small class="form-text text-muted mt-0">
+                                    Marcar como
+                                </small>
+                                
+                                <?php
+                                if ($diligencia->status == 'A') {
+                                    ?>
+                                    <a class="btn btn-outline-danger shadow"
+                                       href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'emEspera' . DS . $diligencia->id; ?>">
+                                        Em espera
+                                    </a>
+                                    <?php
+                                } else if ($diligencia->status == 'E') {
+                                    ?>
+                                    <a class="btn btn-outline-warning shadow"
+                                       href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'emAndamento' . DS . $diligencia->id; ?>">
+                                        Em andamento
+                                    </a>
+                                    <?php
+                                }
+                            } else if ($this->auth->getUserRole() == 'O' && $diligencia->status == 'A') {
+                                ?>
+                                <small class="form-text text-muted mt-0">
+                                    Marcar como
+                                </small>
+
+                                <a class="btn btn-outline-success shadow"
+                                   href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'cumprida' . DS . $diligencia->id; ?>">
+                                    Cumprida
+                                </a>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
             </div>
         </div>
 
