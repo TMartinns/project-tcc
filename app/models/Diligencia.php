@@ -50,27 +50,15 @@ class Diligencia extends \HXPHP\System\Model
         );
     }
 
-    public static function getAllByTipoDiligenciaAndStatusAndEventosAutor($tipoDiligencia, $status, $autor)
+    public static function getByTipoDiligenciaAndEventosAutor($tipoDiligencia, $autor)
     {
         return self::find_by_sql(
             "select diligencias.*
             from diligencias
             inner join eventos
             on diligencias.id = eventos.id_diligencia
-            where diligencias.id_tipo_diligencia = $tipoDiligencia 
-            and diligencias.status = '$status'
-            and eventos.id_autor = $autor"
-        );
-    }
-
-    public static function getAllByTipoDiligenciaAndEventosAutor($tipoDiligencia, $autor)
-    {
-        return self::find_by_sql(
-            "select diligencias.*
-            from diligencias
-            inner join eventos
-            on diligencias.id = eventos.id_diligencia
-            where diligencias.id_tipo_diligencia = $tipoDiligencia and eventos.id_autor = $autor"
+            where diligencias.id_tipo_diligencia = $tipoDiligencia and eventos.id_autor = $autor
+            limit 1"
         );
     }
 }

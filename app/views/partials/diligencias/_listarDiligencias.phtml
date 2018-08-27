@@ -3,20 +3,31 @@ $diligencias = null;
 
 if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
     if (isset($view_status) && !empty($view_status)) {
-        if ($this->auth->getUserRole() == 'C') {
-            $diligencias = Diligencia::find_all_by_id_tipo_diligencia_and_status($view_tipoDiligencia, $view_status);
-        } else {
-            $diligencias = Diligencia::getAllByTipoDiligenciaAndStatusAndEventosAutor(
-                $view_tipoDiligencia,
-                $view_status,
-                $this->auth->getUserId()
-            );
-        }
+        $diligencias = Diligencia::find_all_by_id_tipo_diligencia_and_status($view_tipoDiligencia, $view_status);
     }
 }
 
 if (!empty($diligencias)) {
     foreach ($diligencias as $diligencia) {
+        if($this->auth->getUserRole() == 'O') {
+            $eventos = Evento::find_all_by_id_diligencia($diligencia->id);
+
+            $registros = false;
+            foreach($eventos as $evento) {
+                if($evento->id_autor == $this->auth->getUserId()) {
+                    $registros = true;
+                }
+
+                if($registros) {
+                    break;
+                }
+            }
+
+            if(!$registros) {
+                continue;
+            }
+        }
+
         $mandado = Mandado::find_by_id($diligencia->id_mandado);
 
         $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);

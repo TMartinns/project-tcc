@@ -6,9 +6,9 @@ if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
     $tipoDiligencia = $view_tipoDiligencia;
 
     if($this->auth->getUserRole() == 'C') {
-        $diligencias = Diligencia::find_all_by_id_tipo_diligencia($tipoDiligencia);
+        $diligencias = Diligencia::find_by_id_tipo_diligencia($tipoDiligencia);
     } else {
-        $diligencias = Diligencia::getAllByTipoDiligenciaAndEventosAutor($tipoDiligencia, $this->auth->getUserId());
+        $diligencias = Diligencia::getByTipoDiligenciaAndEventosAutor($tipoDiligencia, $this->auth->getUserId());
     }
 }
 
