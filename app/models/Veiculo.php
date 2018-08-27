@@ -130,9 +130,8 @@ class Veiculo extends \HXPHP\System\Model
         $veiculo = self::find_by_id($id);
         $veiculo->is_ativo = ($ativar) ? 1 : 0;
 
-        $resposta->veiculo = $veiculo;
-
         if($veiculo->save(false)) {
+            $resposta->veiculo = $veiculo;
             $resposta->status = true;
             return $resposta;
         }
