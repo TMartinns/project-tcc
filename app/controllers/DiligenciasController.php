@@ -126,6 +126,37 @@ class DiligenciasController extends \HXPHP\System\Controller
         }
     }
 
+    public function visualizarAction($id = null)
+    {
+        $this->auth->roleCheck(array('C', 'O'));
+
+        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $diligencia = Diligencia::find_by_id($id);
+
+            if(!empty($diligencia)) {
+                $mandado = Mandado::find_by_id($diligencia->id_mandado);
+
+                $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);
+
+                $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
+
+                $interessado = Pessoa::find_by_id($mandado->id_interessado);
+
+                $this->view->setVars(array(
+                    'diligencia' => $diligencia,
+                    'mandado' => $mandado,
+                    'tipoDiligencia' => $tipoDiligencia,
+                    'promotoria' => $promotoria,
+                    'interessado' => $interessado
+                ));
+            } else {
+                $this->view->setFile('index');
+            }
+        } else {
+            $this->view->setFile('index');
+        }
+    }
+
     public function emEsperaAction($id = null)
     {
         $this->view->setFile('index');

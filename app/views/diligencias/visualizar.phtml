@@ -1,0 +1,160 @@
+<ul class="menu nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link text-secondary active" id="resultadoDiligenciaTab" data-toggle="tab"
+           href="#resultadoDiligencia">Resultado</a>
+    </li>
+</ul>
+
+<?php
+$this->setPartialsDir('partials' . DS . 'diligencias');
+$this->partial('modalEventos');
+?>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="resultadoDiligencia">
+        <br/>
+
+        <?php
+        $border = '';
+
+        if ($view_diligencia->status == 'A') {
+            $border = 'warning';
+        } else if ($view_diligencia->status == 'E') {
+            $border = 'danger';
+        } else {
+            $border = 'success';
+        }
+        ?>
+        <div class="card border border-<?php echo $border; ?> shadow-lg">
+            <div class="card-body">
+                <?php
+                $eventos = array();
+
+                foreach (Evento::find_all_by_id_diligencia($view_diligencia->id) as $evento) {
+                    $pessoa = Pessoa::find_by_id($evento->id_autor);
+
+                    $tipoEvento = TipoEvento::find_by_id($evento->id_tipo_evento);
+
+                    $eventos[] = array(
+                        $evento->data->format('d/m/Y H:i:s'),
+                        $tipoEvento->tipo,
+                        $pessoa->nome
+                    );
+                }
+                ?>
+                <label class="botaoEventosOcorridos shadow-sm">
+                    <button type="button" data-toggle="modal"
+                            class="btn btn-light bg-white tooltipTitle"
+                            title="Eventos ocorridos"
+                            data-target="#modalEventos"
+                            data-eventos='<?php echo json_encode($eventos); ?>'>
+                        <i class="fas fa-calendar-alt"></i>
+                    </button>
+                </label>
+
+                <div class="text-center tooltipTitle" title="Número de protocolo">
+                    <h5 class="card-title"><?php echo $view_mandado->numero_protocolo; ?></h5>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 offset-lg-2 col-lg-4">
+                        <p class="card-text"><h6>Promotoria</h6><?php echo $view_promotoria->nome; ?></p>
+
+                        <p class="card-text"><h6>Descrição</h6><?php echo $view_mandado->descricao; ?></p>
+
+                        <p class="card-text"><h6>Interessado(a)</h6><?php echo $view_interessado->nome; ?></p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <p class="card-text"><h6>Tipo de diligência</h6><?php echo $view_tipoDiligencia->tipo; ?></p>
+
+                        <p class="card-text"><h6>Prazo para cumprimento</h6><?php
+                        echo $view_diligencia->prazo_cumprimento->format('d/m/Y');
+                        ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <?php
+                        $evento = Evento::find_by_id_diligencia($view_diligencia->id, array(
+                            'order' => 'data desc'
+                        ));
+
+                        $pessoaPosse = Pessoa::find_by_id($evento->id_autor);
+                        $usuarioPosse = Usuario::find_by_id_pessoa($pessoaPosse->id);
+                        ?>
+                        <p class="card-text">
+                        <h6>Posse</h6>
+
+                        <img class="rounded-circle avatar bg-dark tooltipTitle" src="<?php
+                        $title = '';
+
+                        if (is_null($usuarioPosse->imagem)) {
+                            $title = 'Icon designed by Eucalyp from Flaticon';
+                            $avatar = '';
+                            if (is_null($pessoaPosse->genero)) {
+                                $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
+                                $avatar = $genero[mt_rand(0, 1)];
+                            } else {
+                                $avatar = ($pessoaPosse->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                            }
+                            echo IMG . "avatars/usuarios/$avatar";
+                        } else {
+                            echo UPLOADS . "usuarios/$usuarioPosse->id_pessoa/$usuarioPosse->imagem";
+                        }
+                        ?>" height="25" width="25" title="<?php echo $title; ?>">
+
+                        <?php echo $pessoaPosse->nome; ?>
+                        </p>
+                    </div>
+
+                    <div class="col-sm-4 text-center mt-sm-2 mt-lg-2 mt-md-2">
+                        <?php
+                        if ($pessoaPosse->id == $this->auth->getUserId()) {
+                            if ($this->auth->getUserRole() == 'C') {
+                                ?>
+                                <small class="form-text text-muted mt-0">
+                                    Marcar como
+                                </small>
+
+                                <?php
+                                if ($view_diligencia->status == 'A') {
+                                    ?>
+                                    <a class="btn btn-outline-danger shadow"
+                                       href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'emEspera' . DS . $view_diligencia->id; ?>">
+                                        Em espera
+                                    </a>
+                                    <?php
+                                } else if ($view_diligencia->status == 'E') {
+                                    ?>
+                                    <a class="btn btn-outline-warning shadow"
+                                       href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'emAndamento' . DS . $view_diligencia->id; ?>">
+                                        Em andamento
+                                    </a>
+                                    <?php
+                                }
+                            } else if ($this->auth->getUserRole() == 'O' && $view_diligencia->status == 'A') {
+                                ?>
+                                <small class="form-text text-muted mt-0">
+                                    Marcar como
+                                </small>
+
+                                <a class="btn btn-outline-success shadow"
+                                   href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'cumprida' . DS . $view_diligencia->id; ?>">
+                                    Cumprida
+                                </a>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
