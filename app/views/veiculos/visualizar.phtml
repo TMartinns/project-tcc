@@ -1,0 +1,113 @@
+<ul class="menu nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link text-secondary active" id="resultadoVeiculoTab" data-toggle="tab"
+           href="#resultadoVeiculo">Resultado</a>
+    </li>
+</ul>
+
+<?php
+$this->setPartialsDir('partials' . DS . 'veiculos');
+$this->partial('modalEditarVeiculos');
+$this->partial('modalQrCode');
+?>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="resultadoVeiculo">
+        <br/>
+
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <label class="botaoEditarVeiculos shadow-sm">
+                    <button type="button" class="btn btn-light bg-white tooltipTitle" data-toggle="modal"
+                            title="Editar"
+                            data-target="#modalEditarVeiculos"
+                            data-veiculo='<?php echo json_encode(array('action' => $this->getRelativeURL('editar'),
+                                'id' => $view_veiculo->id,
+                                'imagem' => $view_veiculo->imagem,
+                                'modelo' => $view_veiculo->modelo,
+                                'marca' => $view_veiculo->marca,
+                                'renavam' => $view_veiculo->renavam,
+                                'placa' => $view_veiculo->placa,
+                                'ano' => $view_veiculo->ano,
+                                'cor' => $view_veiculo->cor
+                            )); ?>'>
+                        <span><i class="fas fa-pencil-alt"></i></span>
+                    </button>
+                </label>
+
+                <label class="botaoQrCode shadow-sm">
+                    <button type="button" class="btn btn-light bg-white tooltipTitle"
+                            title="Gerar QR Code"
+                            data-id="<?php echo $view_veiculo->id; ?>"
+                            data-modelo="<?php echo $view_veiculo->modelo; ?>"
+                            data-toggle="modal"
+                            data-target="#modalQrCode">
+                        <span><i class="fas fa-qrcode"></i></span>
+                    </button>
+                </label>
+
+                <div class="offset-md-4 col-md-4 offset-lg-4 col-lg-4 text-center">
+                    <p>
+                        <img class="rounded-circle avatar bg-dark tooltipTitle shadow-lg" src="<?php
+                        $title = '';
+
+                        if (is_null($view_veiculo->imagem)) {
+                            $title = 'Icon designed by Freepik from Flaticon';
+                            $avatar = 'car-' . mt_rand(0, 7);
+                            echo IMG . "avatars/veiculos/$avatar";
+                        } else {
+                            echo UPLOADS . "veiculos/$view_veiculo->id/$view_veiculo->imagem";
+                        }
+                        ?>" width="180" height="180" title="<?php echo $title; ?>">
+                    </p>
+
+                    <hr/>
+
+                    <h5 class="card-title tooltipTitle" title="Modelo"><?php echo $view_veiculo->modelo; ?></h5>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 offset-lg-2 col-lg-4">
+                        <p class="card-text"><h6>Marca</h6><?php echo $view_veiculo->marca; ?></p>
+
+                        <p class="card-text"><h6>
+                            Placa</h6><?php echo $view_veiculo->placa; ?>
+                        </p>
+
+                        <p class="card-text"><h6>Renavam</h6><?php echo $view_veiculo->renavam; ?></p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <p class="card-text"><h6>Ano</h6><?php echo $view_veiculo->ano; ?></p>
+
+                        <p class="card-text"><h6>Cor</h6><?php echo $view_veiculo->cor; ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-center bg-white">
+                <?php
+                if ($view_veiculo->is_ativo == 1) {
+                    ?>
+                    <a class="btn btn-outline-danger shadow"
+                       href="<?php echo $this->getRelativeURL('desativar') . DS . $view_veiculo->id; ?>">
+                        <span><i class="fas fa-lock"></i></span>
+                        Desativar
+                    </a>
+                    <?php
+                } else {
+                    ?>
+                    <a class="btn btn-outline-success shadow"
+                       href="<?php echo $this->getRelativeURL('ativar') . DS . $view_veiculo->id; ?>">
+                        <span><i class="fas fa-lock-open"></i></span>
+                        Ativar
+                    </a>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>

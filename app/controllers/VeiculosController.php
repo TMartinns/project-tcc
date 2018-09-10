@@ -173,6 +173,23 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
+    public function visualizarAction($id = null)
+    {
+        $this->auth->roleCheck(array('C'));
+
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+            $veiculo = Veiculo::find_by_id($id);
+
+            if (!empty($veiculo)) {
+                $this->view->setVar('veiculo', $veiculo);
+            } else {
+                $this->view->setFile('index');
+            }
+        } else {
+            $this->view->setFile('index');
+        }
+    }
+
     public function registrarUsoVeiculoAction($id = null)
     {
         $this->auth->roleCheck(array('O'));
