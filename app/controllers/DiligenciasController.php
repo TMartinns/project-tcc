@@ -110,11 +110,11 @@ class DiligenciasController extends \HXPHP\System\Controller
     {
         $this->view->setFile('index');
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
 
             $resposta = Diligencia::editarStatus($id, 'A');
 
-            if($resposta->status) {
+            if ($resposta->status) {
                 $mandado = Mandado::find_by_id($resposta->diligencia->id_mandado);
 
                 $this->load('Helpers\Alert', array(
@@ -130,10 +130,10 @@ class DiligenciasController extends \HXPHP\System\Controller
     {
         $this->auth->roleCheck(array('C', 'O'));
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
             $diligencia = Diligencia::find_by_id($id);
 
-            if(!empty($diligencia)) {
+            if (!empty($diligencia)) {
                 $mandado = Mandado::find_by_id($diligencia->id_mandado);
 
                 $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);
@@ -161,11 +161,11 @@ class DiligenciasController extends \HXPHP\System\Controller
     {
         $this->view->setFile('index');
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
 
             $resposta = Diligencia::editarStatus($id, 'E');
 
-            if($resposta->status) {
+            if ($resposta->status) {
                 $mandado = Mandado::find_by_id($resposta->diligencia->id_mandado);
 
                 $this->load('Helpers\Alert', array(
@@ -181,11 +181,11 @@ class DiligenciasController extends \HXPHP\System\Controller
     {
         $this->view->setFile('index');
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
 
             $resposta = Diligencia::editarStatus($id, 'C');
 
-            if($resposta->status) {
+            if ($resposta->status) {
                 $mandado = Mandado::find_by_id($resposta->diligencia->id_mandado);
 
                 $this->load('Helpers\Alert', array(
@@ -285,6 +285,44 @@ class DiligenciasController extends \HXPHP\System\Controller
                             );
 
                             Evento::cadastrar($evento);
+
+                            if ($this->auth->getUserRole() == 'C') {
+                                $diligencia = Diligencia::find_by_id($diligencia);
+
+                                $tipoDiligenciaUrgente = TipoDiligencia::find_by_tipo('Urgente');
+                                if ($diligencia->id_tipo_diligencia == $tipoDiligenciaUrgente->id) {
+
+                                    $notificacao = array(
+                                        'id_diligencia' => $diligencia->id,
+                                        'id_destinatario' => $idDestinatario,
+                                        'mensagem' => 'Uma diligência urgente foi emitida, clique para visualizá-la.',
+                                        'data' => date('Y-m-d H:i:s')
+                                    );
+
+                                    Notificacao::cadastrar($notificacao);
+
+                                    $this->load('Services\Email');
+
+                                    $this->email->setFrom($this->configs->mail->getFrom());
+
+                                    $destinatario = Usuario::find_by_id_pessoa($idDestinatario);
+
+                                    $mensagem = $notificacao['mensagem'];
+
+                                    $href = $this->getRelativeURL('diligencias', false) . DS . 'visualizar' . DS . $notificacao['id_diligencia'];
+
+                                    $this->email->send(
+                                        $destinatario->email,
+                                        '[ADUV] DILIGÊNCIA URGENTE',
+                                        "<a href='$href'>$mensagem</a> <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        Por favor, não responda essa mensagem. <br/>
+                                        Atenciosamente, Suporte ADUV."
+                                    );
+                                }
+                            }
                         }
 
                         $this->load('Helpers\Alert', array(
