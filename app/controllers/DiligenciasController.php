@@ -106,26 +106,6 @@ class DiligenciasController extends \HXPHP\System\Controller
         }
     }
 
-    public function emAndamentoAction($id = null)
-    {
-        $this->view->setFile('index');
-
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-
-            $resposta = Diligencia::editarStatus($id, 'A');
-
-            if ($resposta->status) {
-                $mandado = Mandado::find_by_id($resposta->diligencia->id_mandado);
-
-                $this->load('Helpers\Alert', array(
-                    'warning',
-                    'Diligência editada!',
-                    "A diligência <strong>$mandado->numero_protocolo</strong> foi marcada como em andamento!"
-                ));
-            }
-        }
-    }
-
     public function visualizarAction($id = null)
     {
         $this->auth->roleCheck(array('C', 'O'));
@@ -154,6 +134,26 @@ class DiligenciasController extends \HXPHP\System\Controller
             }
         } else {
             $this->view->setFile('index');
+        }
+    }
+
+    public function emAndamentoAction($id = null)
+    {
+        $this->view->setFile('index');
+
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+
+            $resposta = Diligencia::editarStatus($id, 'A');
+
+            if ($resposta->status) {
+                $mandado = Mandado::find_by_id($resposta->diligencia->id_mandado);
+
+                $this->load('Helpers\Alert', array(
+                    'warning',
+                    'Diligência editada!',
+                    "A diligência <strong>$mandado->numero_protocolo</strong> foi marcada como em andamento!"
+                ));
+            }
         }
     }
 

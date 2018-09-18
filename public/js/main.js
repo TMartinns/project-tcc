@@ -90,7 +90,9 @@ $(function () {
             }
         }
     });
+});
 
+$(function () {
     $('#menu').prepend("<li class='nav-item mb-4 mt-1'>" +
         "<input type='text' class='form-control ml-3 shadow' id='pesquisar' placeholder='Pesquisar...'>");
 
