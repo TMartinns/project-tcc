@@ -428,7 +428,7 @@ $this->partial('modalEventos');
             <div class="mt-4 row">
                 <?php
                 $diligencias = Diligencia::all(array(
-                    'conditions' => array('status in (?)', array('A', 'E'))
+                    'conditions' => array('status = ?', 'A')
                 ));
 
                 foreach ($diligencias as $diligencia) {
