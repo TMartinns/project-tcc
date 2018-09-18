@@ -99,6 +99,7 @@ $(function () {
 
 $(function() {
     var interval = 0;
+
     $('.cancelar')
         .mouseover(function () {
             var botao = $(this);
@@ -113,4 +114,13 @@ $(function() {
             botao.addClass('disabled');
             botao.attr('data-dismiss', '');
         });
+});
+
+$('.notificacaoMensagem').click(function () {
+    var id = $(this).data('id');
+
+    $.ajax({
+        method: 'get',
+        url: '/project-tcc/notificacoes/visto/' + id
+    });
 });
