@@ -83,7 +83,7 @@ class UsuariosController extends \HXPHP\System\Controller
                         <br/>
                         <br/>
                         <br/>
-                        Por favor, não responsa essa mensagem. <br/>
+                        Por favor, não responda essa mensagem. <br/>
                         Atenciosamente, Suporte ADUV."
                     );
                 } else {
