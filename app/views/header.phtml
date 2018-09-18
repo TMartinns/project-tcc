@@ -33,16 +33,80 @@
             </a>
 
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item shadow">
-                    <button type="button" class="btn btn-outline-dark">
-                        <i class="fas fa-bell fa-1x"></i>
-                        <span class="badge badge-primary">0</span>
-                    </button>
-                </li>
+                <?php
+                if ($this->auth->getUserRole() == 'O') {
+                    ?>
+                    <li class="nav-item dropdown shadow">
+                        <button type="button" class="btn btn-outline-dark" data-toggle="dropdown">
+                            <i class="fas fa-bell fa-1x"></i>
+                            <span class="badge badge-primary"><?php echo count(Notificacao::find_all_by_id_destinatario_and_visto($this->auth->getUserId(), 0)); ?></span>
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-right shadow-lg">
+                            <h6 class="dropdown-header text-center">Notificações</h6>
+
+                            <?php
+                            $notificacoes = Notificacao::find_all_by_id_destinatario($this->auth->getUserId(), array(
+                                'order' => 'data desc',
+                                'limit' => 5
+                            ));
+
+                            foreach ($notificacoes as $notificacao) {
+                                $bg = '';
+                                $text = '';
+
+                                if ($notificacao->visto == 0) {
+                                    $bg = 'bg-primary ';
+                                    $text = 'text-white';
+                                }
+                                ?>
+                                <a class="notificacaoMensagem dropdown-item border border-left-0 border-right-0 border-bottom-0 <?php echo $bg . $text; ?>"
+                                   href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'visualizar' . DS . $notificacao->id_diligencia; ?>"
+                                   data-id="<?php echo $notificacao->id; ?>">
+                                    <?php
+                                    echo $notificacao->mensagem;
+                                    ?>
+
+                                    <small class="form-text <?php echo (empty($text)) ? 'text-muted' : $text . '-50'; ?>">
+                                        <?php
+                                        $dataAtual = new DateTime(date('Y-m-d H:i:s'));
+
+                                        $intervalo = $dataAtual->diff($notificacao->data);
+
+                                        switch ($intervalo) {
+                                            case $intervalo->y != 0:
+                                                echo "Há $intervalo->y anos";
+                                                break;
+                                            case $intervalo->m != 0:
+                                                echo "Há $intervalo->m meses";
+                                                break;
+                                            case $intervalo->d != 0:
+                                                echo "Há $intervalo->d dias";
+                                                break;
+                                            case $intervalo->h != 0:
+                                                echo "Há $intervalo->h horas";
+                                                break;
+                                            case $intervalo->i != 0:
+                                                echo "Há $intervalo->i minutos";
+                                                break;
+                                            default:
+                                                echo "Há $intervalo->s segundos";
+                                                break;
+                                        }
+                                        ?>
+                                    </small>
+                                </a>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </li>
+                    <?php
+                }
+                ?>
 
                 <li class="nav-item dropdown ml-2 shadow">
-                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown">
+                    <button class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown">
                         <?php
                         echo Pessoa::getPrimeiroNome($this->auth->getUserId());
                         ?>
@@ -102,7 +166,7 @@
                     </div>
 
                     <div class="modal-footer text-center">
-                        <small class="form-text form-muted">Posicione o QR Code próximo da câmera para que ele possa ser
+                        <small class="form-text text-muted">Posicione o QR Code próximo da câmera para que ele possa ser
                             lido.
                         </small>
                     </div>
@@ -118,7 +182,7 @@
                     </div>
 
                     <div class="modal-body text-center">
-                        <small class="form-text form-muted">
+                        <small class="form-text text-muted">
                             Você está prestes a registrar que usará o veículo abaixo.
                         </small>
 
