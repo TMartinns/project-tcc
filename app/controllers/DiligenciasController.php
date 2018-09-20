@@ -139,6 +139,8 @@ class DiligenciasController extends \HXPHP\System\Controller
 
     public function emAndamentoAction($id = null)
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
@@ -159,6 +161,8 @@ class DiligenciasController extends \HXPHP\System\Controller
 
     public function emEsperaAction($id = null)
     {
+        $this->auth->roleCheck(array('C'));
+
         $this->view->setFile('index');
 
         if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
@@ -179,6 +183,8 @@ class DiligenciasController extends \HXPHP\System\Controller
 
     public function cumpridaAction($id = null)
     {
+        $this->auth->roleCheck(array('O'));
+
         $this->view->setFile('index');
 
         if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
