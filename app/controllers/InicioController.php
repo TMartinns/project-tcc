@@ -58,7 +58,7 @@ class InicioController extends \HXPHP\System\Controller
                             $diligencia->id,
                             $this->auth->getUserId(),
                             $tipoNotificacaoPrazoEsgotando->id
-                        )) && $intervalo->d == 1) {
+                        )) && ($intervalo->invert == 0 && $intervalo->d == 1)) {
                         $notificacao = array(
                             'id_diligencia' => $diligencia->id,
                             'id_destinatario' => $this->auth->getUserId(),
