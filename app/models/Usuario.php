@@ -46,6 +46,50 @@ class Usuario extends \HXPHP\System\Model
         return $resposta;
     }
 
+    public static function editar($id, array $atributos)
+    {
+        $resposta = new \stdClass;
+        $resposta->usuario = null;
+        $resposta->status = false;
+        $resposta->errors = array();
+
+        if(in_array('', $atributos)) {
+            array_push($resposta->errors, 'Todos os campos são obrigatórios.');
+
+            return $resposta;
+        }
+
+        $usuario = self::find_by_id_pessoa($id);
+        $usuario->email = $atributos['email'];
+
+        $existeEmail = self::find_by_email($atributos['email']);
+
+        if(!is_null($existeEmail) && $id != $existeEmail->id) {
+            array_push($resposta->errors, 'Já existe um usuário com esse e-mail cadastrado.');
+        }
+
+        if(!empty($resposta->errors)) {
+            return $resposta;
+        }
+
+        $save = $usuario->save(false);
+
+        if($save){
+            $resposta->usuario = $usuario;
+            $resposta->status = true;
+
+            return $resposta;
+        }
+
+        $errors = $usuario->errors->get_raw_errors();
+
+        foreach ($errors as $key => $message) {
+            array_push($resposta->errors, $message[0]);
+        }
+
+        return $resposta;
+    }
+
     public static function ativar($id, $ativar = true)
     {
         $resposta = new \stdClass;

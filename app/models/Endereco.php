@@ -54,4 +54,47 @@ class Endereco extends \HXPHP\System\Model
 
         return $resposta;
     }
+
+    public static function editar($id, array $atributos)
+    {
+        $resposta = new \stdClass;
+        $resposta->endereco = null;
+        $resposta->status = false;
+        $resposta->errors = array();
+
+        if(in_array('', $atributos)) {
+            array_push($resposta->errors, 'Todos os campos são obrigatórios.');
+
+            return $resposta;
+        }
+
+        $endereco = self::find_by_id_pessoa($id);
+        $endereco->logradouro = $atributos['logradouro'];
+        $endereco->numero = $atributos['numero'];
+        $endereco->complemento = $atributos['complemento'];
+        $endereco->cep = $atributos['cep'];
+        $endereco->bairro = $atributos['bairro'];
+        $endereco->id_cidade = $atributos['id_cidade'];
+
+        if(!empty($resposta->errors)) {
+            return $resposta;
+        }
+
+        $save = $endereco->save(false);
+
+        if($save){
+            $resposta->endereco = $endereco;
+            $resposta->status = true;
+
+            return $resposta;
+        }
+
+        $errors = $endereco->errors->get_raw_errors();
+
+        foreach ($errors as $key => $message) {
+            array_push($resposta->errors, $message[0]);
+        }
+
+        return $resposta;
+    }
 }
