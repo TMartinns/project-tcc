@@ -1,0 +1,276 @@
+<?php
+echo (isset($this->alert)) ? $this->alert : '';
+?>
+
+<ul class="menu nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link text-secondary active" id="resultadoUsuarioTab" data-toggle="tab"
+           href="#resultadoPerfil">Perfil</a>
+    </li>
+</ul>
+
+<div id="modalEditarPerfil" class="modal fade modalSeguro" tabindex="-1">
+    <div class="modal-dialog modal-lg shadow-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar perfil</h5>
+            </div>
+
+            <form enctype="multipart/form-data"
+                  action="<?php echo $this->getRelativeURL('perfil', false) . DS . 'editar' . DS . $this->auth->getUserId(); ?>"
+                  method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mt-1">
+                                <?php
+                                $class = '';
+                                $backgroundImage = '';
+
+                                if($view_usuario->imagem != null) {
+                                    $class = 'file-ok';
+                                    $backgroundImage = UPLOADS . "usuarios/$view_usuario->id_pessoa/$view_usuario->imagem";
+                                }
+                                ?>
+                                <div class="wrap-custom-file">
+                                    <input type="file" name="imagem" id="imagemCadastrar" accept=".jpg, .png, .jpeg">
+
+                                    <label class="<?php echo $class; ?>" for="imagemCadastrar" style="background-image: url('<?php echo $backgroundImage; ?>')">
+                                        <span>Imagem de perfil</span>
+
+                                        <i class="fa fa-plus-circle"></i>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nome">Nome</label>
+
+                                <input required type="text" class="form-control" name="nome" id="nome"
+                                       placeholder="Insira o nome completo"
+                                       value="<?php echo $view_pessoa->nome; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+
+                                <input required type="email" class="form-control" name="email" id="email"
+                                       placeholder="Insira o e-mail"
+                                       value="<?php echo $view_usuario->email; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cpf">CPF</label>
+
+                                <input required type="text" class="form-control" name="cpf" id="cpf"
+                                       placeholder="Insira o número de CPF"
+                                       value="<?php echo $view_pessoa->cpf; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dataNascimento">Data de nascimento</label>
+
+                                <input required type="text" class="form-control dataNascimento"
+                                       name="dataNascimento"
+                                       placeholder="Selecione a data de nascimento"
+                                       value="<?php echo (empty($view_pessoa->data_nascimento)) ? '' : $view_pessoa->data_nascimento->format('d/m/Y'); ?>">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-4">
+                                    <label for="ddd">DDD</label>
+
+                                    <input required type="text" class="form-control" name="ddd" id="ddd"
+                                           placeholder="Insira o DDD"
+                                           value="<?php echo $view_telefone->ddd; ?>">
+                                </div>
+
+                                <div class="form-group col">
+                                    <label for="numeroTelefone">Número</label>
+
+                                    <input required type="text" class="form-control" name="numeroTelefone"
+                                           id="numeroTelefone" placeholder="Insira o número de telefone"
+                                           value="<?php echo $view_telefone->numero; ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="logradouro">Logradouro</label>
+
+                                <input required type="text" class="form-control" name="logradouro"
+                                       id="logradouro"
+                                       placeholder="Insira o nome da rua"
+                                       value="<?php echo $view_endereco->logradouro; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="numeroEndereco">Número</label>
+
+                                <input required type="text" class="form-control" name="numeroEndereco"
+                                       id="numeroEndereco"
+                                       placeholder="Insira o número da casa"
+                                       value="<?php echo $view_endereco->numero; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="complemento">Complemento</label>
+
+                                <input required type="text" class="form-control" name="complemento"
+                                       id="complemento"
+                                       placeholder="Insira o complemento"
+                                       value="<?php echo $view_endereco->complemento; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cep">CEP</label>
+
+                                <input required type="text" class="form-control" name="cep" id="cep"
+                                       placeholder="Insira o CEP" value="<?php echo $view_endereco->cep; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bairro">Bairro</label>
+
+                                <input required type="text" class="form-control" name="bairro" id="bairro"
+                                       placeholder="Insira o bairro"
+                                       value="<?php echo $view_endereco->bairro; ?>">
+                            </div>
+
+                            <div class="form-row">
+                                <?php
+                                $cidade = Cidade::find_by_id($view_endereco->id_cidade);
+
+                                $uf = Uf::find_by_id($cidade->id_uf);
+                                ?>
+
+                                <div class="form-group col">
+                                    <label for="uf">Estado</label>
+
+                                    <select class="custom-select" name="uf" id="uf"
+                                            data-url="<?php echo $this->getRelativeURL('cidades', false) . DS . 'getCidades'; ?>">
+                                        <option value="<?php echo $uf->id; ?>"
+                                                selected><?php echo $uf->uf; ?></option>
+                                        <?php
+                                        $ufs = Uf::all(array(
+                                            'order' => 'uf'
+                                        ));
+
+                                        foreach ($ufs as $uf) {
+                                            echo "<option value=$uf->id>$uf->uf</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col">
+                                    <label for="cidade">Cidade</label>
+
+                                    <select class="custom-select" name="cidade" id="cidade">
+                                        <option value="<?php echo $cidade->id; ?>"
+                                                selected><?php echo $cidade->nome; ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
+                            title="Aguarde 3 segundos">
+                        <span><i class="fas fa-times"></i></span>
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn btn-outline-dark shadow">
+                        <span><i class="fas fa-save"></i></span>
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="resultadoPerfil">
+        <br/>
+
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <label class="botaoEsquerda-1 shadow-sm">
+                    <button type="button" data-toggle="modal" class="btn btn-light bg-white tooltipTitle"
+                            title="Editar" data-target="#modalEditarPerfil">
+                        <i class="fas fa-user-edit"></i>
+                    </button>
+                </label>
+
+                <div class="offset-md-4 col-md-4 offset-lg-4 col-lg-4 text-center">
+                    <p>
+                        <img class="rounded-circle avatar bg-dark tooltipTitle shadow-lg" src="<?php
+                        $title = '';
+
+                        if (is_null($view_usuario->imagem)) {
+                            $title = 'Icon designed by Eucalyp from Flaticon';
+                            $avatar = '';
+                            if (is_null($view_pessoa->genero)) {
+                                $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
+                                $avatar = $genero[mt_rand(0, 1)];
+                            } else {
+                                $avatar = ($view_pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
+                            }
+                            echo IMG . "avatars/usuarios/$avatar";
+                        } else {
+                            echo UPLOADS . "usuarios/$view_usuario->id_pessoa/$view_usuario->imagem";
+                        }
+                        ?>" width="180" height="180" title="<?php echo $title; ?>">
+                    </p>
+
+                    <hr/>
+
+                    <h5 class="card-title"><?php echo $view_pessoa->nome; ?></h5>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 offset-lg-2 col-lg-4">
+                        <p class="card-text"><h6>E-mail</h6><?php echo $view_usuario->email; ?></p>
+
+                        <p class="card-text"><h6>
+                            Função</h6><?php echo ($view_usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria'; ?>
+                        </p>
+
+                        <p class="card-text"><h6>CPF</h6><?php echo $view_pessoa->cpf; ?></p>
+
+                        <p class="card-text"><h6>Data de
+                            nascimento</h6><?php echo (empty($view_pessoa->data_nascimento)) ? '' : $view_pessoa->data_nascimento->format('d/m/Y'); ?></p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <p class="card-text"><h6>Telefone</h6>
+                        <?php echo (empty($view_telefone)) ? '' : "($view_telefone->ddd) $view_telefone->numero"; ?></p>
+
+                        <p class="card-text"><h6>Endereço</h6>
+                        <?php
+                        if (!empty($view_endereco)) {
+                            $cidade = Cidade::find_by_id($view_endereco->id_cidade);
+
+                            $uf = Uf::find_by_id($cidade->id_uf);
+
+                            echo "$view_endereco->logradouro, $view_endereco->numero, $view_endereco->complemento, $view_endereco->bairro
+                                  <br/>
+                                  $cidade->nome/$uf->uf
+                                  <br/>
+                                  $view_endereco->cep";
+                        }
+                        ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
