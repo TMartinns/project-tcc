@@ -1,4 +1,4 @@
-$('#modalNovoInteressado #dataNascimento').datepicker({
+$('.dataNascimento').datepicker({
     uiLibrary: 'bootstrap4',
     header: true,
     iconsLibrary: 'fontawesome',
