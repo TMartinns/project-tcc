@@ -114,14 +114,14 @@ class UsuariosController extends \HXPHP\System\Controller
 
             if(!empty($pessoa)) {
                 $usuario = Usuario::find_by_id_pessoa($pessoa->id);
-                $telefones = Telefone::find_all_by_id_pessoa($pessoa->id);
-                $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
+                $telefone = Telefone::find_by_id_pessoa($pessoa->id);
+                $endereco = Endereco::find_by_id_pessoa($pessoa->id);
 
                 $this->view->setVars(array(
                     'pessoa' => $pessoa,
                     'usuario' => $usuario,
-                    'telefones' => $telefones,
-                    'enderecos' => $enderecos
+                    'telefone' => $telefone,
+                    'endereco' => $endereco
                 ));
             } else {
                 $this->view->setFile('index');

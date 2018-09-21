@@ -47,35 +47,26 @@
 
                         <p class="card-text"><h6>CPF</h6><?php echo $view_pessoa->cpf; ?></p>
 
-                        <p class="card-text"><h6>Data de nascimento</h6><?php echo $view_pessoa->data_nascimento; ?></p>
+                        <p class="card-text"><h6>Data de
+                            nascimento</h6><?php echo (empty($view_pessoa->data_nascimento)) ? '' : $view_pessoa->data_nascimento->format('d/m/Y'); ?></p>
                     </div>
 
                     <div class="col-md-6 col-lg-4">
-                        <p class="card-text"><h6>Telefones</h6>
-                        <?php
-                        foreach ($view_telefones as $key => $telefone) {
-                            $hr = ($key != count($view_telefones) - 1) ? "<hr/>" : '';
-                            echo "<p class='card-text'> ($telefone->ddd) $telefone->numero</p>$hr";
-                        }
-                        ?>
-                        </p>
+                        <p class="card-text"><h6>Telefone</h6>
+                        <?php echo (empty($view_telefone)) ? '' : "($view_telefone->ddd) $view_telefone->numero"; ?></p>
 
-                        <p class="card-text"><h6>Endereços</h6>
+                        <p class="card-text"><h6>Endereço</h6>
                         <?php
-                        foreach ($view_enderecos as $key => $endereco) {
-                            $cidade = Cidade::find_by_id($endereco->id_cidade);
+                        if (!empty($view_endereco)) {
+                            $cidade = Cidade::find_by_id($view_endereco->id_cidade);
 
                             $uf = Uf::find_by_id($cidade->id_uf);
 
-                            $hr = ($key != count($view_enderecos) - 1) ? "<hr/>" : '';
-                            echo "<p class='card-text'> 
-                                          $endereco->logradouro, $endereco->numero, $endereco->complemento, $endereco->bairro
-                                          <br/>
-                                          $cidade->nome/$uf->uf
-                                          <br/>
-                                          $endereco->cep
-                                          </p>
-                                          $hr";
+                            echo "$view_endereco->logradouro, $view_endereco->numero, $view_endereco->complemento, $view_endereco->bairro
+                                  <br/>
+                                  $cidade->nome/$uf->uf
+                                  <br/>
+                                  $view_endereco->cep";
                         }
                         ?>
                         </p>

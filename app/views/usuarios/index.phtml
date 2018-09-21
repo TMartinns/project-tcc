@@ -13,11 +13,14 @@ $this->partial('menu');
             <?php
             $usuarios = Usuario::all();
             foreach ($usuarios as $usuario) {
+                if ($usuario->id == $this->auth->getUserId())
+                    continue;
+
                 $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
 
-                $telefones = Telefone::find_all_by_id_pessoa($pessoa->id);
+                $telefone = Telefone::find_by_id_pessoa($pessoa->id);
 
-                $enderecos = Endereco::find_all_by_id_pessoa($pessoa->id);
+                $endereco = Endereco::find_by_id_pessoa($pessoa->id);
                 ?>
                 <div class="col-md-6 col-lg-4">
                     <div class="card border shadow-lg">
@@ -57,33 +60,23 @@ $this->partial('menu');
                                 <p class="card-text"><h6>CPF</h6><?php echo $pessoa->cpf; ?></p>
 
                                 <p class="card-text"><h6>Data de
-                                    nascimento</h6><?php echo $pessoa->data_nascimento; ?></p>
+                                    nascimento</h6><?php echo (empty($pessoa->data_nascimento)) ? '' : $pessoa->data_nascimento->format('d/m/Y'); ?></p>
 
-                                <p class="card-text"><h6>Telefones</h6>
-                                <?php
-                                foreach ($telefones as $key => $telefone) {
-                                    $hr = ($key != count($telefones) - 1) ? "<hr/>" : '';
-                                    echo "<p class='card-text'> ($telefone->ddd) $telefone->numero</p>$hr";
-                                }
-                                ?>
-                                </p>
+                                <p class="card-text"><h6>Telefone</h6>
+                                <?php echo (empty($telefone)) ? '' : "($telefone->ddd) $telefone->numero"; ?></p>
 
-                                <p class="card-text"><h6>Endereços</h6>
+                                <p class="card-text"><h6>Endereço</h6>
                                 <?php
-                                foreach ($enderecos as $key => $endereco) {
+                                if (!empty($endereco)) {
                                     $cidade = Cidade::find_by_id($endereco->id_cidade);
 
                                     $uf = Uf::find_by_id($cidade->id_uf);
 
-                                    $hr = ($key != count($enderecos) - 1) ? "<hr/>" : '';
-                                    echo "<p class='card-text'> 
-                                          $endereco->logradouro, $endereco->numero, $endereco->complemento, $endereco->bairro
+                                    echo "$endereco->logradouro, $endereco->numero, $endereco->complemento, $endereco->bairro
                                           <br/>
                                           $cidade->nome/$uf->uf
                                           <br/>
-                                          $endereco->cep
-                                          </p>
-                                          $hr";
+                                          $endereco->cep";
                                 }
                                 ?>
                                 </p>
@@ -167,7 +160,8 @@ $this->partial('menu');
                             </div>
 
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input class="custom-control-input" type="radio" name="funcao" id="opcaoOficial" value="O">
+                                <input class="custom-control-input" type="radio" name="funcao" id="opcaoOficial"
+                                       value="O">
                                 <label class="custom-control-label" for="opcaoOficial">Oficial de promotoria</label>
                             </div>
                         </div>
