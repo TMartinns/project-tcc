@@ -31,6 +31,9 @@ class PesquisasController extends \HXPHP\System\Controller
 
         if($this->auth->getUserRole() == 'C') {
             foreach (Usuario::getAllByEmailOrPessoasNome($info, $info) as $usuario) {
+                if($usuario->id == $this->auth->getUserId())
+                    continue;
+
                 $usuarios[] = array(
                     'texto' => $usuario->nome,
                     'url' => $this->view->getRelativeURL('usuarios', false) . DS . 'visualizar' . DS . $usuario->id
