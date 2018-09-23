@@ -32,7 +32,7 @@ $('#modalNovoInteressado').find('#botaoCadastrar').click(function () {
     var post = {
         nome: modal.find('#nome').val(),
         cpf: modal.find('#cpf').val(),
-        dataNascimento: modal.find('#dataNascimento').val(),
+        dataNascimento: modal.find('.dataNascimento').val(),
         ddd: modal.find('#ddd').val(),
         numeroTelefone: modal.find('#numeroTelefone').val(),
         logradouro: modal.find('#logradouro').val(),
