@@ -32,8 +32,7 @@ class PerfilController extends \HXPHP\System\Controller
             $this->configs->js . 'wrap-custom-file.js',
             $this->configs->bower . 'gijgo/dist/combined/js/gijgo.min.js',
             $this->configs->bower . 'gijgo/dist/combined/js/messages/messages.pt-br.min.js',
-            $this->configs->js . 'datepicker.config.js',
-            $this->configs->js . 'modal.config.js'
+            $this->configs->js . 'datepicker.config.js'
         ));
     }
 
@@ -119,6 +118,7 @@ class PerfilController extends \HXPHP\System\Controller
             $pessoa = array(
                 'nome' => $post['nome'],
                 'cpf' => $post['cpf'],
+                'genero' => $post['genero'],
                 'data_nascimento' => $this->dateconverter->toMySqlFormat($post['dataNascimento'])
             );
 
@@ -139,7 +139,12 @@ class PerfilController extends \HXPHP\System\Controller
                         'numero' => $post['numeroTelefone']
                     );
 
-                    $resposta = Telefone::editar($id, $telefone);
+                    if(empty(Telefone::find_by_id_pessoa($id)))
+                    {
+                        $resposta = Telefone::cadastrar(array_merge($telefone, array('id_pessoa' => $id)));
+                    } else {
+                        $resposta = Telefone::editar($id, $telefone);
+                    }
 
                     if($resposta->status) {
                         $endereco = array(
@@ -151,7 +156,12 @@ class PerfilController extends \HXPHP\System\Controller
                             'id_cidade' => ($post['cidade'] == 0) ? '' : $post['cidade']
                         );
 
-                        $resposta = Endereco::editar($id, $endereco);
+                        if(empty(Endereco::find_by_id_pessoa($id)))
+                        {
+                            $resposta = Endereco::cadastrar(array_merge($endereco, array('id_pessoa' => $id)));
+                        } else {
+                            $resposta = Endereco::editar($id, $endereco);
+                        }
 
                         if($resposta->status) {
                             $resposta = $this->imagemUpload($usuario);

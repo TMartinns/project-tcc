@@ -62,6 +62,7 @@ class Pessoa extends \HXPHP\System\Model
         $pessoa = self::find_by_id($id);
         $pessoa->nome = $atributos['nome'];
         $pessoa->cpf = $atributos['cpf'];
+        $pessoa->genero = $atributos['genero'];
         $pessoa->data_nascimento = $atributos['data_nascimento'];
 
         $existeCpf = self::find_by_cpf($atributos['cpf']);

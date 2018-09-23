@@ -27,7 +27,7 @@ echo (isset($this->alert)) ? $this->alert : '';
                                 $class = '';
                                 $backgroundImage = '';
 
-                                if($view_usuario->imagem != null) {
+                                if ($view_usuario->imagem != null) {
                                     $class = 'file-ok';
                                     $backgroundImage = UPLOADS . "usuarios/$view_usuario->id_pessoa/$view_usuario->imagem";
                                 }
@@ -35,7 +35,8 @@ echo (isset($this->alert)) ? $this->alert : '';
                                 <div class="wrap-custom-file">
                                     <input type="file" name="imagem" id="imagemCadastrar" accept=".jpg, .png, .jpeg">
 
-                                    <label class="<?php echo $class; ?>" for="imagemCadastrar" style="background-image: url('<?php echo $backgroundImage; ?>')">
+                                    <label class="<?php echo $class; ?>" for="imagemCadastrar"
+                                           style="background-image: url('<?php echo $backgroundImage; ?>')">
                                         <span>Imagem de perfil</span>
 
                                         <i class="fa fa-plus-circle"></i>
@@ -76,13 +77,37 @@ echo (isset($this->alert)) ? $this->alert : '';
                                        value="<?php echo (empty($view_pessoa->data_nascimento)) ? '' : $view_pessoa->data_nascimento->format('d/m/Y'); ?>">
                             </div>
 
+                            <div class="form-group">
+                                <label>Gênero</label>
+
+                                <br/>
+
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="opcaoMasculino" name="genero" class="custom-control-input"
+                                           value="M"
+                                        <?php echo ($view_pessoa->genero == 'M') ? 'checked' : ''; ?>>
+
+                                    <label class="custom-control-label" for="opcaoMasculino">Masculino</label>
+                                </div>
+
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="opcaoFeminino" name="genero" class="custom-control-input"
+                                           value="F"
+                                        <?php echo ($view_pessoa->genero == 'F') ? 'checked' : ''; ?>>
+
+                                    <label class="custom-control-label" for="opcaoFeminino">Feminino</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
                             <div class="form-row">
                                 <div class="form-group col-4">
                                     <label for="ddd">DDD</label>
 
                                     <input required type="text" class="form-control" name="ddd" id="ddd"
                                            placeholder="Insira o DDD"
-                                           value="<?php echo $view_telefone->ddd; ?>">
+                                           value="<?php echo (empty($view_telefone)) ? '' : $view_telefone->ddd; ?>">
                                 </div>
 
                                 <div class="form-group col">
@@ -90,19 +115,17 @@ echo (isset($this->alert)) ? $this->alert : '';
 
                                     <input required type="text" class="form-control" name="numeroTelefone"
                                            id="numeroTelefone" placeholder="Insira o número de telefone"
-                                           value="<?php echo $view_telefone->numero; ?>">
+                                           value="<?php echo (empty($view_telefone)) ? '' : $view_telefone->numero; ?>">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="logradouro">Logradouro</label>
 
                                 <input required type="text" class="form-control" name="logradouro"
                                        id="logradouro"
                                        placeholder="Insira o nome da rua"
-                                       value="<?php echo $view_endereco->logradouro; ?>">
+                                       value="<?php echo (empty($view_endereco)) ? '' : $view_endereco->logradouro; ?>">
                             </div>
 
                             <div class="form-group">
@@ -111,7 +134,7 @@ echo (isset($this->alert)) ? $this->alert : '';
                                 <input required type="text" class="form-control" name="numeroEndereco"
                                        id="numeroEndereco"
                                        placeholder="Insira o número da casa"
-                                       value="<?php echo $view_endereco->numero; ?>">
+                                       value="<?php echo (empty($view_endereco)) ? '' : $view_endereco->numero; ?>">
                             </div>
 
                             <div class="form-group">
@@ -120,14 +143,15 @@ echo (isset($this->alert)) ? $this->alert : '';
                                 <input required type="text" class="form-control" name="complemento"
                                        id="complemento"
                                        placeholder="Insira o complemento"
-                                       value="<?php echo $view_endereco->complemento; ?>">
+                                       value="<?php echo (empty($view_endereco)) ? '' : $view_endereco->complemento; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="cep">CEP</label>
 
                                 <input required type="text" class="form-control" name="cep" id="cep"
-                                       placeholder="Insira o CEP" value="<?php echo $view_endereco->cep; ?>">
+                                       placeholder="Insira o CEP"
+                                       value="<?php echo (empty($view_endereco)) ? '' : $view_endereco->cep; ?>">
                             </div>
 
                             <div class="form-group">
@@ -135,14 +159,19 @@ echo (isset($this->alert)) ? $this->alert : '';
 
                                 <input required type="text" class="form-control" name="bairro" id="bairro"
                                        placeholder="Insira o bairro"
-                                       value="<?php echo $view_endereco->bairro; ?>">
+                                       value="<?php echo (empty($view_endereco)) ? '' : $view_endereco->bairro; ?>">
                             </div>
 
                             <div class="form-row">
                                 <?php
-                                $cidade = Cidade::find_by_id($view_endereco->id_cidade);
+                                $cidade = null;
+                                $uf = null;
 
-                                $uf = Uf::find_by_id($cidade->id_uf);
+                                if (!empty($view_endereco)) {
+                                    $cidade = Cidade::find_by_id($view_endereco->id_cidade);
+
+                                    $uf = Uf::find_by_id($cidade->id_uf);
+                                }
                                 ?>
 
                                 <div class="form-group col">
@@ -150,9 +179,18 @@ echo (isset($this->alert)) ? $this->alert : '';
 
                                     <select class="custom-select" name="uf" id="uf"
                                             data-url="<?php echo $this->getRelativeURL('cidades', false) . DS . 'getCidades'; ?>">
-                                        <option value="<?php echo $uf->id; ?>"
-                                                selected><?php echo $uf->uf; ?></option>
                                         <?php
+                                        if (empty($uf)) {
+                                            ?>
+                                            <option selected>Selecione um estado</option>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <option value="<?php echo $uf->id; ?>"
+                                                    selected><?php echo $uf->uf; ?></option>
+                                            <?php
+                                        }
+
                                         $ufs = Uf::all(array(
                                             'order' => 'uf'
                                         ));
@@ -168,8 +206,18 @@ echo (isset($this->alert)) ? $this->alert : '';
                                     <label for="cidade">Cidade</label>
 
                                     <select class="custom-select" name="cidade" id="cidade">
-                                        <option value="<?php echo $cidade->id; ?>"
-                                                selected><?php echo $cidade->nome; ?></option>
+                                        <?php
+                                        if (empty($cidade)) {
+                                            ?>
+                                            <option selected value="0">Selecione um estado primeiro</option>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <option value="<?php echo $cidade->id; ?>"
+                                                    selected><?php echo $cidade->nome; ?></option>
+                                            <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
