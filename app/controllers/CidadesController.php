@@ -15,7 +15,7 @@ class CidadesController extends \HXPHP\System\Controller
 
         $this->auth->redirectCheck(false);
 
-        $this->auth->roleCheck(array('C'));
+        $this->auth->roleCheck(array('C', 'O'));
     }
 
     public function getCidadesAction($id = null)
