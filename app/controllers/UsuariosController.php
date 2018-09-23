@@ -20,8 +20,6 @@ class UsuariosController extends \HXPHP\System\Controller
             $this->configs,
             $this->auth->getUserRole()
         );
-
-        $this->view->setAssets('js', $this->configs->js . 'autocomplete.config.js');
     }
 
     public function indexAction()
