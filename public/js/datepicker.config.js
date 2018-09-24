@@ -1,4 +1,4 @@
-$('.dataNascimento').datepicker({
+var maxDateToday = {
     uiLibrary: 'bootstrap4',
     header: true,
     iconsLibrary: 'fontawesome',
@@ -7,9 +7,9 @@ $('.dataNascimento').datepicker({
     maxDate: function() {
         return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     }
-});
+};
 
-$('#cadastrarDiligencias #prazoCumprimento').datepicker({
+var minDateToday = {
     uiLibrary: 'bootstrap4',
     header: true,
     iconsLibrary: 'fontawesome',
@@ -18,4 +18,13 @@ $('#cadastrarDiligencias #prazoCumprimento').datepicker({
     minDate: function() {
         return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     }
-});
+};
+
+$('.dataNascimento').datepicker(maxDateToday);
+
+$('.prazoCumprimento').datepicker(minDateToday);
+
+$('.dataInicio').datepicker(maxDateToday);
+
+$('.dataFim').datepicker(maxDateToday);
+
