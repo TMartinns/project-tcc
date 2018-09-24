@@ -126,3 +126,8 @@ $('.notificacaoMensagem').click(function () {
         url: '/project-tcc/notificacoes/visto/' + id
     });
 });
+
+$('.filtro button').click(function () {
+    $('.filtro').toggleClass('show');
+    $('.filtro .dropdown-menu').toggleClass('show');
+});

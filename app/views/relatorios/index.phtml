@@ -1,0 +1,114 @@
+<?php
+$this->setPartialsDir('partials' . DS . 'relatorios');
+$this->partial('menu');
+?>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="relatorioDiligencias">
+        <br/>
+
+        <div class="dropdown filtro">
+            <button type="button" class="btn btn-outline-dark shadow-lg">
+                <i class="fas fa-filter"></i>
+                Filtrar
+            </button>
+
+            <div class="dropdown-menu p-4 shadow-lg">
+                <div class="form-group">
+                    <label>Situação</label>
+
+                    <br/>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input situacao" type="radio" name="situacao" id="opcaoCumprida"
+                               value="1">
+                        <label class="custom-control-label" for="opcaoCumprida">Cumprida</label>
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input situacao" type="radio" name="situacao" id="opcaoNaoCumprida"
+                               value="2">
+                        <label class="custom-control-label" for="opcaoNaoCumprida">Não cumprida</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Período</label>
+
+                    <small class="text-muted">(A pesquisa é feita com base na data do registro)</small>
+
+                    <br/>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input periodo" type="radio" name="periodo" id="opcao30Dias"
+                               value="1">
+                        <label class="custom-control-label" for="opcao30Dias">Últimos 30 dias</label>
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input periodo" type="radio" name="periodo" id="opcao3Meses"
+                               value="2">
+                        <label class="custom-control-label" for="opcao3Meses">Últimos 3 meses</label>
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input periodo" type="radio" name="periodo" id="opcao6Meses"
+                               value="3">
+                        <label class="custom-control-label" for="opcao6Meses">Últimos 6 meses</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col mb-0">
+                        <input type="text" class="form-control dataInicio" name="dataInicio"
+                               placeholder="Data início">
+                    </div>
+
+                    _
+
+                    <div class="form-group col mb-0">
+                        <input type="text" class="form-control dataFim" name="dataFim"
+                               placeholder="Data fim">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="card shadow-lg">
+            <div class="card-body table-responsive">
+                <table id="diligencias" class="table table-borderless table-hover" style="width: 100% !important;">
+                    <thead>
+                    <tr>
+                        <th>Promotoria</th>
+                        <th>Data do registro</th>
+                        <th>Descrição</th>
+                        <th>Prazo para cumprimento</th>
+                        <th>Oficial de promotoria</th>
+                        <th>Data da baixa</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="relatorioVeiculos">
+        <br/>
+
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <table id="veiculos" class="table table-borderless table-hover" style="width: 100% !important;">
+                    <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
