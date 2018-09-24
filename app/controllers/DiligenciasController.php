@@ -23,15 +23,14 @@ class DiligenciasController extends \HXPHP\System\Controller
 
         $this->view->setAssets('css', array(
             $this->configs->bower . 'gijgo/dist/combined/css/gijgo.min.css',
-            $this->configs->bower . 'DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css'
+            $this->configs->bower . 'DataTables/datatables.min.css'
         ));
 
         $this->view->setAssets('js', array(
             $this->configs->bower . 'gijgo/dist/combined/js/gijgo.min.js',
             $this->configs->bower . 'gijgo/dist/combined/js/messages/messages.pt-br.min.js',
             $this->configs->js . 'datepicker.config.js',
-            $this->configs->bower . 'DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js',
-            $this->configs->bower . 'DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js'
+            $this->configs->bower . 'DataTables/datatables.min.js'
         ));
     }
 
@@ -415,5 +414,92 @@ class DiligenciasController extends \HXPHP\System\Controller
                 ));
             }
         }
+    }
+
+    public function getDiligenciasAction($situacao = null, $periodo = null)
+    {
+        $this->auth->roleCheck(array('C'));
+
+        $this->view->setPath('blank', true)
+            ->setFile('index')
+            ->setTemplate(false);
+
+        $resposta = array();
+
+        $diligencias = Diligencia::all();
+
+        foreach ($diligencias as $diligencia) {
+            $eventoCumprimento = TipoEvento::find_by_tipo('Cumprimento');
+
+            $ultimoEvento = Evento::find_by_id_diligencia($diligencia->id, array(
+                'order' => 'data desc'
+            ));
+
+            $eventoRegistro = Evento::find_by_id_diligencia_and_id_tipo_evento($diligencia->id, TipoEvento::find_by_tipo('Registro')->id);
+
+            if (filter_var($situacao, FILTER_VALIDATE_INT)) {
+                if ($situacao == 1) {
+                    if ($ultimoEvento->id_tipo_evento != $eventoCumprimento->id)
+                        continue;
+                } else if ($situacao == 2) {
+                    if ($ultimoEvento->id_tipo_evento == $eventoCumprimento->id)
+                        continue;
+                }
+            }
+
+            if (!empty($periodo) && filter_var($periodo, FILTER_VALIDATE_INT)) {
+                $dataAtual = new DateTime(Date('Y-m-d'));
+
+                if ($periodo == 1) {
+                    $dataAtual->modify('-1 month');
+
+                    if ($eventoRegistro->data->format('Y-m-d') < $dataAtual->format('Y-m-d'))
+                        continue;
+                } else if ($periodo == 2) {
+                    $dataAtual->modify('-3 month');
+
+                    if ($eventoRegistro->data->format('Y-m-d') < $dataAtual->format('Y-m-d'))
+                        continue;
+                } else if ($periodo == 3) {
+                    $dataAtual->modify('-6 month');
+
+                    if ($eventoRegistro->data->format('Y-m-d') < $dataAtual->format('Y-m-d'))
+                        continue;
+                }
+            } else {
+                $datas = $this->request->post();
+
+                $this->load('Services\DateConverter');
+
+                $datas['dataInicio'] = $this->dateconverter->toMySqlFormat($datas['dataInicio']);
+                $datas['dataFim'] = $this->dateconverter->toMySqlFormat($datas['dataFim']);
+
+                if(!empty($datas['dataInicio']) || !empty($datas['dataFim'])) {
+                    if($eventoRegistro->data->format('Y-m-d') < $datas['dataInicio'] || $eventoRegistro->data->format('Y-m-d') > $datas['dataFim'])
+                        continue;
+                }
+            }
+
+            $mandado = Mandado::find_by_id($diligencia->id_mandado);
+
+            $interessado = Pessoa::find_by_id($mandado->id_interessado);
+
+            $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
+
+            $pessoa = Pessoa::find_by_id($ultimoEvento->id_autor);
+
+            $usuario = Usuario::find_by_id_pessoa($pessoa->id);
+
+            $resposta[] = array(
+                $promotoria->nome,
+                $eventoRegistro->data->format('d/m/y'),
+                $mandado->descricao . ' - ' . $mandado->numero_protocolo . ' - ' . $interessado->nome,
+                $diligencia->prazo_cumprimento->format('d/m/Y'),
+                ($usuario->funcao == 'O') ? $pessoa->nome : '',
+                ($ultimoEvento->id_tipo_evento == $eventoCumprimento->id) ? $ultimoEvento->data->format('d/m/Y') : ''
+            );
+        }
+
+        echo json_encode($resposta);
     }
 }
