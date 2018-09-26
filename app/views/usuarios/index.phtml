@@ -9,114 +9,61 @@ $this->partial('menu');
     <div class="tab-pane fade show active" id="listarUsuarios">
         <br/>
 
-        <div class="row">
-            <?php
-            $usuarios = Usuario::all();
-            foreach ($usuarios as $usuario) {
-                if ($usuario->id == $this->auth->getUserId())
-                    continue;
+        <div class="dropdown filtro">
+            <button type="button" class="btn btn-outline-dark shadow-lg">
+                <i class="fas fa-filter"></i>
+                Filtrar
+            </button>
 
-                $pessoa = Pessoa::find_by_id($usuario->id_pessoa);
+            <div class="dropdown-menu p-4 shadow-lg">
+                <div class="form-group mb-0">
+                    <label>Situação</label>
 
-                $telefone = Telefone::find_by_id_pessoa($pessoa->id);
-
-                $endereco = Endereco::find_by_id_pessoa($pessoa->id);
-                ?>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card border shadow-lg">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <p>
-                                    <img class="rounded-circle avatar bg-dark tooltipTitle shadow-lg" src="<?php
-                                    $title = '';
-                                    if (is_null($usuario->imagem)) {
-                                        $title = 'Icon designed by Eucalyp from Flaticon';
-                                        $avatar = '';
-                                        if (is_null($pessoa->genero)) {
-                                            $genero = array('man-' . mt_rand(0, 34), 'woman-' . mt_rand(0, 12));
-                                            $avatar = $genero[mt_rand(0, 1)];
-                                        } else {
-                                            $avatar = ($pessoa->genero == 'M') ? 'man-' . mt_rand(0, 34) : 'woman-' . mt_rand(0, 12);
-                                        }
-                                        echo IMG . "avatars/usuarios/$avatar";
-                                    } else {
-                                        echo UPLOADS . "usuarios/$usuario->id_pessoa/$usuario->imagem";
-                                    }
-                                    ?>" width="110" height="110" title="<?php echo $title; ?>">
-                                </p>
-
-                                <hr/>
-
-                                <h5 class="card-title"><?php echo $pessoa->nome; ?></h5>
-                            </div>
-
-                            <p class="card-text"><h6>E-mail</h6><?php echo $usuario->email; ?></p>
-
-                            <p class="card-text"><h6>
-                                Função</h6><?php echo ($usuario->funcao == 'C') ? 'Coordenador' : 'Oficial de promotoria'; ?>
-                            </p>
-
-                            <div id="dadosPessoais<?php echo $pessoa->id; ?>" class="d-none">
-                                <p class="card-text"><h6>CPF</h6><?php echo $pessoa->cpf; ?></p>
-
-                                <p class="card-text"><h6>Data de
-                                    nascimento</h6><?php echo (empty($pessoa->data_nascimento)) ? '' : $pessoa->data_nascimento->format('d/m/Y'); ?></p>
-
-                                <p class="card-text"><h6>Telefone</h6>
-                                <?php echo (empty($telefone)) ? '' : "($telefone->ddd) $telefone->numero"; ?></p>
-
-                                <p class="card-text"><h6>Endereço</h6>
-                                <?php
-                                if (!empty($endereco)) {
-                                    $cidade = Cidade::find_by_id($endereco->id_cidade);
-
-                                    $uf = Uf::find_by_id($cidade->id_uf);
-
-                                    echo "$endereco->logradouro, $endereco->numero, $endereco->complemento, $endereco->bairro
-                                          <br/>
-                                          $cidade->nome/$uf->uf
-                                          <br/>
-                                          $endereco->cep";
-                                }
-                                ?>
-                                </p>
-                            </div>
-
-                            <div class="text-center">
-                                <button class="btn btn-outline-dark shadow dadosPessoaisExpandir"
-                                        data-id="<?php echo $pessoa->id; ?>">
-                                    <span><i class="fas fa-arrow-circle-down"></i></span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="card-footer text-center bg-white">
-                            <?php
-                            if ($usuario->is_ativo == 1) {
-                                ?>
-                                <a class="btn btn-outline-danger shadow"
-                                   href="<?php echo $this->getRelativeURL('desativar') . DS . $usuario->id_pessoa; ?>">
-                                    <span><i class="fas fa-lock"></i></span>
-                                    Desativar
-                                </a>
-                                <?php
-                            } else {
-                                ?>
-                                <a class="btn btn-outline-success shadow"
-                                   href="<?php echo $this->getRelativeURL('ativar') . DS . $usuario->id_pessoa; ?>">
-                                    <span><i class="fas fa-lock-open"></i></span>
-                                    Ativar
-                                </a>
-                                <?php
-                            }
-                            ?>
-                        </div>
-                    </div>
                     <br/>
+
+                    <div class="custom-control custom-radio">
+                        <input checked class="custom-control-input situacao" type="radio"
+                               name="situacao"
+                               id="opcaoAtivo"
+                               data-target="#ativos">
+                        <label class="custom-control-label success" for="opcaoAtivo">Ativo</label>
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input situacao" type="radio"
+                               name="situacao"
+                               id="opcaoInativo"
+                               data-target="#inativos">
+                        <label class="custom-control-label danger" for="opcaoInativo">Inativo</label>
+                    </div>
                 </div>
+            </div>
+
+            <nav class="nav d-none">
+                <a data-toggle="tab"></a>
+            </nav>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="ativos">
+                <br/>
+
                 <?php
-            }
-            ?>
+                $this->partial('listarUsuarios', array(
+                    'isAtivo' => 1
+                ));
+                ?>
+            </div>
+
+            <div class="tab-pane fade" id="inativos">
+                <br/>
+
+                <?php
+                $this->partial('listarUsuarios', array(
+                    'isAtivo' => 0
+                ));
+                ?>
+            </div>
         </div>
     </div>
 

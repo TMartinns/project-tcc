@@ -108,15 +108,15 @@ body {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
 }
 
-.situacao:checked ~ .emAndamento::before {
+.situacao:checked ~ .warning::before {
     background-color: #ffc107 !important;
 }
 
-.situacao:checked ~ .emEspera::before {
+.situacao:checked ~ .danger::before {
     background-color: #dc3545 !important;
 }
 
-.situacao:checked ~ .cumprida::before {
+.situacao:checked ~ .success::before {
     background-color: #28a745 !important;
 }
 
