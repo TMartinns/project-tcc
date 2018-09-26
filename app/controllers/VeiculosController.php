@@ -273,4 +273,64 @@ class VeiculosController extends \HXPHP\System\Controller
 
         echo json_encode($resposta);
     }
+
+    public function getVeiculosUtilizadosAction($periodo = null)
+    {
+        $this->auth->roleCheck(array('C'));
+
+        $this->view->setPath('blank', true)
+            ->setFile('index')
+            ->setTemplate(false);
+
+        $resposta = array();
+
+        $registros = VeiculoUtilizado::all();
+
+        foreach ($registros as $registro) {
+            if (!empty($periodo) && filter_var($periodo, FILTER_VALIDATE_INT)) {
+                $dataAtual = new DateTime(Date('Y-m-d'));
+
+                if ($periodo == 1) {
+                    $dataAtual->modify('-1 month');
+
+                    if ($registro->data_inicio->format('Y-m-d') < $dataAtual->format('Y-m-d'))
+                        continue;
+                } else if ($periodo == 2) {
+                    $dataAtual->modify('-3 month');
+
+                    if ($registro->data_inicio->format('Y-m-d') < $dataAtual->format('Y-m-d'))
+                        continue;
+                } else if ($periodo == 3) {
+                    $dataAtual->modify('-6 month');
+
+                    if ($registro->data_inicio->format('Y-m-d') < $dataAtual->format('Y-m-d'))
+                        continue;
+                }
+            } else {
+                $datas = $this->request->post();
+
+                $this->load('Services\DateConverter');
+
+                $datas['dataInicio'] = $this->dateconverter->toMySqlFormat($datas['dataInicio']);
+                $datas['dataFim'] = $this->dateconverter->toMySqlFormat($datas['dataFim']);
+
+                if(!empty($datas['dataInicio']) || !empty($datas['dataFim'])) {
+                    if($registro->data_inicio->format('Y-m-d') < $datas['dataInicio'] || $registro->data_inicio->format('Y-m-d') > $datas['dataFim'])
+                        continue;
+                }
+            }
+
+            $veiculo = Veiculo::find_by_id($registro->id_veiculo);
+            $oficial = Pessoa::find_by_id($registro->id_oficial);
+
+            $resposta[] = array(
+                $registro->data_inicio->format('d/m/Y H:i:s'),
+                $veiculo->marca . ' ' . $veiculo->modelo . ' - ' . $veiculo->placa,
+                $oficial->nome,
+                (empty($registro->data_termino)) ? '' : $registro->data_termino->format('d/m/Y H:i:s')
+            );
+        }
+
+        echo json_encode($resposta);
+    }
 }

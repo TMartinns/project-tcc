@@ -60,14 +60,14 @@ $this->partial('menu');
 
                 <div class="form-row">
                     <div class="form-group col mb-0">
-                        <input type="text" class="form-control dataInicio" name="dataInicio"
+                        <input type="text" class="form-control dataInicio" name="dataInicio" id="diligencia"
                                placeholder="Data início">
                     </div>
 
                     _
 
                     <div class="form-group col mb-0">
-                        <input type="text" class="form-control dataFim" name="dataFim"
+                        <input type="text" class="form-control dataFim" name="dataFim" id="diligencia"
                                placeholder="Data fim">
                     </div>
                 </div>
@@ -97,12 +97,66 @@ $this->partial('menu');
     <div class="tab-pane fade" id="relatorioVeiculos">
         <br/>
 
+        <div class="dropdown filtro">
+            <button type="button" class="btn btn-outline-dark shadow-lg">
+                <i class="fas fa-filter"></i>
+                Filtrar
+            </button>
+
+            <div class="dropdown-menu p-4 shadow-lg">
+                <div class="form-group">
+                    <label>Período</label>
+
+                    <small class="text-muted">(A pesquisa é feita com base na data do registro)</small>
+
+                    <br/>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input periodo" type="radio" name="veiculos-periodo" id="veiculos-opcao30Dias"
+                               value="1">
+                        <label class="custom-control-label" for="veiculos-opcao30Dias">Últimos 30 dias</label>
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input periodo" type="radio" name="veiculos-periodo" id="veiculo-opcao3Meses"
+                               value="2">
+                        <label class="custom-control-label" for="veiculo-opcao3Meses">Últimos 3 meses</label>
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input periodo" type="radio" name="veiculos-periodo" id="veiculo-opcao6Meses"
+                               value="3">
+                        <label class="custom-control-label" for="veiculo-opcao6Meses">Últimos 6 meses</label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col mb-0">
+                        <input type="text" class="form-control dataInicio" name="dataInicio" id="veiculo"
+                               placeholder="Data início">
+                    </div>
+
+                    _
+
+                    <div class="form-group col mb-0">
+                        <input type="text" class="form-control dataFim" name="dataFim" id="veiculo"
+                               placeholder="Data fim">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+
         <div class="card shadow-lg">
             <div class="card-body">
                 <table id="veiculos" class="table table-borderless table-hover" style="width: 100% !important;">
                     <thead>
                     <tr>
-                        <th></th>
+                        <th>Data do registro</th>
+                        <th>Veículo</th>
+                        <th>Oficial de promotoria</th>
+                        <th>Data da baixa</th>
                     </tr>
                     </thead>
                 </table>

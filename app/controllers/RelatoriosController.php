@@ -33,7 +33,8 @@ class RelatoriosController extends \HXPHP\System\Controller
             $this->configs->bower . 'gijgo/dist/combined/js/messages/messages.pt-br.min.js',
             $this->configs->js . 'datepicker.config.js',
             $this->configs->bower . 'DataTables/datatables.min.js',
-            $this->configs->js . 'relatorio.diligencias.js'
+            $this->configs->js . 'relatorio.diligencias.js',
+            $this->configs->js . 'relatorio.veiculos.js'
         ));
     }
 }

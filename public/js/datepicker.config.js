@@ -24,7 +24,11 @@ $('.dataNascimento').datepicker(maxDateToday);
 
 $('.prazoCumprimento').datepicker(minDateToday);
 
-$('.dataInicio').datepicker(maxDateToday);
+$('#diligencia.dataInicio').datepicker(maxDateToday);
 
-$('.dataFim').datepicker(maxDateToday);
+$('#diligencia.dataFim').datepicker(maxDateToday);
+
+$('#veiculo.dataInicio').datepicker(maxDateToday);
+
+$('#veiculo.dataFim').datepicker(maxDateToday);
 

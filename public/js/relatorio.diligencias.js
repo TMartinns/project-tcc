@@ -1,6 +1,6 @@
 function getDiligencias(diligencias) {
-    var situacao = $('.situacao:checked').val();
-    var periodo = $('.periodo:checked').val();
+    var situacao = $('#relatorioDiligencias .situacao:checked').val();
+    var periodo = $('#relatorioDiligencias .periodo:checked').val();
 
     var ajax = {
         method: 'get',
@@ -11,8 +11,8 @@ function getDiligencias(diligencias) {
     };
 
     if (periodo == null) {
-        var dataInicio = $('.dataInicio').val();
-        var dataFim = $('.dataFim').val();
+        var dataInicio = $('#relatorioDiligencias .dataInicio').val();
+        var dataFim = $('#relatorioDiligencias .dataFim').val();
 
         var ajax = {
             method: 'post',
@@ -36,31 +36,31 @@ $(function () {
     });
 });
 
-$('.situacao').click(function () {
+$('#relatorioDiligencias .situacao').click(function () {
     getDiligencias(function (diligencias) {
         preencherTabelaDiligencias(diligencias);
     });
 });
 
-$('.periodo').click(function () {
-    $('.dataInicio').val('');
-    $('.dataFim').val('');
-
-    getDiligencias(function (diligencias) {
-        preencherTabelaDiligencias(diligencias);
-    });
-});
-
-$('.dataInicio').change(function () {
-    $('.periodo:checked').prop('checked', false);
+$('#relatorioDiligencias .periodo').click(function () {
+    $('#relatorioDiligencias .dataInicio').val('');
+    $('#relatorioDiligencias .dataFim').val('');
 
     getDiligencias(function (diligencias) {
         preencherTabelaDiligencias(diligencias);
     });
 });
 
-$('.dataFim').change(function () {
-    $('.periodo:checked').prop('checked', false);
+$('#relatorioDiligencias .dataInicio').change(function () {
+    $('#relatorioDiligencias .periodo:checked').prop('checked', false);
+
+    getDiligencias(function (diligencias) {
+        preencherTabelaDiligencias(diligencias);
+    });
+});
+
+$('#relatorioDiligencias .dataFim').change(function () {
+    $('#relatorioDiligencias .periodo:checked').prop('checked', false);
 
     getDiligencias(function (diligencias) {
         preencherTabelaDiligencias(diligencias);
