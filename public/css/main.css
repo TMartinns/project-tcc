@@ -108,25 +108,16 @@ body {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
 }
 
-.diligenciasStatus .nav-link:hover {
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+.situacao:checked ~ .emAndamento::before {
+    background-color: #ffc107 !important;
 }
 
-.diligenciasStatus .nav-link.active {
-    background-color: #fff !important;
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+.situacao:checked ~ .emEspera::before {
+    background-color: #dc3545 !important;
 }
 
-.emAndamentoTab.nav-link.active {
-    border: 1px solid #ffc107 !important;
-}
-
-.emEsperaTab.nav-link.active {
-    border: 1px solid #dc3545 !important;
-}
-
-.cumpridaTab.nav-link.active {
-    border: 1px solid #28a745 !important;
+.situacao:checked ~ .cumprida::before {
+    background-color: #28a745 !important;
 }
 
 .w-eac-100-46 {

@@ -5,7 +5,7 @@ $tipoDiligencia = null;
 if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
     $tipoDiligencia = $view_tipoDiligencia;
 
-    if($this->auth->getUserRole() == 'C') {
+    if ($this->auth->getUserRole() == 'C') {
         $diligencias = Diligencia::find_by_id_tipo_diligencia($tipoDiligencia);
     } else {
         $diligencias = Diligencia::getByTipoDiligenciaAndEventosAutor($tipoDiligencia, $this->auth->getUserId());
@@ -21,25 +21,50 @@ if (empty($diligencias)) {
 } else {
     ?>
 
-    <div class="row">
-        <div class="col-md-12 col-lg-12">
-            <nav class="diligenciasStatus nav nav-pills justify-content-center flex-column flex-sm-row">
-                <a class="emAndamentoTab text-secondary nav-link text-secondary active" data-toggle="pill"
-                   href="#emAndamento<?php echo $tipoDiligencia; ?>">
-                    Em Andamento
-                </a>
+    <div class="dropdown filtro">
+        <button type="button" class="btn btn-outline-dark shadow-lg">
+            <i class="fas fa-filter"></i>
+            Filtrar
+        </button>
 
-                <a class="emEsperaTab text-secondary nav-link text-secondary" data-toggle="pill"
-                   href="#emEspera<?php echo $tipoDiligencia; ?>">
-                    Em Espera
-                </a>
+        <div class="dropdown-menu p-4 shadow-lg">
+            <div class="form-group mb-0">
+                <label>Situação</label>
 
-                <a class="cumpridaTab text-secondary nav-link text-secondary" data-toggle="pill"
-                   href="#cumprida<?php echo $tipoDiligencia; ?>">
-                    Cumpridas
-                </a>
-            </nav>
+                <br/>
+
+                <div class="custom-control custom-radio">
+                    <input checked class="custom-control-input situacao" type="radio"
+                           name="situacao<?php echo $tipoDiligencia; ?>"
+                           id="opcaoEmAndamento<?php echo $tipoDiligencia; ?>"
+                           data-target="#emAndamento<?php echo $tipoDiligencia; ?>">
+                    <label class="custom-control-label emAndamento" for="opcaoEmAndamento<?php echo $tipoDiligencia; ?>">Em
+                        Andamento</label>
+                </div>
+
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input situacao" type="radio"
+                           name="situacao<?php echo $tipoDiligencia; ?>"
+                           id="opcaoEmEspera<?php echo $tipoDiligencia; ?>"
+                           data-target="#emEspera<?php echo $tipoDiligencia; ?>">
+                    <label class="custom-control-label emEspera" for="opcaoEmEspera<?php echo $tipoDiligencia; ?>">Em
+                        espera</label>
+                </div>
+
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input situacao" type="radio"
+                           name="situacao<?php echo $tipoDiligencia; ?>"
+                           id="opcaoCumprida<?php echo $tipoDiligencia; ?>"
+                           data-target="#cumprida<?php echo $tipoDiligencia; ?>">
+                    <label class="custom-control-label cumprida"
+                           for="opcaoCumprida<?php echo $tipoDiligencia; ?>">Cumprida</label>
+                </div>
+            </div>
         </div>
+
+        <nav class="nav d-none">
+            <a data-toggle="tab"></a>
+        </nav>
     </div>
 
     <div class="tab-content">

@@ -131,3 +131,12 @@ $('.filtro button').click(function () {
     $('.filtro').toggleClass('show');
     $('.filtro .dropdown-menu').toggleClass('show');
 });
+
+$('.filtro .situacao').click(function () {
+    var target = $(this).data('target');
+
+    $('.filtro .nav a').removeClass('active show')
+        .attr('href', target);
+
+    $('.filtro .nav a').tab('show');
+});
