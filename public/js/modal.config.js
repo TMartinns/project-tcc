@@ -103,6 +103,32 @@ $('#modalDadosDiligencia').on('show.bs.modal', function (event) {
 });
 
 $('#modalEventos').on('show.bs.modal', function (event) {
+    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-br-pre": function ( a ) {
+            var x;
+
+            if ( $.trim(a) !== '' ) {
+                var frDatea = $.trim(a).split(' ');
+                var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00,00,00];
+                var frDatea2 = frDatea[0].split('/');
+                x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined != frTimea[2]) ? frTimea[2] : 0)) * 1;
+            }
+            else {
+                x = Infinity;
+            }
+
+            return x;
+        },
+
+        "date-br-asc": function ( a, b ) {
+            return a - b;
+        },
+
+        "date-br-desc": function ( a, b ) {
+            return b - a;
+        }
+    } );
+
     var eventos = $(event.relatedTarget).data('eventos');
     var modal = $(this);
 
@@ -112,7 +138,10 @@ $('#modalEventos').on('show.bs.modal', function (event) {
         language: {
             url: '/project-tcc/public/bower_components/DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
         },
-        order: [[0, 'desc']]
+        order: [[0, 'desc']],
+        columnDefs: [
+            { type: 'date-br', targets: 0 }
+        ]
     });
 });
 
