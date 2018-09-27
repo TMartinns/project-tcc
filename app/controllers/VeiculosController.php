@@ -21,10 +21,14 @@ class VeiculosController extends \HXPHP\System\Controller
             $this->auth->getUserRole()
         );
 
-        $this->view->setAssets('css', $this->configs->css . 'wrap-custom-file.css');
+        $this->view->setAssets('css', array(
+            $this->configs->css . 'wrap-custom-file.css',
+            $this->configs->bower . 'DataTables/datatables.min.css'
+        ));
 
         $this->view->setAssets('js', array(
-            $this->configs->js . 'wrap-custom-file.js'
+            $this->configs->js . 'wrap-custom-file.js',
+            $this->configs->bower . 'DataTables/datatables.min.js'
         ));
     }
 
@@ -175,7 +179,7 @@ class VeiculosController extends \HXPHP\System\Controller
 
     public function visualizarAction($id = null)
     {
-        $this->auth->roleCheck(array('C'));
+        $this->auth->roleCheck(array('C', 'O'));
 
         if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
             $veiculo = Veiculo::find_by_id($id);

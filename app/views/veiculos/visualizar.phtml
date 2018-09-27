@@ -7,8 +7,11 @@
 
 <?php
 $this->setPartialsDir('partials' . DS . 'veiculos');
-$this->partial('modalEditarVeiculos');
-$this->partial('modalQrCode');
+if ($this->auth->getUserRole() == 'C') {
+    $this->partial('modalEditarVeiculos');
+    $this->partial('modalQrCode');
+}
+$this->partial('modalRegistrosUtilizacao');
 ?>
 
 <div class="tab-content">
@@ -21,32 +24,63 @@ $this->partial('modalQrCode');
         ?>
         <div class="card shadow-lg <?php echo $border; ?>">
             <div class="card-body">
-                <label class="botaoEsquerda-1 shadow-sm">
-                    <button type="button" class="btn btn-light bg-white tooltipTitle" data-toggle="modal"
-                            title="Editar"
-                            data-target="#modalEditarVeiculos"
-                            data-veiculo='<?php echo json_encode(array('action' => $this->getRelativeURL('editar'),
-                                'id' => $view_veiculo->id,
-                                'imagem' => $view_veiculo->imagem,
-                                'modelo' => $view_veiculo->modelo,
-                                'marca' => $view_veiculo->marca,
-                                'renavam' => $view_veiculo->renavam,
-                                'placa' => $view_veiculo->placa,
-                                'ano' => $view_veiculo->ano,
-                                'cor' => $view_veiculo->cor
-                            )); ?>'>
-                        <span><i class="fas fa-pencil-alt"></i></span>
-                    </button>
-                </label>
+                <?php
+                $botaoEsquerda = 'botaoEsquerda-1';
+                if ($this->auth->getUserRole() == 'C') {
+                    $botaoEsquerda = 'botaoEsquerda-3';
+                    ?>
+                    <label class="botaoEsquerda-1 shadow-sm">
+                        <button type="button" class="btn btn-light bg-white tooltipTitle" data-toggle="modal"
+                                title="Editar"
+                                data-target="#modalEditarVeiculos"
+                                data-veiculo='<?php echo json_encode(array('action' => $this->getRelativeURL('editar'),
+                                    'id' => $view_veiculo->id,
+                                    'imagem' => $view_veiculo->imagem,
+                                    'modelo' => $view_veiculo->modelo,
+                                    'marca' => $view_veiculo->marca,
+                                    'renavam' => $view_veiculo->renavam,
+                                    'placa' => $view_veiculo->placa,
+                                    'ano' => $view_veiculo->ano,
+                                    'cor' => $view_veiculo->cor
+                                )); ?>'>
+                            <span><i class="fas fa-pencil-alt"></i></span>
+                        </button>
+                    </label>
 
-                <label class="botaoEsquerda-2 shadow-sm">
+                    <label class="botaoEsquerda-2 shadow-sm">
+                        <button type="button" class="btn btn-light bg-white tooltipTitle"
+                                title="Gerar QR Code"
+                                data-id="<?php echo $view_veiculo->id; ?>"
+                                data-modelo="<?php echo $view_veiculo->modelo; ?>"
+                                data-toggle="modal"
+                                data-target="#modalQrCode">
+                            <span><i class="fas fa-qrcode"></i></span>
+                        </button>
+                    </label>
+                    <?php
+                }
+                ?>
+
+                <?php
+                $registros = array();
+
+                foreach (VeiculoUtilizado::find_all_by_id_veiculo($view_veiculo->id) as $registro) {
+                    $oficial = Pessoa::find_by_id($registro->id_oficial);
+
+                    $registros[] = array(
+                        $registro->data_inicio->format('d/m/y H:i:s'),
+                        $oficial->nome,
+                        (empty($registro->data_termino)) ? '' : $registro->data_termino->format('d/m/Y H:i:s')
+                    );
+                }
+                ?>
+                <label class="<?php echo $botaoEsquerda; ?> shadow-sm">
                     <button type="button" class="btn btn-light bg-white tooltipTitle"
-                            title="Gerar QR Code"
-                            data-id="<?php echo $view_veiculo->id; ?>"
-                            data-modelo="<?php echo $view_veiculo->modelo; ?>"
+                            title="Registros de utilização"
                             data-toggle="modal"
-                            data-target="#modalQrCode">
-                        <span><i class="fas fa-qrcode"></i></span>
+                            data-target="#modalRegistrosUtilizacao"
+                            data-registros='<?php echo json_encode($registros); ?>'>
+                        <i class="fas fa-car-side"></i>
                     </button>
                 </label>
 
@@ -89,27 +123,33 @@ $this->partial('modalQrCode');
                 </div>
             </div>
 
-            <div class="card-footer text-center bg-white">
-                <?php
-                if ($view_veiculo->is_ativo == 1) {
-                    ?>
-                    <a class="btn btn-outline-danger shadow"
-                       href="<?php echo $this->getRelativeURL('desativar') . DS . $view_veiculo->id; ?>">
-                        <span><i class="fas fa-lock"></i></span>
-                        Desativar
-                    </a>
-                    <?php
-                } else {
-                    ?>
-                    <a class="btn btn-outline-success shadow"
-                       href="<?php echo $this->getRelativeURL('ativar') . DS . $view_veiculo->id; ?>">
-                        <span><i class="fas fa-lock-open"></i></span>
-                        Ativar
-                    </a>
-                    <?php
-                }
+            <?php
+            if ($this->auth->getUserRole() == 'C') {
                 ?>
-            </div>
+                <div class="card-footer text-center bg-white">
+                    <?php
+                    if ($view_veiculo->is_ativo == 1) {
+                        ?>
+                        <a class="btn btn-outline-danger shadow"
+                           href="<?php echo $this->getRelativeURL('desativar') . DS . $view_veiculo->id; ?>">
+                            <span><i class="fas fa-lock"></i></span>
+                            Desativar
+                        </a>
+                        <?php
+                    } else {
+                        ?>
+                        <a class="btn btn-outline-success shadow"
+                           href="<?php echo $this->getRelativeURL('ativar') . DS . $view_veiculo->id; ?>">
+                            <span><i class="fas fa-lock-open"></i></span>
+                            Ativar
+                        </a>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
 </div>

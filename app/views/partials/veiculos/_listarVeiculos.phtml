@@ -37,6 +37,29 @@
                         </button>
                     </label>
 
+                    <?php
+                    $registros = array();
+
+                    foreach (VeiculoUtilizado::find_all_by_id_veiculo($veiculo->id) as $registro) {
+                        $oficial = Pessoa::find_by_id($registro->id_oficial);
+
+                        $registros[] = array(
+                            $registro->data_inicio->format('d/m/y H:i:s'),
+                            $oficial->nome,
+                            (empty($registro->data_termino)) ? '' : $registro->data_termino->format('d/m/Y H:i:s')
+                        );
+                    }
+                    ?>
+                    <label class="botaoEsquerda-3 shadow-sm">
+                        <button type="button" class="btn btn-light bg-white tooltipTitle"
+                                title="Registros de utilização"
+                                data-toggle="modal"
+                                data-target="#modalRegistrosUtilizacao"
+                                data-registros='<?php echo json_encode($registros); ?>'>
+                            <i class="fas fa-car-side"></i>
+                        </button>
+                    </label>
+
                     <div class="text-center">
                         <p>
                             <img class="rounded-circle avatar bg-dark tooltipTitle shadow-lg" src="<?php
