@@ -15,7 +15,11 @@ $this->partial('modalQrCode');
     <div class="tab-pane fade show active" id="resultadoVeiculo">
         <br/>
 
-        <div class="card shadow-lg">
+        <?php
+        $border = 'border border';
+        $border .= ($view_veiculo->is_ativo == 1) ? '-success' : '-danger';
+        ?>
+        <div class="card shadow-lg <?php echo $border; ?>">
             <div class="card-body">
                 <label class="botaoEsquerda-1 shadow-sm">
                     <button type="button" class="btn btn-light bg-white tooltipTitle" data-toggle="modal"
