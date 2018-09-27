@@ -2,9 +2,11 @@
     <?php
     $veiculos = Veiculo::find_all_by_is_ativo($view_isAtivo);
     foreach ($veiculos as $veiculo) {
+        $border = 'border border';
+        $border .= ($veiculo->is_ativo == 1) ? '-success' : '-danger';
         ?>
         <div class="col-md-6 col-lg-4">
-            <div class="card shadow-lg">
+            <div class="card shadow-lg <?php echo $border; ?>">
                 <div class="card-body">
                     <label class="botaoEsquerda-1 shadow-sm">
                         <button type="button" class="btn btn-light bg-white tooltipTitle" data-toggle="modal"

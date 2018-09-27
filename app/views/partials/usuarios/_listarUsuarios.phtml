@@ -10,9 +10,12 @@
         $telefone = Telefone::find_by_id_pessoa($pessoa->id);
 
         $endereco = Endereco::find_by_id_pessoa($pessoa->id);
+
+        $border = 'border border';
+        $border .= ($usuario->is_ativo == 1) ? '-success' : '-danger';
         ?>
         <div class="col-md-6 col-lg-4">
-            <div class="card border shadow-lg">
+            <div class="card shadow-lg <?php echo $border; ?>">
                 <div class="card-body">
                     <div class="text-center">
                         <p>
