@@ -1,0 +1,181 @@
+<h6 class="text-secondary mb-0">Últimas
+    diligências <?php echo ($this->auth->getUserRole() == 'C') ? 'registradas' : 'recebidas'; ?></h6>
+
+<br/>
+
+<div class="row">
+    <?php
+    $eventos = null;
+
+    if ($this->auth->getUserRole() == 'C') {
+        $eventoRegistro = TipoEvento::find_by_tipo('Registro');
+
+        $eventos = Evento::find_all_by_id_tipo_evento($eventoRegistro->id, array(
+            'order' => 'data desc',
+            'limit' => 3
+        ));
+    } else {
+        $eventoRecebimento = TipoEvento::find_by_tipo('Recebimento');
+
+        $eventos = Evento::find_all_by_id_tipo_evento_and_id_autor($eventoRecebimento->id, $this->auth->getUserId(), array(
+            'order' => 'data desc',
+            'limit' => 3
+        ));
+    }
+
+    if (!empty($eventos)) {
+        foreach ($eventos as $evento) {
+            $diligencia = Diligencia::find_by_id($evento->id_diligencia);
+
+            $mandado = Mandado::find_by_id($diligencia->id_mandado);
+
+            $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
+
+            $interessado = Pessoa::find_by_id($mandado->id_interessado);
+
+            $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);
+            ?>
+            <div class="col-md-6 col-lg-4">
+                <a class="nav-link text-dark p-0"
+                   href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'visualizar' . DS . $diligencia->id; ?>">
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <div class="text-center tooltipTitle" title="Número de protocolo">
+                                <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
+                            </div>
+
+                            <p class="card-text"><h6>Descrição</h6><?php echo $mandado->descricao; ?></p>
+
+                            <p class="card-text"><h6>Tipo de diligência</h6><?php echo $tipoDiligencia->tipo; ?></p>
+                        </div>
+
+                        <div class="card-footer text-center bg-white">
+                            <small class="form-text text-muted">Clique para saber mais</small>
+                        </div>
+                    </div>
+                </a>
+
+                <br/>
+            </div>
+            <?php
+        }
+    }
+    ?>
+</div>
+
+<h6 class="text-secondary mb-0">Últimas diligências cumpridas</h6>
+
+<br/>
+
+<div class="row">
+    <?php
+    $eventoCumprimento = TipoEvento::find_by_tipo('Cumprimento');
+
+    $eventos = null;
+
+    if ($this->auth->getUserRole() == 'C') {
+        $eventos = Evento::find_all_by_id_tipo_evento($eventoCumprimento->id, array(
+            'order' => 'data desc',
+            'limit' => 3
+        ));
+    } else {
+        $eventoRecebimento = TipoEvento::find_by_tipo('Recebimento');
+
+        $eventos = Evento::find_all_by_id_tipo_evento_and_id_autor($eventoCumprimento->id, $this->auth->getUserId(), array(
+            'order' => 'data desc',
+            'limit' => 3
+        ));
+    }
+
+    if (!empty($eventos)) {
+        foreach ($eventos as $evento) {
+            $diligencia = Diligencia::find_by_id($evento->id_diligencia);
+
+            $mandado = Mandado::find_by_id($diligencia->id_mandado);
+
+            $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
+
+            $interessado = Pessoa::find_by_id($mandado->id_interessado);
+
+            $tipoDiligencia = TipoDiligencia::find_by_id($diligencia->id_tipo_diligencia);
+            ?>
+            <div class="col-md-6 col-lg-4">
+                <a class="nav-link text-dark p-0"
+                   href="<?php echo $this->getRelativeURL('diligencias', false) . DS . 'visualizar' . DS . $diligencia->id; ?>">
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <div class="text-center tooltipTitle" title="Número de protocolo">
+                                <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
+                            </div>
+
+                            <p class="card-text"><h6>Descrição</h6><?php echo $mandado->descricao; ?></p>
+
+                            <p class="card-text"><h6>Tipo de diligência</h6><?php echo $tipoDiligencia->tipo; ?></p>
+                        </div>
+
+                        <div class="card-footer text-center bg-white">
+                            <small class="form-text text-muted">Clique para saber mais</small>
+                        </div>
+                    </div>
+                </a>
+
+                <br/>
+            </div>
+            <?php
+        }
+    }
+    ?>
+</div>
+
+<h6 class="text-secondary mb-0">Últimos veículos utilizados</h6>
+
+<br/>
+
+<div class="row">
+    <?php
+
+    $registros = null;
+
+    if ($this->auth->getUserRole() == 'C') {
+        $registros = VeiculoUtilizado::all(array(
+            'order' => 'data_inicio desc',
+            'limit' => 3
+        ));
+    } else {
+        $registros = VeiculoUtilizado::find_all_by_id_oficial($this->auth->getUserId(), array(
+            'order' => 'data_inicio desc',
+            'limit' => 3
+        ));
+    }
+
+    if (!empty($registros)) {
+        foreach ($registros as $registro) {
+            $veiculo = Veiculo::find_by_id($registro->id_veiculo);
+            ?>
+            <div class="col-md-6 col-lg-4">
+                <a class="nav-link text-dark p-0"
+                   href="<?php echo $this->getRelativeURL('veiculos', false) . DS . 'visualizar' . DS . $veiculo->id; ?>">
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h5 class="card-title tooltipTitle" title="Modelo"><?php echo $veiculo->modelo; ?></h5>
+                            </div>
+
+                            <p class="card-text"><h6>Marca</h6><?php echo $veiculo->marca; ?></p>
+
+                            <p class="card-text"><h6>Placa</h6><?php echo $veiculo->placa; ?></p>
+                        </div>
+
+                        <div class="card-footer text-center bg-white">
+                            <small class="form-text text-muted">Clique para saber mais</small>
+                        </div>
+                    </div>
+                </a>
+
+                <br/>
+            </div>
+            <?php
+        }
+    }
+    ?>
+</div>
