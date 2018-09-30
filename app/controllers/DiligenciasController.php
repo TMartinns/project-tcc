@@ -333,10 +333,14 @@ class DiligenciasController extends \HXPHP\System\Controller
                             }
                         }
 
+                        $href = $this->getRelativeURL('remessas', false) . DS . 'index' . DS . $resposta->remessa->id;
+
+                        $remessa = $resposta->remessa->id;
+
                         $this->load('Helpers\Alert', array(
                             'success',
                             'Envio efetuado!',
-                            "Todas as diligências selecionadas foram enviadas com sucesso."
+                            "Todas as diligências selecionadas foram enviadas com sucesso na remessa <a href=$href target='_blank'>$remessa</a>."
                         ));
                     } else {
                         $resposta->remessa->delete();
@@ -477,8 +481,8 @@ class DiligenciasController extends \HXPHP\System\Controller
                 $datas['dataInicio'] = $this->dateconverter->toMySqlFormat($datas['dataInicio']);
                 $datas['dataFim'] = $this->dateconverter->toMySqlFormat($datas['dataFim']);
 
-                if(!empty($datas['dataInicio']) || !empty($datas['dataFim'])) {
-                    if($eventoRegistro->data->format('Y-m-d') < $datas['dataInicio'] || $eventoRegistro->data->format('Y-m-d') > $datas['dataFim'])
+                if (!empty($datas['dataInicio']) || !empty($datas['dataFim'])) {
+                    if ($eventoRegistro->data->format('Y-m-d') < $datas['dataInicio'] || $eventoRegistro->data->format('Y-m-d') > $datas['dataFim'])
                         continue;
                 }
             }
