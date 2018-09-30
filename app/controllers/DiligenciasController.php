@@ -492,7 +492,7 @@ class DiligenciasController extends \HXPHP\System\Controller
 
             $resposta[] = array(
                 $promotoria->nome,
-                $eventoRegistro->data->format('d/m/y'),
+                $eventoRegistro->data->format('d/m/Y'),
                 $mandado->descricao . ' - ' . $mandado->numero_protocolo . ' - ' . $interessado->nome,
                 $diligencia->prazo_cumprimento->format('d/m/Y'),
                 ($usuario->funcao == 'O') ? $pessoa->nome : '',

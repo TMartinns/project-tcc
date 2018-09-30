@@ -68,7 +68,7 @@ $this->partial('modalRegistrosUtilizacao');
                     $oficial = Pessoa::find_by_id($registro->id_oficial);
 
                     $registros[] = array(
-                        $registro->data_inicio->format('d/m/y H:i:s'),
+                        $registro->data_inicio->format('d/m/Y H:i:s'),
                         $oficial->nome,
                         (empty($registro->data_termino)) ? '' : $registro->data_termino->format('d/m/Y H:i:s')
                     );
