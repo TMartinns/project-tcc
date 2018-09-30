@@ -92,11 +92,9 @@ function pesquisarAutocomplete() {
         },
         requestDelay: 500,
         template: {
-            type: "links",
-            fields: {
-                link: function (element) {
-                    return element.url;
-                }
+            type: "custom",
+            method: function(value, item) {
+                return "<a href='" + item.url + "'>" + item.texto + "</a>";
             }
         },
         categories: [
