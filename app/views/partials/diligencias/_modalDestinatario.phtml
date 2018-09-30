@@ -1,0 +1,62 @@
+<div id="modalDestinatario" class="modal fade modalSeguro" tabindex="-1">
+    <div class="modal-dialog modal-sm shadow-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Destinatário</h5>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <?php
+                    $checked = 'checked';
+                    $dNone = '';
+                    if($this->auth->getUserRole() == 'C') {
+                        $checked = '';
+                        $dNone = 'd-none';
+                        ?>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="destinatario"
+                                   id="opcaoOficial" value="O" checked>
+
+                            <label class="custom-control-label" for="opcaoOficial">Oficial de
+                                promotoria</label>
+
+                            <small class="form-text text-muted">Essa opção envia para um dos
+                                oficiais seguindo a regra de envio
+                            </small>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="destinatario"
+                               id="opcaoEspecifico" value="E" <?php echo $checked; ?>>
+
+                        <label class="custom-control-label" for="opcaoEspecifico">Usuário específico</label>
+                    </div>
+                </div>
+
+                <div class="usuarioEspecifico form-group <?php echo $dNone; ?>">
+                    <input type="text" class="form-control" id="usuarioEspecifico" name="usuarioEspecifico"
+                           placeholder="Insira o nome do usuário">
+
+                    <input type="hidden" id="idUsuarioEspecifico" name="idUsuarioEspecifico">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
+                        title="Aguarde 3 segundos">
+                    <span><i class="fas fa-times"></i></span>
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn btn-outline-dark shadow">
+                    <span><i class="fas fa-share-square"></i></span>
+                    Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

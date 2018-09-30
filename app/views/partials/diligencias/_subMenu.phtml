@@ -1,112 +1,86 @@
-<?php
-$diligencias = null;
-$tipoDiligencia = null;
+<div class="dropdown filtro">
+    <button type="button" class="btn btn-outline-dark shadow-lg">
+        <i class="fas fa-filter"></i>
+        Filtrar
+    </button>
 
-if (isset($view_tipoDiligencia) && !empty($view_tipoDiligencia)) {
-    $tipoDiligencia = $view_tipoDiligencia;
+    <div class="dropdown-menu p-4 shadow-lg">
+        <div class="form-group mb-0">
+            <label>Situação</label>
 
-    if ($this->auth->getUserRole() == 'C') {
-        $diligencias = Diligencia::find_by_id_tipo_diligencia($tipoDiligencia);
-    } else {
-        $diligencias = Diligencia::getByTipoDiligenciaAndEventosAutor($tipoDiligencia, $this->auth->getUserId());
-    }
-}
+            <br/>
 
-if (empty($diligencias)) {
-    ?>
-    <div class="alert alert-warning show shadow-lg">
-        <h5 class="alert-heading text-center">Nenhuma diligência desse tipo foi emitida até o momento.</h5>
-    </div>
-    <?php
-} else {
-    ?>
+            <div class="custom-control custom-radio">
+                <input checked class="custom-control-input situacao" type="radio"
+                       name="situacao<?php echo $view_tipoDiligencia; ?>"
+                       id="opcaoEmAndamento<?php echo $view_tipoDiligencia; ?>"
+                       data-target="#emAndamento<?php echo $view_tipoDiligencia; ?>">
+                <label class="custom-control-label warning" for="opcaoEmAndamento<?php echo $view_tipoDiligencia; ?>">Em
+                    Andamento</label>
+            </div>
 
-    <div class="dropdown filtro">
-        <button type="button" class="btn btn-outline-dark shadow-lg">
-            <i class="fas fa-filter"></i>
-            Filtrar
-        </button>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input situacao" type="radio"
+                       name="situacao<?php echo $view_tipoDiligencia; ?>"
+                       id="opcaoEmEspera<?php echo $view_tipoDiligencia; ?>"
+                       data-target="#emEspera<?php echo $view_tipoDiligencia; ?>">
+                <label class="custom-control-label danger" for="opcaoEmEspera<?php echo $view_tipoDiligencia; ?>">Em
+                    espera</label>
+            </div>
 
-        <div class="dropdown-menu p-4 shadow-lg">
-            <div class="form-group mb-0">
-                <label>Situação</label>
-
-                <br/>
-
-                <div class="custom-control custom-radio">
-                    <input checked class="custom-control-input situacao" type="radio"
-                           name="situacao<?php echo $tipoDiligencia; ?>"
-                           id="opcaoEmAndamento<?php echo $tipoDiligencia; ?>"
-                           data-target="#emAndamento<?php echo $tipoDiligencia; ?>">
-                    <label class="custom-control-label warning" for="opcaoEmAndamento<?php echo $tipoDiligencia; ?>">Em
-                        Andamento</label>
-                </div>
-
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input situacao" type="radio"
-                           name="situacao<?php echo $tipoDiligencia; ?>"
-                           id="opcaoEmEspera<?php echo $tipoDiligencia; ?>"
-                           data-target="#emEspera<?php echo $tipoDiligencia; ?>">
-                    <label class="custom-control-label danger" for="opcaoEmEspera<?php echo $tipoDiligencia; ?>">Em
-                        espera</label>
-                </div>
-
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input situacao" type="radio"
-                           name="situacao<?php echo $tipoDiligencia; ?>"
-                           id="opcaoCumprida<?php echo $tipoDiligencia; ?>"
-                           data-target="#cumprida<?php echo $tipoDiligencia; ?>">
-                    <label class="custom-control-label success"
-                           for="opcaoCumprida<?php echo $tipoDiligencia; ?>">Cumprida</label>
-                </div>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input situacao" type="radio"
+                       name="situacao<?php echo $view_tipoDiligencia; ?>"
+                       id="opcaoCumprida<?php echo $view_tipoDiligencia; ?>"
+                       data-target="#cumprida<?php echo $view_tipoDiligencia; ?>">
+                <label class="custom-control-label success"
+                       for="opcaoCumprida<?php echo $view_tipoDiligencia; ?>">Cumprida</label>
             </div>
         </div>
-
-        <nav class="nav d-none">
-            <a data-toggle="tab"></a>
-        </nav>
     </div>
 
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="emAndamento<?php echo $tipoDiligencia; ?>">
-            <br/>
+    <nav class="nav d-none">
+        <a data-toggle="tab"></a>
+    </nav>
+</div>
 
-            <?php
-            if (!empty($tipoDiligencia)) {
-                $this->partial('listarDiligencias', array(
-                    'tipoDiligencia' => $tipoDiligencia,
-                    'status' => 'A'
-                ));
-            }
-            ?>
-        </div>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="emAndamento<?php echo $view_tipoDiligencia; ?>">
+        <br/>
 
-        <div class="tab-pane fade" id="emEspera<?php echo $tipoDiligencia; ?>">
-            <br/>
-
-            <?php
-            if (!empty($tipoDiligencia)) {
-                $this->partial('listarDiligencias', array(
-                    'tipoDiligencia' => $tipoDiligencia,
-                    'status' => 'E'
-                ));
-            }
-            ?>
-        </div>
-
-        <div class="tab-pane fade" id="cumprida<?php echo $tipoDiligencia; ?>">
-            <br/>
-
-            <?php
-            if (!empty($tipoDiligencia)) {
-                $this->partial('listarDiligencias', array(
-                    'tipoDiligencia' => $tipoDiligencia,
-                    'status' => 'C'
-                ));
-            }
-            ?>
-        </div>
+        <?php
+        if (!empty($view_tipoDiligencia)) {
+            $this->partial('listarDiligencias', array(
+                'tipoDiligencia' => $view_tipoDiligencia,
+                'status' => 'A'
+            ));
+        }
+        ?>
     </div>
-    <?php
-}
-?>
+
+    <div class="tab-pane fade" id="emEspera<?php echo $view_tipoDiligencia; ?>">
+        <br/>
+
+        <?php
+        if (!empty($view_tipoDiligencia)) {
+            $this->partial('listarDiligencias', array(
+                'tipoDiligencia' => $view_tipoDiligencia,
+                'status' => 'E'
+            ));
+        }
+        ?>
+    </div>
+
+    <div class="tab-pane fade" id="cumprida<?php echo $view_tipoDiligencia; ?>">
+        <br/>
+
+        <?php
+        if (!empty($view_tipoDiligencia)) {
+            $this->partial('listarDiligencias', array(
+                'tipoDiligencia' => $view_tipoDiligencia,
+                'status' => 'C'
+            ));
+        }
+        ?>
+    </div>
+</div>

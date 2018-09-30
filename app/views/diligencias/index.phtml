@@ -5,147 +5,9 @@ $this->setPartialsDir('partials' . DS . 'diligencias');
 $this->partial('menu');
 $this->partial('modalEventos');
 $this->partial('modalInteressado');
+$this->partial('modalNovoInteressado');
+$this->partial('modalDadosDiligencia');
 ?>
-
-<div id="modalNovoInteressado" class="modal fade modalSeguro" tabindex="-1">
-    <div class="modal-dialog modal-lg shadow-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Novo interessado</h5>
-            </div>
-
-            <div class="modal-body">
-                <div class="d-none alert alert-danger fade show">
-                    <h5 class="alert-heading text-center">Não foi possível completar o cadastro!</h5>
-
-                    <hr/>
-
-                    <div id="alertBody" class="text-center"></div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="nome">Nome</label>
-
-                            <input required type="text" class="form-control" name="nome" id="nome"
-                                   placeholder="Insira o nome completo">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cpf">CPF</label>
-
-                            <input required type="text" class="form-control" name="cpf" id="cpf"
-                                   placeholder="Insira o número de CPF">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dataNascimento">Data de nascimento</label>
-
-                            <input required type="text" class="form-control dataNascimento" name="dataNascimento"
-                                   placeholder="Selecione a data de nascimento">
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-4">
-                                <label for="ddd">DDD</label>
-
-                                <input required type="text" class="form-control" name="ddd" id="ddd"
-                                       placeholder="Insira o DDD">
-                            </div>
-
-                            <div class="form-group col">
-                                <label for="numeroTelefone">Número</label>
-
-                                <input required type="text" class="form-control" name="numeroTelefone"
-                                       id="numeroTelefone" placeholder="Insira o número de telefone">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="logradouro">Logradouro</label>
-
-                            <input required type="text" class="form-control" name="logradouro" id="logradouro"
-                                   placeholder="Insira o nome da rua">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="numeroEndereco">Número</label>
-
-                            <input required type="text" class="form-control" name="numeroEndereco" id="numeroEndereco"
-                                   placeholder="Insira o número da casa">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="complemento">Complemento</label>
-
-                            <input required type="text" class="form-control" name="complemento" id="complemento"
-                                   placeholder="Insira o complemento">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cep">CEP</label>
-
-                            <input required type="text" class="form-control" name="cep" id="cep"
-                                   placeholder="Insira o CEP">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="bairro">Bairro</label>
-
-                            <input required type="text" class="form-control" name="bairro" id="bairro"
-                                   placeholder="Insira o bairro">
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label for="uf">Estado</label>
-
-                                <select class="custom-select" name="uf" id="uf"
-                                        data-url="<?php echo $this->getRelativeURL('cidades', false) . DS . 'getCidades'; ?>">
-                                    <option selected>Selecione um estado</option>
-                                    <?php
-                                    $ufs = Uf::all(array(
-                                        'order' => 'uf'
-                                    ));
-
-                                    foreach ($ufs as $uf) {
-                                        echo "<option value=$uf->id>$uf->uf</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-
-                            <div class="form-group col">
-                                <label for="cidade">Cidade</label>
-
-                                <select class="custom-select" name="cidade" id="cidade">
-                                    <option selected value="0">Selecione um estado primeiro</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
-                        title="Aguarde 3 segundos">
-                    <span><i class="fas fa-times"></i></span>
-                    Cancelar
-                </button>
-
-                <button type="button" id="botaoCadastrar" class="btn btn-outline-dark shadow"
-                        data-action="<?php echo $this->getRelativeURL('pessoas', false) . DS . 'cadastrar'; ?>">
-                    <span><i class="fas fa-save"></i></span>
-                    Cadastrar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="tab-content">
     <div class="tab-pane fade show active" id="averiguacaoFazenda">
@@ -357,68 +219,9 @@ $this->partial('modalInteressado');
         <br/>
 
         <form action="<?php echo $this->getRelativeURL('enviar'); ?>" method="post">
-            <div id="modalDestinatario" class="modal fade modalSeguro" tabindex="-1">
-                <div class="modal-dialog modal-sm shadow-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Destinatário</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <?php
-                                $checked = 'checked';
-                                $dNone = '';
-                                if($this->auth->getUserRole() == 'C') {
-                                    $checked = '';
-                                    $dNone = 'd-none';
-                                    ?>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" name="destinatario"
-                                               id="opcaoOficial" value="O" checked>
-
-                                        <label class="custom-control-label" for="opcaoOficial">Oficial de
-                                            promotoria</label>
-
-                                        <small class="form-text text-muted">Essa opção envia para um dos
-                                            oficiais seguindo a regra de envio
-                                        </small>
-                                    </div>
-                                    <?php
-                                }
-                                ?>
-
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="destinatario"
-                                           id="opcaoEspecifico" value="E" <?php echo $checked; ?>>
-
-                                    <label class="custom-control-label" for="opcaoEspecifico">Usuário específico</label>
-                                </div>
-                            </div>
-
-                            <div class="usuarioEspecifico form-group <?php echo $dNone; ?>">
-                                <input type="text" class="form-control" id="usuarioEspecifico" name="usuarioEspecifico"
-                                       placeholder="Insira o nome do usuário">
-
-                                <input type="hidden" id="idUsuarioEspecifico" name="idUsuarioEspecifico">
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
-                                    title="Aguarde 3 segundos">
-                                <span><i class="fas fa-times"></i></span>
-                                Cancelar
-                            </button>
-
-                            <button type="submit" class="btn btn-outline-dark shadow">
-                                <span><i class="fas fa-share-square"></i></span>
-                                Enviar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            $this->partial('modalDestinatario');
+            ?>
 
             <button type="button" data-toggle="modal" data-target="#modalDestinatario" class="btn btn-outline-dark shadow">
                 <span><i class="fas fa-share-square"></i></span>
@@ -499,38 +302,6 @@ $this->partial('modalInteressado');
 
     <div class="tab-pane fade" id="receberDiligencias">
         <br/>
-
-        <div id="modalDadosDiligencia" class="modal fade" tabindex="-1">
-            <div class="modal-dialog shadow-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title tooltipTitle" title="Número de protocolo"></h5>
-
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="card-text" id="promotoria"></p>
-
-                                <p class="card-text" id="descricao"></p>
-
-                                <p class="card-text mb-3" id="interessado"></p>
-                            </div>
-
-                            <div class="col-md-6">
-                                <p class="card-text" id="tipoDiligencia"></p>
-
-                                <p class="card-text" id="prazoCumprimento"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <form action="<?php echo $this->getRelativeURL('receber'); ?>" method="post">
             <button type="submit" class="btn btn-outline-dark shadow">
