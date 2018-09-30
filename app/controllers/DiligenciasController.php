@@ -297,11 +297,14 @@ class DiligenciasController extends \HXPHP\System\Controller
                                 $tipoDiligenciaUrgente = TipoDiligencia::find_by_tipo('Urgente');
                                 if ($diligencia->id_tipo_diligencia == $tipoDiligenciaUrgente->id) {
 
+                                    $tipoNotificacaoUrgente = TipoNotificacao::find_by_tipo('Urgente');
+
                                     $notificacao = array(
                                         'id_diligencia' => $diligencia->id,
                                         'id_destinatario' => $idDestinatario,
                                         'mensagem' => 'Uma diligência urgente foi emitida, clique para visualizá-la.',
-                                        'data' => date('Y-m-d H:i:s')
+                                        'data' => date('Y-m-d H:i:s'),
+                                        'id_tipo_notificacao' => $tipoNotificacaoUrgente->id
                                     );
 
                                     Notificacao::cadastrar($notificacao);
