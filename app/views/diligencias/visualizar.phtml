@@ -8,6 +8,7 @@
 <?php
 $this->setPartialsDir('partials' . DS . 'diligencias');
 $this->partial('modalEventos');
+$this->partial('modalInteressado');
 ?>
 
 <div class="tab-content">
@@ -62,7 +63,13 @@ $this->partial('modalEventos');
 
                         <p class="card-text"><h6>Descrição</h6><?php echo $view_mandado->descricao; ?></p>
 
-                        <p class="card-text"><h6>Interessado(a)</h6><?php echo $view_interessado->nome; ?></p>
+                        <p class="card-text"><h6>Interessado</h6>
+                        <button type="button" class="btn btn-light bg-white shadow-sm" data-toggle="modal"
+                                data-target="#modalInteressado"
+                                data-id="<?php echo $view_interessado->id; ?>">
+                            <?php echo $view_interessado->nome; ?>
+                        </button>
+                        </p>
                     </div>
 
                     <div class="col-md-6 col-lg-4">

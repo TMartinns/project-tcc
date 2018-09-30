@@ -297,3 +297,22 @@ $('#modalConfirmaRegistro').on('hide.bs.modal', function () {
     modal.find('.modal-footer div').first().addClass('d-none');
     modal.find('.modal-footer div').last().removeClass('d-none');
 });
+
+$('#modalInteressado').on('show.bs.modal', function (event) {
+    var id = $(event.relatedTarget).data('id');
+    var modal = $(this);
+
+    $.ajax({
+        method: 'GET',
+        url: '/project-tcc/pessoas/getPessoa/' + id,
+        success: function(resposta) {
+            var pessoa = $.parseJSON(resposta);
+
+            modal.find('.modal-title').html(pessoa.nome);
+            modal.find('#cpf').html('<h6>CPF</h6>' + pessoa.cpf);
+            modal.find('#dataNascimento').html('<h6>Data de Nascimento</h6>' + pessoa.dataNascimento);
+            modal.find('#telefone').html('<h6>Telefone</h6>' + pessoa.telefone);
+            modal.find('#endereco').html('<h6>Endereço</h6>' + pessoa.endereco);
+        }
+    });
+});
