@@ -204,7 +204,7 @@ $('#modalQrCode').on('show.bs.modal', function (event) {
 
 var scanner = null;
 
-$('#modalRegistraUsoVeiculo').on('show.bs.modal', function () {
+$('#modalRegistrarUtilizacao').on('show.bs.modal', function () {
     var modal = $(this);
 
     scanner = new Instascan.Scanner({
@@ -263,7 +263,7 @@ $('#modalRegistraUsoVeiculo').on('show.bs.modal', function () {
     });
 });
 
-$('#modalRegistraUsoVeiculo').on('hide.bs.modal', function () {
+$('#modalRegistrarUtilizacao').on('hide.bs.modal', function () {
     scanner.stop();
 
     scanner = null;

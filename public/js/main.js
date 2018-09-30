@@ -86,7 +86,7 @@ $(function () {
 
             if(funcao == 'O') {
                 $('#menu li').last().find('.nav-link').attr('data-toggle', 'modal')
-                    .attr('data-target', '#modalRegistraUsoVeiculo');
+                    .attr('data-target', '#modalRegistrarUtilizacao');
             }
         }
     });
