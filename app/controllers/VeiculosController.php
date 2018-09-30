@@ -203,11 +203,17 @@ class VeiculosController extends \HXPHP\System\Controller
             ->setTemplate(false);
 
         if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            VeiculoUtilizado::cadastrar(array(
-                'data_inicio' => date('Y-m-d H:i:s'),
-                'id_veiculo' => $id,
-                'id_oficial' => $this->auth->getUserId()
-            ));
+            $veiculoUtilizado = VeiculoUtilizado::find_by_id_veiculo_and_id_oficial_and_data_termino($id, $this->auth->getUserId(), null);
+
+            if(empty($veiculoUtilizado)) {
+                VeiculoUtilizado::cadastrar(array(
+                    'data_inicio' => date('Y-m-d H:i:s'),
+                    'id_veiculo' => $id,
+                    'id_oficial' => $this->auth->getUserId()
+                ));
+            } else {
+                VeiculoUtilizado::encerrar($veiculoUtilizado);
+            }
         }
     }
 

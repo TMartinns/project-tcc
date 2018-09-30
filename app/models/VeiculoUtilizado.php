@@ -8,4 +8,11 @@ class VeiculoUtilizado extends \HXPHP\System\Model
     {
         self::create($atributos);
     }
+
+    public static function encerrar($atributos)
+    {
+        $atributos->data_termino = date('Y-m-d H:i:s');
+
+        $atributos->save(false);
+    }
 }
