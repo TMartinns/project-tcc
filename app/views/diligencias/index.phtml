@@ -107,7 +107,7 @@ $this->partial('modalDadosDiligencia');
     </div>
 
     <?php
-    if($this->auth->getUserRole() == 'C') {
+    if ($this->auth->getUserRole() == 'C') {
         ?>
         <div class="tab-pane fade" id="cadastrarDiligencias">
             <br/>
@@ -192,7 +192,8 @@ $this->partial('modalDadosDiligencia');
                                 <div class="form-group">
                                     <label for="prazoCumprimento">Prazo para cumprimento</label>
 
-                                    <input required type="text" class="form-control prazoCumprimento" name="prazoCumprimento"
+                                    <input required type="text" class="form-control prazoCumprimento"
+                                           name="prazoCumprimento"
                                            placeholder="Selecione a data máxima para o cumprimento">
                                 </div>
                             </div>
@@ -223,7 +224,8 @@ $this->partial('modalDadosDiligencia');
             $this->partial('modalDestinatario');
             ?>
 
-            <button type="button" data-toggle="modal" data-target="#modalDestinatario" class="btn btn-outline-dark shadow">
+            <button type="button" data-toggle="modal" data-target="#modalDestinatario"
+                    class="btn btn-outline-dark shadow">
                 <span><i class="fas fa-share-square"></i></span>
                 Enviar
             </button>
@@ -371,12 +373,10 @@ $this->partial('modalDadosDiligencia');
                                                                     'tipoDiligencia' => $tipoDiligencia->tipo,
                                                                     'prazoCumprimento' => $diligencia->prazo_cumprimento->format('d/m/Y')
                                                                 )); ?>'
-                                                                class="btn btn-light bg-white w-100 shadow-sm">
-                                                            <div class="text-left">
-                                                                <?php
-                                                                echo $mandado->numero_protocolo;
-                                                                ?>
-                                                            </div>
+                                                                class="btn btn-light bg-white w-100 shadow-sm text-left">
+                                                            <?php
+                                                            echo $mandado->numero_protocolo;
+                                                            ?>
                                                         </button>
                                                     </p>
                                                     <?php
@@ -385,7 +385,8 @@ $this->partial('modalDadosDiligencia');
                                             </div>
 
                                             <div class="mt-4 text-center">
-                                                <button type="button" class="btn btn-outline-dark shadow diligenciasExpandir"
+                                                <button type="button"
+                                                        class="btn btn-outline-dark shadow diligenciasExpandir"
                                                         data-id="<?php echo $remessa->id; ?>">
                                                     <span><i class="fas fa-arrow-circle-down"></i></span>
                                                 </button>
