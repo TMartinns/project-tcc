@@ -263,7 +263,7 @@ class VeiculosController extends \HXPHP\System\Controller
     {
         $this->auth->roleCheck(array('O'));
 
-        $this->view->setPath('blank', false)
+        $this->view->setPath('blank', true)
             ->setFile('index')
             ->setTemplate(false);
 
