@@ -18,6 +18,13 @@ class CidadesController extends \HXPHP\System\Controller
         $this->auth->roleCheck(array('C', 'O'));
     }
 
+    public function indexAction()
+    {
+        $this->view->setPath('blank', true)
+            ->setFile('index')
+            ->setTemplate(false);
+    }
+
     public function getCidadesAction($id = null)
     {
         $this->view->setPath('blank', true)

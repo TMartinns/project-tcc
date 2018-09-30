@@ -16,6 +16,15 @@ class PessoasController extends \HXPHP\System\Controller
         $this->auth->redirectCheck(false);
     }
 
+    public function indexAction()
+    {
+        $this->auth->roleCheck(array('C'));
+
+        $this->view->setPath('blank', true)
+            ->setFile('index')
+            ->setTemplate(false);
+    }
+
     public function cadastrarAction()
     {
         $this->auth->roleCheck(array('C'));

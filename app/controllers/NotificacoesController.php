@@ -18,6 +18,13 @@ class NotificacoesController extends \HXPHP\System\Controller
         $this->auth->roleCheck(array('O'));
     }
 
+    public function indexAction()
+    {
+        $this->view->setPath('blank', true)
+            ->setFile('index')
+            ->setTemplate(false);
+    }
+
     public function vistoAction($id = null)
     {
         $this->view->setPath('blank', true)

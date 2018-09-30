@@ -16,7 +16,13 @@ class PesquisasController extends \HXPHP\System\Controller
         $this->auth->redirectCheck(false);
 
         $this->auth->roleCheck(array('C', 'O'));
+    }
 
+    public function indexAction()
+    {
+        $this->view->setPath('blank', true)
+            ->setFile('index')
+            ->setTemplate(false);
     }
 
     public function getResultadoAction()
