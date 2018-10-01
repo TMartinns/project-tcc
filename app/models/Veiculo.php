@@ -103,9 +103,7 @@ class Veiculo extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $save = $veiculo->save(false);
-
-        if($save){
+        if($veiculo->save(false)){
             $resposta->veiculo = $veiculo;
             $resposta->status = true;
 

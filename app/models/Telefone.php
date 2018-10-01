@@ -60,9 +60,7 @@ class Telefone extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $save = $telefone->save(false);
-
-        if($save){
+        if($telefone->save(false)){
             $resposta->telefone = $telefone;
             $resposta->status = true;
 

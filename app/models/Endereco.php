@@ -80,9 +80,7 @@ class Endereco extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $save = $endereco->save(false);
-
-        if($save){
+        if($endereco->save(false)){
             $resposta->endereco = $endereco;
             $resposta->status = true;
 

@@ -72,9 +72,7 @@ class Usuario extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $save = $usuario->save(false);
-
-        if($save){
+        if($usuario->save(false)){
             $resposta->usuario = $usuario;
             $resposta->status = true;
 

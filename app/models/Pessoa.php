@@ -75,9 +75,7 @@ class Pessoa extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $save = $pessoa->save(false);
-
-        if($save){
+        if($pessoa->save(false)){
             $resposta->pessoa = $pessoa;
             $resposta->status = true;
 
