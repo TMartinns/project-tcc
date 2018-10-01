@@ -68,16 +68,4 @@ class Diligencia extends \HXPHP\System\Model
             where aux_diligencias_remessas.id_remessa = $id"
         );
     }
-
-    public static function getByTipoDiligenciaAndEventosAutor($tipoDiligencia, $autor)
-    {
-        return self::find_by_sql(
-            "select diligencias.*
-            from diligencias
-            inner join eventos
-            on diligencias.id = eventos.id_diligencia
-            where diligencias.id_tipo_diligencia = $tipoDiligencia and eventos.id_autor = $autor
-            limit 1"
-        );
-    }
 }
