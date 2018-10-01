@@ -53,6 +53,28 @@ $this->partial('modalInteressado');
                     </button>
                 </label>
 
+                <?php
+                $eventoEnvio = TipoEvento::find_by_tipo('Envio');
+
+                $evento = Evento::find_by_id_diligencia($view_diligencia->id, array(
+                    'order' => 'data desc'
+                ));
+
+                if (($evento->id_tipo_evento == $eventoEnvio->id) && ($evento->id_autor == $this->auth->getUserId())) {
+                    $remessa = Remessa::getByDiligenciaAndStatus($view_diligencia->id, 'A');
+                    ?>
+                    <label class="botaoEsquerda-2 shadow-sm">
+                        <a class="btn btn-light bg-white tooltipTitle"
+                           title="Gerar remessa"
+                           href="<?php echo $this->getRelativeURL('remessas', false) . DS . 'index' . DS . $remessa->id; ?>"
+                           target="_blank">
+                            <i class="fas fa-file-pdf"></i>
+                        </a>
+                    </label>
+                    <?php
+                }
+                ?>
+
                 <div class="text-center tooltipTitle" title="Número de protocolo">
                     <h5 class="card-title"><?php echo $view_mandado->numero_protocolo; ?></h5>
                 </div>
