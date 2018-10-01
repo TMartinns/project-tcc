@@ -110,10 +110,6 @@ function pesquisarAutocomplete() {
                 listLocation: "veiculos",
                 header: "Veículos"
 
-            },
-            {
-                listLocation: "remessas",
-                header: "Remessas"
             }
         ],
         adjustWidth: false

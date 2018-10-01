@@ -92,32 +92,10 @@ class PesquisasController extends \HXPHP\System\Controller
             }
         }
 
-        $remessas = array();
-
-        $registros = Remessa::all(array(
-            'conditions' => "id like '%$info%'"
-        ));
-
-        if($this->auth->getUserRole() == 'O') {
-            $usuario = $this->auth->getUserId();
-
-            $registros = Remessa::all(array(
-                'conditions' => "id like '%$info%' and (id_remetente = $usuario or id_destinatario = $usuario)"
-            ));
-        }
-
-        foreach($registros as $remessa) {
-            $remessas[] = array(
-                'texto' => $remessa->id,
-                'url' => $this->view->getRelativeURL('remessas', false) . DS . 'index' . DS . $remessa->id
-            );
-        }
-
         echo json_encode(array(
             'usuarios' => $usuarios,
             'diligencias' => $diligencias,
-            'veiculos' => $veiculos,
-            'remessas' => $remessas
+            'veiculos' => $veiculos
         ));
     }
 }
