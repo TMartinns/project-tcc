@@ -8,7 +8,8 @@
         "hxphp/framework": "3.0.0",
         "phpmailer/phpmailer": "^6.0",
         "verot/class.upload.php": "dev-master",
-        "dompdf/dompdf": "^0.8.2"
+        "dompdf/dompdf": "^0.8.2",
+        "phpunit/phpunit": "^7.3"
     },    
     "minimum-stability": "stable",
     "prefer-stable": true,
