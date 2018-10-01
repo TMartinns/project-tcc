@@ -43,4 +43,17 @@ class Remessa extends \HXPHP\System\Model
 
         $remessa->save(false);
     }
+
+    public static function getByDiligenciaAndStatus($id, $status)
+    {
+        return self::find_by_sql(
+            "select remessas.*
+            from remessas
+            inner join aux_diligencias_remessas
+            on remessas.id = aux_diligencias_remessas.id_remessa
+            where aux_diligencias_remessas.id_diligencia = $id and remessas.status = '$status'
+            order by remessas.data desc 
+            limit 1"
+        )[0];
+    }
 }
