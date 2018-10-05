@@ -15,14 +15,14 @@ class Telefone extends \HXPHP\System\Model
         )
     );
 
-    public static function cadastrar(array $post)
+    public static function cadastrar(array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->telefone = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        $telefone = self::create($post);
+        $telefone = self::create($atributos);
 
         if ($telefone->is_valid()) {
             $resposta->telefone = $telefone;
