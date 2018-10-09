@@ -107,10 +107,10 @@ class UsuariosController extends \HXPHP\System\Controller
     {
         $this->auth->roleCheck(array('C'));
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
             $pessoa = Pessoa::find_by_id($id);
 
-            if(!empty($pessoa)) {
+            if (!empty($pessoa)) {
                 $usuario = Usuario::find_by_id_pessoa($pessoa->id);
                 $telefone = Telefone::find_by_id_pessoa($pessoa->id);
                 $endereco = Endereco::find_by_id_pessoa($pessoa->id);
@@ -135,7 +135,7 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $this->view->setFile('index');
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
             $resposta = Usuario::ativar($id, false);
 
             $pessoa = Pessoa::find_by_id($resposta->usuario->id);
@@ -156,7 +156,7 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $this->view->setFile('index');
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
             $resposta = Usuario::ativar($id);
 
             $pessoa = Pessoa::find_by_id($resposta->usuario->id);
@@ -183,15 +183,17 @@ class UsuariosController extends \HXPHP\System\Controller
 
         $resposta = array();
 
-        if(!empty($nome)) {
+        if (!empty($nome)) {
             $usuarios = Usuario::getAllByIsAtivoAndPessoasNome(1, $nome);
 
             foreach ($usuarios as $usuario) {
-                if($this->auth->getUserRole() == 'O') {
-                    if($usuario->funcao == 'O') {
+                if ($this->auth->getUserRole() == 'O') {
+                    if ($usuario->funcao == 'O')
                         continue;
-                    }
                 }
+
+                if ($this->auth->getUserId() == $usuario->id_pessoa)
+                    continue;
 
                 $usuario->funcao = ($usuario->funcao == 'C') ? 'Coordenador(a)' : 'Oficial de promotoria';
 
