@@ -88,6 +88,24 @@ class Usuario extends \HXPHP\System\Model
         return $resposta;
     }
 
+    public static function alterarSenha($id, $senha)
+    {
+        $resposta = new \stdClass;
+        $resposta->usuario = null;
+        $resposta->status = false;
+
+        $usuario = self::find_by_id_pessoa($id);
+        $usuario->senha = $senha;
+
+        if($usuario->save(false)) {
+            $resposta->uuario = $usuario;
+            $resposta->status = true;
+            return $resposta;
+        }
+
+        return $resposta;
+    }
+
     public static function ativar($id, $ativar = true)
     {
         $resposta = new \stdClass;

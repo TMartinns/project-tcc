@@ -1,0 +1,40 @@
+<div class="modal fade modalSeguro" id="modalAlterarSenha" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Alterar senha</h5>
+            </div>
+
+            <form action="<?php echo $this->getRelativeURL('perfil', false) . DS . 'alterarSenha'; ?>" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="senha">Antiga senha</label>
+
+                        <input required type="password" class="form-control" name="antigaSenha" id="antigaSenha"
+                               placeholder="Insira sua antiga senha">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="senha">Nova senha</label>
+
+                        <input required type="password" class="form-control" name="novaSenha" id="novaSenha"
+                               placeholder="Insira sua nova senha">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
+                            title="Aguarde 3 segundos">
+                        <span><i class="fas fa-times"></i></span>
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn btn-outline-dark shadow">
+                        <span><i class="fas fa-save"></i></span>
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

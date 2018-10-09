@@ -36,7 +36,7 @@ class PerfilController extends \HXPHP\System\Controller
         ));
     }
 
-    public function indexAction()
+    private function gerarVariaveis($view)
     {
         $pessoa = Pessoa::find_by_id($this->auth->getUserId());
 
@@ -44,12 +44,17 @@ class PerfilController extends \HXPHP\System\Controller
         $telefone = Telefone::find_by_id_pessoa($pessoa->id);
         $endereco = Endereco::find_by_id_pessoa($pessoa->id);
 
-        $this->view->setVars(array(
+        $view->setVars(array(
             'pessoa' => $pessoa,
             'usuario' => $usuario,
             'telefone' => $telefone,
             'endereco' => $endereco
         ));
+    }
+
+    public function indexAction()
+    {
+        $this->gerarVariaveis($this->view);
     }
 
     private function imagemUpload($usuario)
@@ -131,7 +136,7 @@ class PerfilController extends \HXPHP\System\Controller
 
                 $resposta = Usuario::editar($id, $usuario);
 
-                if($resposta->status) {
+                if ($resposta->status) {
                     $usuario = $resposta->usuario;
 
                     $telefone = array(
@@ -139,14 +144,13 @@ class PerfilController extends \HXPHP\System\Controller
                         'numero' => $post['numeroTelefone']
                     );
 
-                    if(empty(Telefone::find_by_id_pessoa($id)))
-                    {
+                    if (empty(Telefone::find_by_id_pessoa($id))) {
                         $resposta = Telefone::cadastrar(array_merge($telefone, array('id_pessoa' => $id)));
                     } else {
                         $resposta = Telefone::editar($id, $telefone);
                     }
 
-                    if($resposta->status) {
+                    if ($resposta->status) {
                         $endereco = array(
                             'logradouro' => $post['logradouro'],
                             'numero' => $post['numeroEndereco'],
@@ -156,14 +160,13 @@ class PerfilController extends \HXPHP\System\Controller
                             'id_cidade' => ($post['cidade'] == 0) ? '' : $post['cidade']
                         );
 
-                        if(empty(Endereco::find_by_id_pessoa($id)))
-                        {
+                        if (empty(Endereco::find_by_id_pessoa($id))) {
                             $resposta = Endereco::cadastrar(array_merge($endereco, array('id_pessoa' => $id)));
                         } else {
                             $resposta = Endereco::editar($id, $endereco);
                         }
 
-                        if($resposta->status) {
+                        if ($resposta->status) {
                             $resposta = $this->imagemUpload($usuario);
 
                             $alertSuccess = array(
@@ -215,17 +218,45 @@ class PerfilController extends \HXPHP\System\Controller
             }
         }
 
-        $pessoa = Pessoa::find_by_id($this->auth->getUserId());
+        $this->gerarVariaveis($this->view);
+    }
 
-        $usuario = Usuario::find_by_id_pessoa($pessoa->id);
-        $telefone = Telefone::find_by_id_pessoa($pessoa->id);
-        $endereco = Endereco::find_by_id_pessoa($pessoa->id);
+    public function alterarSenhaAction()
+    {
+        $this->view->setFile('index');
 
-        $this->view->setVars(array(
-            'pessoa' => $pessoa,
-            'usuario' => $usuario,
-            'telefone' => $telefone,
-            'endereco' => $endereco
-        ));
+        $post = $this->request->post();
+
+        if (!empty($post)) {
+            $usuario = Usuario::find_by_id_pessoa($this->auth->getUserId());
+
+            if (password_verify($post['antigaSenha'], $usuario->senha)) {
+                if (empty($post['novaSenha'])) {
+                    $this->load('Helpers\Alert', array(
+                        'danger',
+                        'Não foi possível alterar a senha!',
+                        'A nova senha é um campo obrigatório.'
+                    ));
+                } else {
+                    $resposta = Usuario::alterarSenha($this->auth->getUserId(), password_hash($post['novaSenha'], PASSWORD_DEFAULT));
+
+                    if ($resposta->status) {
+                        $this->load('Helpers\Alert', array(
+                            'success',
+                            'Senha alterada!',
+                            'A sua senha foi alterada com sucesso.'
+                        ));
+                    }
+                }
+            } else {
+                $this->load('Helpers\Alert', array(
+                    'warning',
+                    'Não foi possível alterar a senha!',
+                    'A antiga senha está incorreta. Por favor, confira seus dados!'
+                ));
+            }
+        }
+
+        $this->gerarVariaveis($this->view);
     }
 }

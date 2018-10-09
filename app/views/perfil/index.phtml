@@ -8,6 +8,7 @@ $this->partial('modalEditarPerfil', array(
     'pessoa' => $view_pessoa,
     'endereco' => $view_endereco
 ));
+$this->partial('modalAlterarSenha');
 ?>
 
 <ul class="menu nav nav-tabs">
@@ -26,7 +27,14 @@ $this->partial('modalEditarPerfil', array(
                 <label class="botaoEsquerda-1 shadow-sm">
                     <button type="button" data-toggle="modal" class="btn btn-light bg-white tooltipTitle"
                             title="Editar" data-target="#modalEditarPerfil">
-                        <i class="fas fa-user-edit"></i>
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                </label>
+
+                <label class="botaoEsquerda-2 shadow-sm">
+                    <button type="button" data-toggle="modal" class="btn btn-light bg-white tooltipTitle"
+                            title="Alterar senha" data-target="#modalAlterarSenha">
+                        <i class="fas fa-key"></i>
                     </button>
                 </label>
 
