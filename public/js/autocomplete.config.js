@@ -1,4 +1,4 @@
-$('#interessado').easyAutocomplete({
+$('#cadastrarDiligencias #interessado').easyAutocomplete({
     url: function (url) {
         return "/project-tcc/pessoas/getPessoas/";
     },
