@@ -54,6 +54,6 @@ class Remessa extends \HXPHP\System\Model
             where aux_diligencias_remessas.id_diligencia = $id and remessas.status = '$status'
             order by remessas.data desc 
             limit 1"
-        )[0];
+        );
     }
 }

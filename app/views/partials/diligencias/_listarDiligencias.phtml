@@ -81,7 +81,7 @@ if (!empty($diligencias)) {
                 ));
 
                 if (($evento->id_tipo_evento == $eventoEnvio->id) && ($evento->id_autor == $this->auth->getUserId())) {
-                    $remessa = Remessa::getByDiligenciaAndStatus($diligencia->id, 'A');
+                    $remessa = Remessa::getByDiligenciaAndStatus($diligencia->id, 'A')[0];
                     ?>
                     <label class="botaoEsquerda-2 shadow-sm">
                         <a class="btn btn-light bg-white tooltipTitle"
