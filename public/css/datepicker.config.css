@@ -1,0 +1,9 @@
+.gj-datepicker button.btn-outline-secondary:hover {
+    color: #fff !important;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
+.gj-datepicker button.btn-outline-secondary:focus, .gj-datepicker button.btn-outline-secondary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5) !important;
+}

@@ -4,7 +4,7 @@ function getDiligencias(diligencias) {
 
     var ajax = {
         method: 'get',
-        url: '/project-tcc/diligencias/getDiligencias/' + situacao + '/' + periodo,
+        url: DILIGENCIAS + 'getDiligencias/' + situacao + '/' + periodo,
         success: function (resposta) {
             diligencias($.parseJSON(resposta));
         }
@@ -16,7 +16,7 @@ function getDiligencias(diligencias) {
 
         var ajax = {
             method: 'post',
-            url: '/project-tcc/diligencias/getDiligencias/' + situacao,
+            url: DILIGENCIAS + 'getDiligencias/' + situacao,
             data: {
                 dataInicio: dataInicio,
                 dataFim: dataFim
@@ -100,7 +100,7 @@ function preencherTabelaDiligencias(diligencias) {
             }
         ],
         language: {
-            url: '/project-tcc/public/bower_components/DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
+            url: BOWER + 'DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
         },
         order: [[1, 'desc']],
         columnDefs: [

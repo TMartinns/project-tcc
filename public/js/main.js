@@ -24,7 +24,7 @@ $(function () {
     }
 
     if (window.matchMedia('(max-width: 379px)').matches) {
-        $('#brand').attr('src', '/project-tcc/public/img/favicon.png');
+        $('#brand').attr('src', IMG + 'favicon.png');
     }
 });
 
@@ -80,7 +80,7 @@ $('#uf').change(function () {
 
 $(function () {
     $.ajax({
-        url: '/project-tcc/usuarios/getUsuarioFuncao/',
+        url: USUARIOS + 'getUsuarioFuncao/',
         success: function(resposta) {
             var funcao = $.parseJSON(resposta);
 
@@ -123,7 +123,7 @@ $('.notificacaoMensagem').click(function () {
 
     $.ajax({
         method: 'get',
-        url: '/project-tcc/notificacoes/visto/' + id
+        url: NOTIFICACOES + 'visto/' + id
     });
 });
 

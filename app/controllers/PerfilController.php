@@ -26,6 +26,7 @@ class PerfilController extends \HXPHP\System\Controller
         $this->view->setAssets('css', array(
             $this->configs->css . 'wrap-custom-file.css',
             $this->configs->bower . 'gijgo/dist/combined/css/gijgo.min.css',
+            $this->configs->css . 'datepicker.config.css'
         ));
 
         $this->view->setAssets('js', array(

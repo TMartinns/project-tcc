@@ -1,0 +1,28 @@
+#eac-container-pesquisar {
+    width: calc(248px - 2em);
+    margin-left: 1rem;
+    color: #343a40;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+}
+
+#eac-container-pesquisar ul .eac-category {
+    color: #007bff;
+    font-style: initial;
+}
+
+#eac-container-pesquisar .eac-item a {
+    display: block;
+    color: #343a40;
+}
+
+#eac-container-pesquisar .eac-item a:hover {
+    text-decoration: none;
+}
+
+.w-eac-100-46 {
+    width: calc(100% - 46px) !important;
+}
+
+.w-eac-100-90 {
+    width: calc(100% - 90px) !important;
+}

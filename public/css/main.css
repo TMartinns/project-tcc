@@ -12,27 +12,6 @@ body {
     width: calc(248px - 2rem);
 }
 
-#eac-container-pesquisar {
-    width: calc(248px - 2em);
-    margin-left: 1rem;
-    color: #343a40;
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
-}
-
-#eac-container-pesquisar ul .eac-category {
-    color: #007bff;
-    font-style: initial;
-}
-
-#eac-container-pesquisar .eac-item a {
-    display: block;
-    color: #343a40;
-}
-
-#eac-container-pesquisar .eac-item a:hover {
-    text-decoration: none;
-}
-
 .botaoEsquerda {
     position: absolute;
     left: .5rem;
@@ -83,16 +62,6 @@ body {
     border: 1px solid #ced4da !important;
 }
 
-.gj-datepicker button.btn-outline-secondary:hover {
-    color: #fff !important;
-    background-color: #6c757d !important;
-    border-color: #6c757d !important;
-}
-
-.gj-datepicker button.btn-outline-secondary:focus, .gj-datepicker button.btn-outline-secondary.focus {
-    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5) !important;
-}
-
 .menu .nav-link.active {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
 }
@@ -111,23 +80,6 @@ body {
 
 .situacao:checked ~ .success::before {
     background-color: #28a745 !important;
-}
-
-.w-eac-100-46 {
-    width: calc(100% - 46px) !important;
-}
-
-.w-eac-100-90 {
-    width: calc(100% - 90px) !important;
-}
-
-.mCustomScrollBox {
-    padding-top: 20px;
-    width: 250px !important;
-}
-
-.mCSB_container {
-    height: 100%;
 }
 
 .btn-outline-warning:hover {
@@ -182,9 +134,5 @@ body {
 
     #sidebar.active {
         left: 0;
-    }
-
-    div.dataTables_wrapper div.dataTables_filter label {
-        margin-left: -25px;
     }
 }

@@ -18,7 +18,7 @@ $('#modalEditarVeiculos').on('show.bs.modal', function (event) {
 
     if (veiculo.imagem != null) {
         modal.find('.wrap-custom-file label').addClass('file-ok')
-            .css('background-image', 'url(/project-tcc/public/uploads/veiculos/' + veiculo.id + '/' + veiculo.imagem + ')');
+            .css('background-image', 'url(' + UPLOADS + 'veiculos/' + veiculo.id + '/' + veiculo.imagem + ')');
     } else {
         modal.find('.wrap-custom-file label').removeClass('file-ok')
             .css('background-image', '');
@@ -136,7 +136,7 @@ $('#modalEventos').on('show.bs.modal', function (event) {
         destroy: true,
         data: eventos,
         language: {
-            url: '/project-tcc/public/bower_components/DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
+            url: BOWER + 'DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
         },
         order: [[0, 'desc']],
         columnDefs: [
@@ -179,7 +179,7 @@ $('#modalRegistrosUtilizacao').on('show.bs.modal', function (event) {
         destroy: true,
         data: registros,
         language: {
-            url: '/project-tcc/public/bower_components/DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
+            url: BOWER + 'DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
         },
         order: [[0, 'desc']],
         columnDefs: [
@@ -214,7 +214,7 @@ $('#modalRegistrarUtilizacao').on('show.bs.modal', function () {
     scanner.addListener('scan', function (content) {
         $.ajax({
             method: 'GET',
-            url: '/project-tcc/veiculos/getVeiculo/' + content,
+            url: VEICULOS + 'getVeiculo/' + content,
             success: function (resposta) {
                 var veiculo = $.parseJSON(resposta);
 
@@ -228,12 +228,12 @@ $('#modalRegistrarUtilizacao').on('show.bs.modal', function () {
                     modal.find('button#confirmaRegistro').attr('data-veiculo', veiculo.id);
 
                     var title = '';
-                    var src = '/project-tcc/public/uploads/veiculos/' + veiculo.id + '/' + veiculo.imagem;
+                    var src = UPLOADS + 'veiculos/' + veiculo.id + '/' + veiculo.imagem;
 
                     if (veiculo.imagem == null) {
                         title = 'Icon designed by Freepik from Flaticon';
                         var avatar = 'car-' + Math.floor(Math.random() * 8);
-                        src = '/project-tcc/public/img/avatars/veiculos/' + avatar;
+                        src = IMG + 'avatars/veiculos/' + avatar;
                     }
 
                     modal.find('.modal-body img').attr('src', src)
@@ -304,7 +304,7 @@ $('#modalInteressado').on('show.bs.modal', function (event) {
 
     $.ajax({
         method: 'GET',
-        url: '/project-tcc/pessoas/getPessoa/' + id,
+        url: PESSOAS + 'getPessoa/' + id,
         success: function(resposta) {
             var pessoa = $.parseJSON(resposta);
 

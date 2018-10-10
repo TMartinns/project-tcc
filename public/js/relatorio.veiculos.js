@@ -3,7 +3,7 @@ function getVeiculos(veiculos) {
 
     var ajax = {
         method: 'get',
-        url: '/project-tcc/veiculos/getVeiculosUtilizados/' + periodo,
+        url: VEICULOS + 'getVeiculosUtilizados/' + periodo,
         success: function (resposta) {
             veiculos($.parseJSON(resposta));
         }
@@ -15,7 +15,7 @@ function getVeiculos(veiculos) {
 
         var ajax = {
             method: 'post',
-            url: '/project-tcc/veiculos/getVeiculosUtilizados',
+            url: VEICULOS + 'getVeiculosUtilizados',
             data: {
                 dataInicio: dataInicio,
                 dataFim: dataFim
@@ -107,7 +107,7 @@ function preencherTabelaVeiculos(veiculos) {
             }
         ],
         language: {
-            url: '/project-tcc/public/bower_components/DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
+            url: BOWER + 'DataTables/DataTables-1.10.18/lang/Portuguese-Brasil.json'
         },
         order: [[0, 'desc']],
         columnDefs: [

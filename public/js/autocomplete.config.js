@@ -1,6 +1,6 @@
 $('#cadastrarDiligencias #interessado').easyAutocomplete({
     url: function (url) {
-        return "/project-tcc/pessoas/getPessoas/";
+        return PESSOAS + "getPessoas/";
     },
     getValue: function (element) {
         return element.nome;
@@ -37,7 +37,7 @@ $('#cadastrarDiligencias #interessado').easyAutocomplete({
 
 $('#usuarioEspecifico').easyAutocomplete({
     url: function (url) {
-        return "/project-tcc/usuarios/getUsuariosAtivos/";
+        return USUARIOS + "getUsuariosAtivos/";
     },
     getValue: function (element) {
         return element.nome;
@@ -74,7 +74,7 @@ $('#usuarioEspecifico').easyAutocomplete({
 function pesquisarAutocomplete() {
     $('#pesquisar').easyAutocomplete({
         url: function (url) {
-            return "/project-tcc/pesquisas/getResultado/";
+            return PESQUISAS + "getResultado/";
         },
         getValue: function (element) {
             return element.texto;
