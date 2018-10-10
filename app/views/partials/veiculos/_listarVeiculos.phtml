@@ -2,63 +2,61 @@
     <?php
     $veiculos = Veiculo::find_all_by_is_ativo($view_isAtivo);
     foreach ($veiculos as $veiculo) {
-        $border = 'border border';
-        $border .= ($veiculo->is_ativo == 1) ? '-success' : '-danger';
         ?>
         <div class="col-md-6 col-lg-4">
-            <div class="card shadow-lg <?php echo $border; ?>">
+            <div class="card shadow-lg">
                 <div class="card-body">
-                    <label class="botaoEsquerda-1 shadow-sm">
-                        <button type="button" class="btn btn-light bg-white tooltipTitle" data-toggle="modal"
-                                title="Editar"
-                                data-target="#modalEditarVeiculos"
-                                data-veiculo='<?php echo json_encode(array('action' => $this->getRelativeURL('editar'),
-                                    'id' => $veiculo->id,
-                                    'imagem' => $veiculo->imagem,
-                                    'modelo' => $veiculo->modelo,
-                                    'marca' => $veiculo->marca,
-                                    'renavam' => $veiculo->renavam,
-                                    'placa' => $veiculo->placa,
-                                    'ano' => $veiculo->ano,
-                                    'cor' => $veiculo->cor
-                                )); ?>'>
-                            <span><i class="fas fa-pencil-alt"></i></span>
+                    <div class="dropdown botaoEsquerda">
+                        <button type="button" class="btn btn-light bg-white shadow-sm tooltipTitle" title="Opções"
+                                data-toggle="dropdown">
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
-                    </label>
 
-                    <label class="botaoEsquerda-2 shadow-sm">
-                        <button type="button" class="btn btn-light bg-white tooltipTitle"
-                                title="Gerar QR Code"
-                                data-id="<?php echo $veiculo->id; ?>"
-                                data-modelo="<?php echo $veiculo->modelo; ?>"
-                                data-toggle="modal"
-                                data-target="#modalQrCode">
-                            <span><i class="fas fa-qrcode"></i></span>
-                        </button>
-                    </label>
+                        <div class="dropdown-menu shadow-lg">
+                            <a class="dropdown-item text-dark" href="#modalEditarVeiculos" data-toggle="modal"
+                               data-veiculo='<?php echo json_encode(array('action' => $this->getRelativeURL('editar'),
+                                   'id' => $veiculo->id,
+                                   'imagem' => $veiculo->imagem,
+                                   'modelo' => $veiculo->modelo,
+                                   'marca' => $veiculo->marca,
+                                   'renavam' => $veiculo->renavam,
+                                   'placa' => $veiculo->placa,
+                                   'ano' => $veiculo->ano,
+                                   'cor' => $veiculo->cor
+                               )); ?>'>
+                                <span><i class="fas fa-pencil-alt"></i></span>
+                                <span class="ml-1">Editar veículo</span>
+                            </a>
 
-                    <?php
-                    $registros = array();
+                            <?php
+                            $registros = array();
 
-                    foreach (VeiculoUtilizado::find_all_by_id_veiculo($veiculo->id) as $registro) {
-                        $oficial = Pessoa::find_by_id($registro->id_oficial);
+                            foreach (VeiculoUtilizado::find_all_by_id_veiculo($veiculo->id) as $registro) {
+                                $oficial = Pessoa::find_by_id($registro->id_oficial);
 
-                        $registros[] = array(
-                            $registro->data_inicio->format('d/m/Y H:i:s'),
-                            $oficial->nome,
-                            (empty($registro->data_termino)) ? '' : $registro->data_termino->format('d/m/Y H:i:s')
-                        );
-                    }
-                    ?>
-                    <label class="botaoEsquerda-3 shadow-sm">
-                        <button type="button" class="btn btn-light bg-white tooltipTitle"
-                                title="Registros de utilização"
-                                data-toggle="modal"
-                                data-target="#modalRegistrosUtilizacao"
-                                data-registros='<?php echo json_encode($registros); ?>'>
-                            <i class="fas fa-car-side"></i>
-                        </button>
-                    </label>
+                                $registros[] = array(
+                                    $registro->data_inicio->format('d/m/Y H:i:s'),
+                                    $oficial->nome,
+                                    (empty($registro->data_termino)) ? '' : $registro->data_termino->format('d/m/Y H:i:s')
+                                );
+                            }
+                            ?>
+                            <a class="dropdown-item text-dark" href="#modalRegistrosUtilizacao" data-toggle="modal"
+                               data-registros='<?php echo json_encode($registros); ?>'>
+                                <span><i class="fas fa-car-side"></i></span>
+                                <span>Registros de utilização</span>
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item text-dark" href="#modalQrCode" data-toggle="modal"
+                               data-id="<?php echo $veiculo->id; ?>"
+                               data-modelo="<?php echo $veiculo->modelo; ?>">
+                                <span><i class="fas fa-qrcode"></i></span>
+                                <span class="ml-2">Gerar QR Code</span>
+                            </a>
+                        </div>
+                    </div>
 
                     <div class="text-center">
                         <p>

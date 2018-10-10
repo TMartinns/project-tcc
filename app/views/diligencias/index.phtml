@@ -150,7 +150,7 @@ $this->partial('modalDadosDiligencia');
 
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label for="interessado">Interessado(a)</label>
+                                    <label for="interessado">Interessado</label>
 
                                     <div class="w-100">
                                         <div class="input-group">
@@ -161,6 +161,13 @@ $this->partial('modalDadosDiligencia');
                                                    placeholder="Insira o interessado">
 
                                             <div class="input-group-append">
+                                                <button id="botaoEditarInteressado" type="button"
+                                                        class="btn btn-outline-secondary border border-left-0 tooltipTitle d-none"
+                                                        data-toggle="modal"
+                                                        data-target="#modalEditarInteressado" title="Editar interessado">
+                                                    <span><i class="fas fa-user-edit"></i></span>
+                                                </button>
+
                                                 <button id="botaoNovoInteressado" type="button"
                                                         class="btn btn-outline-secondary border border-left-0 tooltipTitle"
                                                         data-toggle="modal"
@@ -277,7 +284,7 @@ $this->partial('modalDadosDiligencia');
                                                         Descrição</h6><?php echo $mandado->descricao; ?></p>
 
                                                     <p class="card-text"><h6>
-                                                        Interessado(a)</h6><?php echo $interessado->nome; ?></p>
+                                                        Interessado</h6><?php echo $interessado->nome; ?></p>
 
                                                     <p class="card-text"><h6>Tipo de
                                                         diligência</h6><?php echo $tipoDiligencia->tipo; ?></p>

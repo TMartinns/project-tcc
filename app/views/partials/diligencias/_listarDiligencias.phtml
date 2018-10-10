@@ -35,68 +35,75 @@ if (!empty($diligencias)) {
         $promotoria = Promotoria::find_by_id($mandado->id_promotoria);
 
         $interessado = Pessoa::find_by_id($mandado->id_interessado);
-
-        $border = '';
-
-        if ($diligencia->status == 'A') {
-            $border = 'warning';
-        } else if ($diligencia->status == 'E') {
-            $border = 'danger';
-        } else {
-            $border = 'success';
-        }
         ?>
-        <div class="card border border-<?php echo $border; ?> shadow-lg">
+        <div class="card shadow-lg">
             <div class="card-body">
-                <?php
-                $eventos = array();
-
-                foreach (Evento::find_all_by_id_diligencia($diligencia->id) as $evento) {
-                    $pessoa = Pessoa::find_by_id($evento->id_autor);
-
-                    $tipoEvento = TipoEvento::find_by_id($evento->id_tipo_evento);
-
-                    $eventos[] = array(
-                        $evento->data->format('d/m/Y H:i:s'),
-                        $tipoEvento->tipo,
-                        $pessoa->nome
-                    );
-                }
-                ?>
-                <label class="botaoEsquerda-1 shadow-sm">
-                    <button type="button" data-toggle="modal"
-                            class="btn btn-light bg-white tooltipTitle"
-                            title="Eventos ocorridos"
-                            data-target="#modalEventos"
-                            data-eventos='<?php echo json_encode($eventos); ?>'>
-                        <i class="fas fa-calendar-alt"></i>
+                <div class="dropdown botaoEsquerda">
+                    <button type="button" class="btn btn-light bg-white shadow-sm tooltipTitle" title="Opções"
+                            data-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
                     </button>
-                </label>
+
+                    <div class="dropdown-menu shadow-lg">
+                        <?php
+                        $eventos = array();
+
+                        foreach (Evento::find_all_by_id_diligencia($diligencia->id) as $evento) {
+                            $pessoa = Pessoa::find_by_id($evento->id_autor);
+
+                            $tipoEvento = TipoEvento::find_by_id($evento->id_tipo_evento);
+
+                            $eventos[] = array(
+                                $evento->data->format('d/m/Y H:i:s'),
+                                $tipoEvento->tipo,
+                                $pessoa->nome
+                            );
+                        }
+                        ?>
+                        <a class="dropdown-item text-dark" href="#modalEventos" data-toggle="modal"
+                           data-eventos='<?php echo json_encode($eventos); ?>'>
+                            <span><i class="fas fa-calendar-alt"></i></span>
+                            <span>Eventos ocorridos</span>
+                        </a>
+
+                        <?php
+                        $eventoEnvio = TipoEvento::find_by_tipo('Envio');
+
+                        $evento = Evento::find_by_id_diligencia($diligencia->id, array(
+                            'order' => 'data desc'
+                        ));
+
+                        if (($evento->id_tipo_evento == $eventoEnvio->id) && ($evento->id_autor == $this->auth->getUserId())) {
+                            $remessa = Remessa::getByDiligenciaAndStatus($diligencia->id, 'A')[0];
+                            ?>
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item text-dark"
+                               href="<?php echo $this->getRelativeURL('remessas', false) . DS . 'index' . DS . $remessa->id; ?>"
+                               target="_blank">
+                                <span><i class="fas fa-file-pdf"></i></span>
+                                <span class="ml-1">Gerar remessa</span>
+                            </a>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
 
                 <?php
-                $eventoEnvio = TipoEvento::find_by_tipo('Envio');
+                $color = '';
 
-                $evento = Evento::find_by_id_diligencia($diligencia->id, array(
-                    'order' => 'data desc'
-                ));
-
-                if (($evento->id_tipo_evento == $eventoEnvio->id) && ($evento->id_autor == $this->auth->getUserId())) {
-                    $remessa = Remessa::getByDiligenciaAndStatus($diligencia->id, 'A')[0];
-                    ?>
-                    <label class="botaoEsquerda-2 shadow-sm">
-                        <a class="btn btn-light bg-white tooltipTitle"
-                           title="Gerar remessa"
-                           href="<?php echo $this->getRelativeURL('remessas', false) . DS . 'index' . DS . $remessa->id; ?>"
-                           target="_blank">
-                            <i class="fas fa-file-pdf"></i>
-                        </a>
-                    </label>
-                    <?php
+                if ($diligencia->status == 'A') {
+                    $color = 'warning';
+                } else if ($diligencia->status == 'E') {
+                    $color = 'danger';
+                } else {
+                    $color = 'success';
                 }
                 ?>
 
                 <div class="text-center tooltipTitle" title="Número de protocolo">
-                    <h5 class="card-title"><?php echo $mandado->numero_protocolo; ?></h5>
+                    <h5 class="card-title text-<?php echo $color; ?>"><?php echo $mandado->numero_protocolo; ?></h5>
                 </div>
 
                 <div class="row">

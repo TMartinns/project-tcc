@@ -24,19 +24,26 @@ $this->partial('modalAlterarSenha');
 
         <div class="card shadow-lg">
             <div class="card-body">
-                <label class="botaoEsquerda-1 shadow-sm">
-                    <button type="button" data-toggle="modal" class="btn btn-light bg-white tooltipTitle"
-                            title="Editar" data-target="#modalEditarPerfil">
-                        <i class="fas fa-pencil-alt"></i>
+                <div class="dropdown botaoEsquerda">
+                    <button type="button" class="btn btn-light bg-white shadow-sm tooltipTitle" title="Opções"
+                            data-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
                     </button>
-                </label>
 
-                <label class="botaoEsquerda-2 shadow-sm">
-                    <button type="button" data-toggle="modal" class="btn btn-light bg-white tooltipTitle"
-                            title="Alterar senha" data-target="#modalAlterarSenha">
-                        <i class="fas fa-key"></i>
-                    </button>
-                </label>
+                    <div class="dropdown-menu shadow-lg">
+                        <a class="dropdown-item text-dark" href="#modalEditarPerfil" data-toggle="modal">
+                            <span><i class="fas fa-pencil-alt"></i></span>
+                            <span class="ml-1">Editar perfil</span>
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a class="dropdown-item text-dark" href="#modalAlterarSenha" data-toggle="modal">
+                            <span><i class="fas fa-key"></i></span>
+                            <span>Alterar senha</span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="offset-md-4 col-md-4 offset-lg-4 col-lg-4 text-center">
                     <p>

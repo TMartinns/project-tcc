@@ -33,23 +33,9 @@ body {
     text-decoration: none;
 }
 
-.botaoEsquerda-1 {
+.botaoEsquerda {
     position: absolute;
     left: .5rem;
-    top: .5rem;
-    display: block;
-}
-
-.botaoEsquerda-2 {
-    position: absolute;
-    left: 3.5rem;
-    top: .5rem;
-    display: block;
-}
-
-.botaoEsquerda-3 {
-    position: absolute;
-    left: 6.5rem;
     top: .5rem;
     display: block;
 }
@@ -129,6 +115,10 @@ body {
 
 .w-eac-100-46 {
     width: calc(100% - 46px) !important;
+}
+
+.w-eac-100-90 {
+    width: calc(100% - 90px) !important;
 }
 
 .mCustomScrollBox {

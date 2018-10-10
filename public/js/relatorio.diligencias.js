@@ -94,7 +94,7 @@ function preencherTabelaDiligencias(diligencias) {
             {
                 extend: 'pdf',
                 text: '<i class="fas fa-file-pdf"></i>',
-                className: 'btn btn-light bg-white shadow-sm botaoEsquerda-1',
+                className: 'btn btn-light bg-white shadow-sm botaoEsquerda',
                 download: 'open',
                 title: 'ADUV - Relatório de diligências'
             }

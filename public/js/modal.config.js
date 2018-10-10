@@ -97,7 +97,7 @@ $('#modalDadosDiligencia').on('show.bs.modal', function (event) {
     modal.find('.modal-title').html(diligencia.numeroProtocolo);
     modal.find('#promotoria').html("<h6>Promotoria</h6>" + diligencia.promotoria);
     modal.find('#descricao').html("<h6>Descrição</h6>" + diligencia.descricao);
-    modal.find('#interessado').html("<h6>Interessado(a)</h6>" + diligencia.interessado);
+    modal.find('#interessado').html("<h6>Interessado</h6>" + diligencia.interessado);
     modal.find('#tipoDiligencia').html("<h6>Tipo de diligência</h6>" + diligencia.tipoDiligencia);
     modal.find('#prazoCumprimento').html("<h6>Prazo para cumprimento</h6>" + diligencia.prazoCumprimento);
 });
