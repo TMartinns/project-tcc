@@ -1,13 +1,13 @@
-<div id="modalNovoInteressado" class="modal fade modalSeguro" tabindex="-1">
+<div id="modalEditarInteressado" class="modal fade modalSeguro" tabindex="-1">
     <div class="modal-dialog modal-lg shadow-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Novo interessado</h5>
+                <h5 class="modal-title">Editar interessado</h5>
             </div>
 
             <div class="modal-body">
                 <div class="d-none alert alert-danger fade show">
-                    <h5 class="alert-heading text-center">Não foi possível completar o cadastro!</h5>
+                    <h5 class="alert-heading text-center">Não foi possível completar as alterações!</h5>
 
                     <hr/>
 
@@ -96,7 +96,7 @@
 
                                 <select class="custom-select" name="uf" id="uf"
                                         data-url="<?php echo $this->getRelativeURL('cidades', false) . DS . 'getCidades'; ?>">
-                                    <option selected>Selecione um estado</option>
+                                    <option>Selecione um estado</option>
                                     <?php
                                     $ufs = Uf::all(array(
                                         'order' => 'uf'
@@ -113,7 +113,6 @@
                                 <label for="cidade">Cidade</label>
 
                                 <select class="custom-select" name="cidade" id="cidade">
-                                    <option selected value="0">Selecione um estado primeiro</option>
                                 </select>
                             </div>
                         </div>

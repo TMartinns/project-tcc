@@ -45,15 +45,15 @@ class Pessoa extends \HXPHP\System\Model
 
         return $resposta;
     }
-    
-    public static function editar($id, array $atributos)
+
+    public static function editar($id, array $atributos, $genero = true)
     {
         $resposta = new \stdClass;
         $resposta->pessoa = null;
         $resposta->status = false;
         $resposta->errors = array();
 
-        if(in_array('', $atributos)) {
+        if (in_array('', $atributos)) {
             array_push($resposta->errors, 'Todos os campos são obrigatórios.');
 
             return $resposta;
@@ -62,20 +62,22 @@ class Pessoa extends \HXPHP\System\Model
         $pessoa = self::find_by_id($id);
         $pessoa->nome = $atributos['nome'];
         $pessoa->cpf = $atributos['cpf'];
-        $pessoa->genero = $atributos['genero'];
         $pessoa->data_nascimento = $atributos['data_nascimento'];
+
+        if ($genero)
+            $pessoa->genero = $atributos['genero'];
 
         $existeCpf = self::find_by_cpf($atributos['cpf']);
 
-        if(!is_null($existeCpf) && $id != $existeCpf->id) {
+        if (!is_null($existeCpf) && $id != $existeCpf->id) {
             array_push($resposta->errors, 'Já existe uma pessoa com esse CPF cadastrado.');
         }
 
-        if(!empty($resposta->errors)) {
+        if (!empty($resposta->errors)) {
             return $resposta;
         }
 
-        if($pessoa->save(false)){
+        if ($pessoa->save(false)) {
             $resposta->pessoa = $pessoa;
             $resposta->status = true;
 

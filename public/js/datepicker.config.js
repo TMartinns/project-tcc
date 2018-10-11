@@ -20,7 +20,11 @@ var minDateToday = {
     }
 };
 
-$('.dataNascimento').datepicker(maxDateToday);
+$('#modalEditarPerfil .dataNascimento').datepicker(maxDateToday);
+
+$('#modalNovoInteressado .dataNascimento').datepicker(maxDateToday);
+
+$('#modalEditarInteressado .dataNascimento').datepicker(maxDateToday);
 
 $('.prazoCumprimento').datepicker(minDateToday);
 

@@ -1,6 +1,6 @@
 $('#cadastrarDiligencias #interessado').easyAutocomplete({
     url: function (url) {
-        return PESSOAS + "getPessoas/";
+        return PESSOAS + "getPessoas";
     },
     getValue: function (element) {
         return element.nome;
@@ -13,7 +13,7 @@ $('#cadastrarDiligencias #interessado').easyAutocomplete({
         }
     },
     preparePostData: function (data) {
-        data.nome = $("#interessado").val();
+        data.nome = $('#cadastrarDiligencias #interessado').val();
         return data;
     },
     requestDelay: 500,
@@ -27,8 +27,13 @@ $('#cadastrarDiligencias #interessado').easyAutocomplete({
     },
     list: {
         onClickEvent: function () {
-            var resposta = $('#interessado').getSelectedItemData();
+            var resposta = $('#cadastrarDiligencias #interessado').getSelectedItemData();
             $('#idInteressado').val(resposta.id);
+
+            $('#botaoEditarInteressado').removeClass('d-none');
+
+            $('.w-eac-100-46').addClass('w-eac-100-90')
+                .removeClass('w-eac-100-46');
         }
     },
     adjustWidth: false,

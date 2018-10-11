@@ -45,13 +45,13 @@ $('#modalNovoInteressado').find('#botaoCadastrar').click(function () {
 
     $.ajax({
         method: "POST",
-        url: $(this).data('action'),
+        url: PESSOAS + 'cadastrar',
         data: post,
         success: function (resposta) {
             var resposta = $.parseJSON(resposta);
 
             if (resposta.status == true) {
-                $('#interessado').val(resposta.pessoa.nome);
+                $('#cadastrarDiligencias #interessado').val(resposta.pessoa.nome);
                 $('#idInteressado').val(resposta.pessoa.id);
 
                 modal.modal('hide');
@@ -78,7 +78,7 @@ $('#modalNovoInteressado').on('hide.bs.modal', function () {
 
     modal.find('#nome').val('');
     modal.find('#cpf').val('');
-    modal.find('#dataNascimento').val('');
+    modal.find('.dataNascimento').val('');
     modal.find('#ddd').val('');
     modal.find('#numeroTelefone').val('');
     modal.find('#logradouro').val('');
@@ -88,6 +88,88 @@ $('#modalNovoInteressado').on('hide.bs.modal', function () {
     modal.find('#bairro').val('');
     modal.find('#cidade').empty().append("<option selected value='0'>Selecione um estado antes</option>");
     modal.find('#uf').val(modal.find('#uf option:first').val());
+});
+
+$('#modalEditarInteressado').on('show.bs.modal', function (event) {
+    var interessado = $(event.relatedTarget).data('interessado');
+    var modal = $(this);
+
+    $.ajax({
+        method: "GET",
+        url: PESSOAS + 'getPessoa/' + $('#idInteressado').val(),
+        success: function (resposta) {
+            var resposta = $.parseJSON(resposta);
+
+
+            modal.find('#nome').val(resposta.nome);
+            modal.find('#cpf').val(resposta.cpf);
+            modal.find('.dataNascimento').val(resposta.dataNascimento);
+            modal.find('#ddd').val(resposta.telefone.ddd);
+            modal.find('#numeroTelefone').val(resposta.telefone.numero);
+            modal.find('#logradouro').val(resposta.endereco.logradouro);
+            modal.find('#numeroEndereco').val(resposta.endereco.numero);
+            modal.find('#complemento').val(resposta.endereco.complemento);
+            modal.find('#cep').val(resposta.endereco.cep);
+            modal.find('#bairro').val(resposta.endereco.bairro);
+            modal.find('#uf').find('option[value="' + resposta.endereco.idUf + '"]').prop('selected', true);
+            modal.find('#cidade').html(
+                '<option value="' + resposta.endereco.idCidade + '" selected>' + resposta.endereco.cidade + '</option>'
+            );
+        }
+    });
+});
+
+$('#modalEditarInteressado').on('hide.bs.modal', function() {
+    var modal = $(this);
+
+    if (!modal.find('.alert').hasClass('d-none')) {
+        modal.find('.alert').addClass('d-none');
+    }
+
+    modal.find('#uf').find('option:selected').prop('selected', false);
+});
+
+$('#modalEditarInteressado').find('#botaoCadastrar').click(function () {
+    var modal = $('#modalEditarInteressado');
+
+    var post = {
+        nome: modal.find('#nome').val(),
+        cpf: modal.find('#cpf').val(),
+        dataNascimento: modal.find('.dataNascimento').val(),
+        ddd: modal.find('#ddd').val(),
+        numeroTelefone: modal.find('#numeroTelefone').val(),
+        logradouro: modal.find('#logradouro').val(),
+        numeroEndereco: modal.find('#numeroEndereco').val(),
+        complemento: modal.find('#complemento').val(),
+        cep: modal.find('#cep').val(),
+        bairro: modal.find('#bairro').val(),
+        cidade: modal.find('#cidade').val()
+    };
+
+    $.ajax({
+        method: "POST",
+        url: PESSOAS + 'editar/' + $('#idInteressado').val(),
+        data: post,
+        success: function (resposta) {
+            var resposta = $.parseJSON(resposta);
+
+            if (resposta.status == true) {
+                $('#cadastrarDiligencias #interessado').val(resposta.pessoa.nome);
+                $('#idInteressado').val(resposta.pessoa.id);
+
+                modal.modal('hide');
+            } else {
+                modal.find('#alertBody').text('');
+
+                if (modal.find('.alert').hasClass('d-none')) {
+                    modal.find('.alert').removeClass('d-none');
+                }
+                $.each(resposta.errors, function (key, error) {
+                    modal.find('#alertBody').append(error + "<br/>");
+                });
+            }
+        }
+    });
 });
 
 $('#modalDadosDiligencia').on('show.bs.modal', function (event) {
@@ -103,13 +185,13 @@ $('#modalDadosDiligencia').on('show.bs.modal', function (event) {
 });
 
 $('#modalEventos').on('show.bs.modal', function (event) {
-    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-        "date-br-pre": function ( a ) {
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-br-pre": function (a) {
             var x;
 
-            if ( $.trim(a) !== '' ) {
+            if ($.trim(a) !== '') {
                 var frDatea = $.trim(a).split(' ');
-                var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00,00,00];
+                var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00, 00, 00];
                 var frDatea2 = frDatea[0].split('/');
                 x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined != frTimea[2]) ? frTimea[2] : 0)) * 1;
             }
@@ -120,14 +202,14 @@ $('#modalEventos').on('show.bs.modal', function (event) {
             return x;
         },
 
-        "date-br-asc": function ( a, b ) {
+        "date-br-asc": function (a, b) {
             return a - b;
         },
 
-        "date-br-desc": function ( a, b ) {
+        "date-br-desc": function (a, b) {
             return b - a;
         }
-    } );
+    });
 
     var eventos = $(event.relatedTarget).data('eventos');
     var modal = $(this);
@@ -140,19 +222,19 @@ $('#modalEventos').on('show.bs.modal', function (event) {
         },
         order: [[0, 'desc']],
         columnDefs: [
-            { type: 'date-br', targets: 0 }
+            {type: 'date-br', targets: 0}
         ]
     });
 });
 
 $('#modalRegistrosUtilizacao').on('show.bs.modal', function (event) {
-    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-        "date-br-pre": function ( a ) {
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-br-pre": function (a) {
             var x;
 
-            if ( $.trim(a) !== '' ) {
+            if ($.trim(a) !== '') {
                 var frDatea = $.trim(a).split(' ');
-                var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00,00,00];
+                var frTimea = (undefined != frDatea[1]) ? frDatea[1].split(':') : [00, 00, 00];
                 var frDatea2 = frDatea[0].split('/');
                 x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + ((undefined != frTimea[2]) ? frTimea[2] : 0)) * 1;
             }
@@ -163,14 +245,14 @@ $('#modalRegistrosUtilizacao').on('show.bs.modal', function (event) {
             return x;
         },
 
-        "date-br-asc": function ( a, b ) {
+        "date-br-asc": function (a, b) {
             return a - b;
         },
 
-        "date-br-desc": function ( a, b ) {
+        "date-br-desc": function (a, b) {
             return b - a;
         }
-    } );
+    });
 
     var registros = $(event.relatedTarget).data('registros');
     var modal = $(this);
@@ -183,7 +265,7 @@ $('#modalRegistrosUtilizacao').on('show.bs.modal', function (event) {
         },
         order: [[0, 'desc']],
         columnDefs: [
-            { type: 'date-br', targets: 0 }
+            {type: 'date-br', targets: 0}
         ]
     });
 });
@@ -305,14 +387,29 @@ $('#modalInteressado').on('show.bs.modal', function (event) {
     $.ajax({
         method: 'GET',
         url: PESSOAS + 'getPessoa/' + id,
-        success: function(resposta) {
+        success: function (resposta) {
             var pessoa = $.parseJSON(resposta);
 
             modal.find('.modal-title').html(pessoa.nome);
             modal.find('#cpf').html('<h6>CPF</h6>' + pessoa.cpf);
             modal.find('#dataNascimento').html('<h6>Data de Nascimento</h6>' + pessoa.dataNascimento);
-            modal.find('#telefone').html('<h6>Telefone</h6>' + pessoa.telefone);
-            modal.find('#endereco').html('<h6>Endereço</h6>' + pessoa.endereco);
+            modal.find('#telefone').html('<h6>Telefone</h6>');
+            if (pessoa.telefone != null) {
+                var telefone = pessoa.telefone;
+                modal.find('#telefone').html('<h6>Telefone</h6> (' + telefone.ddd + ') ' + telefone.numero);
+            }
+
+            modal.find('#endereco').html('<h6>Endereço</h6>');
+            if (pessoa.endereco != null) {
+                var endereco = pessoa.endereco;
+                modal.find('#endereco').html('<h6>Endereço</h6>' +
+                    endereco.logradouro + ', ' + endereco.numero + ', ' + endereco.complemento + ', ' + endereco.bairro +
+                    '<br/>' +
+                    endereco.cidade + '/' + endereco.uf +
+                    '<br/>' +
+                    endereco.cep
+                );
+            }
         }
     });
 });

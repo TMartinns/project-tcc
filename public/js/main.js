@@ -61,18 +61,35 @@ $('.diligenciasExpandir').on('click', function () {
     botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
 });
 
-$('#uf').change(function () {
+$('#modalNovoInteressado #uf').change(function () {
     var uf = $(this);
 
     $.ajax({
         method: 'get',
         url: uf.data('url') + '/' + uf.val(),
         success: function (resposta) {
-            $('#cidade').empty().append("<option selected value='0'>Selecione uma cidade</option>");
+            $('#modalNovoInteressado #cidade').empty().append("<option selected value='0'>Selecione uma cidade</option>");
             var cidades = $.parseJSON(resposta);
 
             $.each(cidades, function (key, cidade) {
-                $('#cidade').append("<option value='" + cidade.id + "'>" + cidade.nome + "</option>");
+                $('#modalNovoInteressado #cidade').append("<option value='" + cidade.id + "'>" + cidade.nome + "</option>");
+            });
+        }
+    });
+});
+
+$('#modalEditarInteressado #uf').change(function () {
+    var uf = $(this);
+
+    $.ajax({
+        method: 'get',
+        url: uf.data('url') + '/' + uf.val(),
+        success: function (resposta) {
+            $('#modalEditarInteressado #cidade').empty().append("<option selected value='0'>Selecione uma cidade</option>");
+            var cidades = $.parseJSON(resposta);
+
+            $.each(cidades, function (key, cidade) {
+                $('#modalEditarInteressado #cidade').append("<option value='" + cidade.id + "'>" + cidade.nome + "</option>");
             });
         }
     });
