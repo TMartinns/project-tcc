@@ -318,7 +318,7 @@ class DiligenciasController extends \HXPHP\System\Controller
 
                                     $mensagem = $notificacao['mensagem'];
 
-                                    $href = $this->getRelativeURL('diligencias', false) . DS . 'visualizar' . DS . $notificacao['id_diligencia'];
+                                    $href = 'http://localhost' . $this->getRelativeURL('diligencias', false) . DS . 'visualizar' . DS . $notificacao['id_diligencia'];
 
                                     $this->email->send(
                                         $destinatario->email,
