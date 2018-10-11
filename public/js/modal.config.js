@@ -321,12 +321,14 @@ $('#modalRegistrarUtilizacao').on('show.bs.modal', function () {
                     modal.find('.modal-body img').attr('src', src)
                         .tooltip().attr('data-original-title', title);
                 } else {
-                    modal.find('.modal-footer small').addClass('text-danger')
+                    modal.find('.modal-footer small').removeClass('text-muted')
+                        .addClass('text-danger')
                         .text('Veículo desativado ou inexistente! ' +
                             'Por favor, contate a coordenadoria para obter mais informações.');
 
                     setTimeout(function () {
                         modal.find('.modal-footer small').removeClass('text-danger')
+                            .addClass('text-muted')
                             .text('Posicione o QR Code próximo da câmera para que ele possa ser lido.');
                     }, 10 * 1000);
                 }
