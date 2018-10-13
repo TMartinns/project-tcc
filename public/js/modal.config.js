@@ -14,7 +14,7 @@ $('#modalEditarVeiculos').on('show.bs.modal', function (event) {
     modal.find('#renavam').val(veiculo.renavam);
     modal.find('#ano').val(veiculo.ano);
     modal.find('#placa').val(veiculo.placa);
-    modal.find('.modal-content form').attr('action', veiculo.action + '/' + veiculo.id);
+    modal.find('.modal-content form').attr('action', VEICULOS + 'editar/' + veiculo.id);
 
     if (veiculo.imagem != null) {
         modal.find('.wrap-custom-file label').addClass('file-ok')
