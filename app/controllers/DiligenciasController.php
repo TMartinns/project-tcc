@@ -130,10 +130,10 @@ class DiligenciasController extends \HXPHP\System\Controller
                     'interessado' => $interessado
                 ));
             } else {
-                $this->view->setFile('index');
+                $this->redirectTo('diligencias', false, false);
             }
         } else {
-            $this->view->setFile('index');
+            $this->redirectTo('diligencias', false, false);
         }
     }
 

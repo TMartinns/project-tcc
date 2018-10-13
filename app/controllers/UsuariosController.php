@@ -122,10 +122,10 @@ class UsuariosController extends \HXPHP\System\Controller
                     'endereco' => $endereco
                 ));
             } else {
-                $this->view->setFile('index');
+                $this->redirectTo('usuarios', false, false);
             }
         } else {
-            $this->view->setFile('index');
+            $this->redirectTo('usuarios', false, false);
         }
     }
 

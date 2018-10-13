@@ -187,10 +187,10 @@ class VeiculosController extends \HXPHP\System\Controller
             if (!empty($veiculo)) {
                 $this->view->setVar('veiculo', $veiculo);
             } else {
-                $this->view->setFile('index');
+                $this->redirectTo('veiculos', false, false);
             }
         } else {
-            $this->view->setFile('index');
+            $this->redirectTo('veiculos', false, false);
         }
     }
 
