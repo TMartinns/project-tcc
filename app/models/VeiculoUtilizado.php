@@ -12,7 +12,7 @@ class VeiculoUtilizado extends \HXPHP\System\Model
     public static function encerrar($atributos, $ocorrencia)
     {
         $atributos->data_termino = date('Y-m-d H:i:s');
-        $atributos->ocorrencias = (empty($ocorrencia)) ? null : $ocorrencia;
+        $atributos->ocorrencia = (empty($ocorrencia)) ? null : $ocorrencia;
 
         $atributos->save(false);
     }

@@ -372,9 +372,6 @@ $('#modalConfirmaRegistro').find('button#confirmaRegistro').click(function () {
         success: function (resposta) {
             modal.find('.modal-footer div').first().removeClass('d-none');
             modal.find('.modal-footer div').last().addClass('d-none');
-
-            if (!modal.find('.ocorrencia').hasClass('d-none'))
-                modal.find('.ocorrencia').addClass('d-none');
         }
     });
 });
