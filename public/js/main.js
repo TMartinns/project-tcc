@@ -61,39 +61,36 @@ $('.diligenciasExpandir').on('click', function () {
     botao.find('i').toggleClass('fa-arrow-circle-down fa-arrow-circle-up');
 });
 
-$('#modalNovoInteressado #uf').change(function () {
-    var uf = $(this);
+$(function () {
+    var popularCidade = function(modal) {
+        var uf = $(modal).find('#uf');
 
-    $.ajax({
-        method: 'get',
-        url: uf.data('url') + '/' + uf.val(),
-        success: function (resposta) {
-            $('#modalNovoInteressado #cidade').empty().append("<option selected value='0'>Selecione uma cidade</option>");
-            var cidades = $.parseJSON(resposta);
+        $.ajax({
+            method: 'get',
+            url: uf.data('url') + '/' + uf.val(),
+            success: function (resposta) {
+                $(modal).find('#cidade').empty().append("<option selected value='0'>Selecione uma cidade</option>");
+                var cidades = $.parseJSON(resposta);
 
-            $.each(cidades, function (key, cidade) {
-                $('#modalNovoInteressado #cidade').append("<option value='" + cidade.id + "'>" + cidade.nome + "</option>");
-            });
-        }
+                $.each(cidades, function (key, cidade) {
+                    $(modal).find('#cidade').append("<option value='" + cidade.id + "'>" + cidade.nome + "</option>");
+                });
+            }
+        });
+    };
+
+    $('#modalNovoInteressado #uf').change(function () {
+        popularCidade('#modalNovoInteressado');
     });
-});
 
-$('#modalEditarInteressado #uf').change(function () {
-    var uf = $(this);
-
-    $.ajax({
-        method: 'get',
-        url: uf.data('url') + '/' + uf.val(),
-        success: function (resposta) {
-            $('#modalEditarInteressado #cidade').empty().append("<option selected value='0'>Selecione uma cidade</option>");
-            var cidades = $.parseJSON(resposta);
-
-            $.each(cidades, function (key, cidade) {
-                $('#modalEditarInteressado #cidade').append("<option value='" + cidade.id + "'>" + cidade.nome + "</option>");
-            });
-        }
+    $('#modalEditarInteressado #uf').change(function () {
+        popularCidade('#modalEditarInteressado');
     });
-});
+
+    $('#modalEditarPerfil #uf').change(function () {
+        popularCidade('#modalEditarPerfil');
+    });
+})
 
 $(function () {
     $.ajax({
