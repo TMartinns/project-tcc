@@ -56,6 +56,7 @@ if (!empty($diligencias)) {
                             $eventos[] = array(
                                 $evento->data->format('d/m/Y H:i:s'),
                                 $tipoEvento->tipo,
+                                (empty($evento->observacao)) ? '' : $evento->observacao,
                                 $pessoa->nome
                             );
                         }

@@ -43,6 +43,24 @@
 
                     <input type="hidden" id="idUsuarioEspecifico" name="idUsuarioEspecifico">
                 </div>
+
+                <?php
+                if($this->auth->getUserRole() == 'O') {
+                    ?>
+                    <div class="form-group">
+                        <label for="observacao">Observação</label>
+
+                        <textarea required class="form-control" name="observacao" id="observacao"
+                                  placeholder="Insira a observação"
+                                  rows="3"></textarea>
+
+                        <small class="form-text text-muted">
+                            Favor, informar o motivo de estar devolvendo a diligência.
+                        </small>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
 
             <div class="modal-footer">

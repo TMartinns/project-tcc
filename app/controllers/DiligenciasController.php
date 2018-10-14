@@ -290,6 +290,9 @@ class DiligenciasController extends \HXPHP\System\Controller
                                 'id_tipo_evento' => $eventoEnvio->id
                             );
 
+                            if(isset($post['observacao']))
+                                $evento = array_merge($evento, array('observacao' => $post['observacao']));
+
                             Evento::cadastrar($evento);
 
                             if ($this->auth->getUserRole() == 'C') {
