@@ -57,6 +57,7 @@ $this->partial('modalRegistrosUtilizacao');
                             $registros[] = array(
                                 $registro->data_inicio->format('d/m/Y H:i:s'),
                                 $oficial->nome,
+                                (empty($registro->ocorrencias)) ? '' : $registro->ocorrencias,
                                 (empty($registro->data_termino)) ? '' : $registro->data_termino->format('d/m/Y H:i:s')
                             );
                         }

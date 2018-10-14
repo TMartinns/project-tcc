@@ -9,9 +9,10 @@ class VeiculoUtilizado extends \HXPHP\System\Model
         self::create($atributos);
     }
 
-    public static function encerrar($atributos)
+    public static function encerrar($atributos, $ocorrencia)
     {
         $atributos->data_termino = date('Y-m-d H:i:s');
+        $atributos->ocorrencias = (empty($ocorrencia)) ? null : $ocorrencia;
 
         $atributos->save(false);
     }

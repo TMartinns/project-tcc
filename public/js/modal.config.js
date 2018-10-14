@@ -119,7 +119,7 @@ $('#modalEditarInteressado').on('show.bs.modal', function (event) {
     });
 });
 
-$('#modalEditarInteressado').on('hide.bs.modal', function() {
+$('#modalEditarInteressado').on('hide.bs.modal', function () {
     var modal = $(this);
 
     if (!modal.find('.alert').hasClass('d-none')) {
@@ -318,6 +318,10 @@ $('#modalRegistrarUtilizacao').on('show.bs.modal', function () {
                         src = IMG + 'avatars/veiculos/' + avatar;
                     }
 
+                    if (veiculo.utilizado) {
+                        modal.find('.ocorrencia').removeClass('d-none');
+                    }
+
                     modal.find('.modal-body img').attr('src', src)
                         .tooltip().attr('data-original-title', title);
                 } else {
@@ -359,13 +363,18 @@ $('#modalRegistrarUtilizacao').on('hide.bs.modal', function () {
 $('#modalConfirmaRegistro').find('button#confirmaRegistro').click(function () {
     var modal = $('#modalConfirmaRegistro');
     var veiculo = $(this).data('veiculo');
-    var url = $(this).data('url');
+    var ocorrencia = modal.find('#ocorrencia').val();
 
     $.ajax({
-        url: url + veiculo,
+        method: "POST",
+        url: VEICULOS + 'registrarUsoVeiculo/' + veiculo,
+        data: {ocorrencia: ocorrencia},
         success: function (resposta) {
             modal.find('.modal-footer div').first().removeClass('d-none');
             modal.find('.modal-footer div').last().addClass('d-none');
+
+            if (!modal.find('.ocorrencia').hasClass('d-none'))
+                modal.find('.ocorrencia').addClass('d-none');
         }
     });
 });
@@ -380,6 +389,9 @@ $('#modalConfirmaRegistro').on('hide.bs.modal', function () {
         .attr('data-original-title', '');
     modal.find('.modal-footer div').first().addClass('d-none');
     modal.find('.modal-footer div').last().removeClass('d-none');
+
+    if (!modal.find('.ocorrencia').hasClass('d-none'))
+        modal.find('.ocorrencia').addClass('d-none');
 });
 
 $('#modalInteressado').on('show.bs.modal', function (event) {

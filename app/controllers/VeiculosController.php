@@ -212,7 +212,9 @@ class VeiculosController extends \HXPHP\System\Controller
                     'id_oficial' => $this->auth->getUserId()
                 ));
             } else {
-                VeiculoUtilizado::encerrar($veiculoUtilizado);
+                $ocorrencia = $this->request->post('ocorrencia');
+
+                VeiculoUtilizado::encerrar($veiculoUtilizado, $ocorrencia);
             }
         }
     }
@@ -276,8 +278,14 @@ class VeiculosController extends \HXPHP\System\Controller
                 $resposta = array(
                     'id' => $veiculo->id,
                     'modelo' => $veiculo->modelo,
-                    'imagem' => $veiculo->imagem
+                    'imagem' => $veiculo->imagem,
+                    'utilizado' => false
                 );
+
+                $veiculoUtilizado = VeiculoUtilizado::find_by_id_veiculo_and_id_oficial_and_data_termino($id, $this->auth->getUserId(), null);
+
+                if(!empty($veiculoUtilizado))
+                    $resposta['utilizado'] = true;
             }
         }
 

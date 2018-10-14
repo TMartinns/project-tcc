@@ -41,7 +41,7 @@
                 <h5 id="veiculo" title="Modelo"></h5>
             </div>
 
-            <div class="modal-footer bg-white">
+            <div class="modal-footer bg-white d-block">
                 <div class="text-center d-none">
                     <span class="text-success">Registro efetuado com sucesso!</span>
 
@@ -51,18 +51,28 @@
                     </button>
                 </div>
 
-                <div>
-                    <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
-                            title="Aguarde 3 segundos">
-                        <span><i class="fas fa-thumbs-down"></i></span>
-                        Não
-                    </button>
+                <div class="ocorrencia row pb-3 d-none">
+                    <textarea class="form-control" name="ocorrencia" id="ocorrencia" placeholder="Insira a ocorrência"
+                              rows="3"></textarea>
 
-                    <button type="button" id="confirmaRegistro" class="btn btn-outline-success shadow"
-                            data-url="<?php echo $this->getRelativeURL('veiculos', false) . DS . 'registrarUsoVeiculo' . DS; ?>">
-                        <span><i class="fas fa-thumbs-up"></i></span>
-                        Sim
-                    </button>
+                    <small class="form-text text-muted">
+                        Deixe em branco se não tiver nada para relatar.
+                    </small>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <div>
+                        <button type="button" class="cancelar btn btn-outline-danger disabled tooltipTitle shadow"
+                                title="Aguarde 3 segundos">
+                            <span><i class="fas fa-thumbs-down"></i></span>
+                            Não
+                        </button>
+
+                        <button type="button" id="confirmaRegistro" class="btn btn-outline-success shadow">
+                            <span><i class="fas fa-thumbs-up"></i></span>
+                            Sim
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
