@@ -39,14 +39,14 @@ class Pessoa extends \HXPHP\System\Model
 
         $errors = $pessoa->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function editar($id, array $atributos, $genero = true)
+    public static function editar($idPessoa, array $atributos, $genero = true)
     {
         $resposta = new \stdClass;
         $resposta->pessoa = null;
@@ -59,7 +59,7 @@ class Pessoa extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $pessoa = self::find_by_id($id);
+        $pessoa = self::find_by_id($idPessoa);
         $pessoa->nome = $atributos['nome'];
         $pessoa->cpf = $atributos['cpf'];
         $pessoa->data_nascimento = $atributos['data_nascimento'];
@@ -69,7 +69,7 @@ class Pessoa extends \HXPHP\System\Model
 
         $existeCpf = self::find_by_cpf($atributos['cpf']);
 
-        if (!is_null($existeCpf) && $id != $existeCpf->id) {
+        if (!is_null($existeCpf) && $idPessoa != $existeCpf->id) {
             array_push($resposta->errors, 'Já existe uma pessoa com esse CPF cadastrado.');
         }
 
@@ -86,16 +86,16 @@ class Pessoa extends \HXPHP\System\Model
 
         $errors = $pessoa->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function getPrimeiroNome($id)
+    public static function getPrimeiroNome($idPessoa)
     {
-        return explode(" ", self::find_by_id($id)->nome)[0];
+        return explode(" ", self::find_by_id($idPessoa)->nome)[0];
     }
 
     public static function getAllByUsuariosFuncaoAndIsAtivo($funcao, $isAtivo)

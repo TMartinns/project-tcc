@@ -28,30 +28,30 @@ class Remessa extends \HXPHP\System\Model
 
         $errors = $remessa->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function receber($id)
+    public static function receber($idRemessa)
     {
-        $remessa = self::find_by_id($id);
+        $remessa = self::find_by_id($idRemessa);
 
         $remessa->status = 'R';
 
         $remessa->save(false);
     }
 
-    public static function getByDiligenciaAndStatus($id, $status)
+    public static function getByDiligenciaAndStatus($idDiligencia, $status)
     {
         return self::find_by_sql(
             "select remessas.*
             from remessas
             inner join aux_diligencias_remessas
             on remessas.id = aux_diligencias_remessas.id_remessa
-            where aux_diligencias_remessas.id_diligencia = $id and remessas.status = '$status'
+            where aux_diligencias_remessas.id_diligencia = $idDiligencia and remessas.status = '$status'
             order by remessas.data desc 
             limit 1"
         );

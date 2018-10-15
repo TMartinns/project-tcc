@@ -48,14 +48,14 @@ class Endereco extends \HXPHP\System\Model
 
         $errors = $endereco->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function editar($id, array $atributos)
+    public static function editar($idPessoa, array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->endereco = null;
@@ -68,7 +68,7 @@ class Endereco extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $endereco = self::find_by_id_pessoa($id);
+        $endereco = self::find_by_id_pessoa($idPessoa);
         $endereco->logradouro = $atributos['logradouro'];
         $endereco->numero = $atributos['numero'];
         $endereco->complemento = $atributos['complemento'];
@@ -89,7 +89,7 @@ class Endereco extends \HXPHP\System\Model
 
         $errors = $endereco->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 

@@ -108,7 +108,7 @@ class PerfilController extends \HXPHP\System\Controller
         }
     }
 
-    public function editarAction($id = null)
+    public function editarAction($idPessoa = null)
     {
         $this->view->setFile('index');
 
@@ -118,7 +118,7 @@ class PerfilController extends \HXPHP\System\Controller
 
         $post = $this->request->post();
 
-        if (!empty($post) && !empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty($post) && !empty(filter_var($idPessoa, FILTER_VALIDATE_INT))) {
             $this->load('Services\DateConverter');
 
             $pessoa = array(
@@ -128,14 +128,14 @@ class PerfilController extends \HXPHP\System\Controller
                 'data_nascimento' => $this->dateconverter->toMySqlFormat($post['dataNascimento'])
             );
 
-            $resposta = Pessoa::editar($id, $pessoa);
+            $resposta = Pessoa::editar($idPessoa, $pessoa);
 
             if ($resposta->status) {
                 $usuario = array(
                     'email' => $post['email']
                 );
 
-                $resposta = Usuario::editar($id, $usuario);
+                $resposta = Usuario::editar($idPessoa, $usuario);
 
                 if ($resposta->status) {
                     $usuario = $resposta->usuario;
@@ -145,10 +145,10 @@ class PerfilController extends \HXPHP\System\Controller
                         'numero' => $post['numeroTelefone']
                     );
 
-                    if (empty(Telefone::find_by_id_pessoa($id))) {
-                        $resposta = Telefone::cadastrar(array_merge($telefone, array('id_pessoa' => $id)));
+                    if (empty(Telefone::find_by_id_pessoa($idPessoa))) {
+                        $resposta = Telefone::cadastrar(array_merge($telefone, array('id_pessoa' => $idPessoa)));
                     } else {
-                        $resposta = Telefone::editar($id, $telefone);
+                        $resposta = Telefone::editar($idPessoa, $telefone);
                     }
 
                     if ($resposta->status) {
@@ -161,10 +161,10 @@ class PerfilController extends \HXPHP\System\Controller
                             'id_cidade' => ($post['cidade'] == 0) ? '' : $post['cidade']
                         );
 
-                        if (empty(Endereco::find_by_id_pessoa($id))) {
-                            $resposta = Endereco::cadastrar(array_merge($endereco, array('id_pessoa' => $id)));
+                        if (empty(Endereco::find_by_id_pessoa($idPessoa))) {
+                            $resposta = Endereco::cadastrar(array_merge($endereco, array('id_pessoa' => $idPessoa)));
                         } else {
-                            $resposta = Endereco::editar($id, $endereco);
+                            $resposta = Endereco::editar($idPessoa, $endereco);
                         }
 
                         if ($resposta->status) {

@@ -32,14 +32,14 @@ class Telefone extends \HXPHP\System\Model
 
         $errors = $telefone->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function editar($id, array $atributos)
+    public static function editar($idPessoa, array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->telefone = null;
@@ -52,7 +52,7 @@ class Telefone extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $telefone = self::find_by_id_pessoa($id);
+        $telefone = self::find_by_id_pessoa($idPessoa);
         $telefone->ddd = $atributos['ddd'];
         $telefone->numero = $atributos['numero'];
 
@@ -69,7 +69,7 @@ class Telefone extends \HXPHP\System\Model
 
         $errors = $telefone->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 

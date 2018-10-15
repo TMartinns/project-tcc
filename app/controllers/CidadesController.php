@@ -25,7 +25,7 @@ class CidadesController extends \HXPHP\System\Controller
             ->setTemplate(false);
     }
 
-    public function getCidadesAction($id = null)
+    public function getCidadesAction($idUf = null)
     {
         $this->view->setPath('blank', true)
             ->setFile('index')
@@ -33,8 +33,8 @@ class CidadesController extends \HXPHP\System\Controller
 
         $resposta = array();
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $cidades = Cidade::find_all_by_id_uf($id);
+        if(!empty(filter_var($idUf, FILTER_VALIDATE_INT))) {
+            $cidades = Cidade::find_all_by_id_uf($idUf);
 
             foreach ($cidades as $cidade) {
                 $resposta[] = array(

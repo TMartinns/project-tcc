@@ -103,12 +103,12 @@ class UsuariosController extends \HXPHP\System\Controller
         }
     }
 
-    public function visualizarAction($id = null)
+    public function visualizarAction($idUsuario = null)
     {
         $this->auth->roleCheck(array('C'));
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $pessoa = Pessoa::find_by_id($id);
+        if (!empty(filter_var($idUsuario, FILTER_VALIDATE_INT))) {
+            $pessoa = Pessoa::find_by_id($idUsuario);
 
             if (!empty($pessoa)) {
                 $usuario = Usuario::find_by_id_pessoa($pessoa->id);
@@ -129,14 +129,14 @@ class UsuariosController extends \HXPHP\System\Controller
         }
     }
 
-    public function desativarAction($id = null)
+    public function desativarAction($idUsuario = null)
     {
         $this->auth->roleCheck(array('C'));
 
         $this->view->setFile('index');
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $resposta = Usuario::ativar($id, false);
+        if (!empty(filter_var($idUsuario, FILTER_VALIDATE_INT))) {
+            $resposta = Usuario::ativar($idUsuario, false);
 
             $pessoa = Pessoa::find_by_id($resposta->usuario->id);
 
@@ -150,14 +150,14 @@ class UsuariosController extends \HXPHP\System\Controller
         }
     }
 
-    public function ativarAction($id = null)
+    public function ativarAction($idUsuario = null)
     {
         $this->auth->roleCheck(array('C'));
 
         $this->view->setFile('index');
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $resposta = Usuario::ativar($id);
+        if (!empty(filter_var($idUsuario, FILTER_VALIDATE_INT))) {
+            $resposta = Usuario::ativar($idUsuario);
 
             $pessoa = Pessoa::find_by_id($resposta->usuario->id);
 

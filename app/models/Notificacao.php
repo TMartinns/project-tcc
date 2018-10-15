@@ -9,9 +9,9 @@ class Notificacao extends \HXPHP\System\Model
         self::create($atributos);
     }
 
-    public static function visto($id)
+    public static function visto($idNotificacao)
     {
-        $notificacao = self::find_by_id($id);
+        $notificacao = self::find_by_id($idNotificacao);
         $notificacao->visto = 1;
 
         $notificacao->save(false);

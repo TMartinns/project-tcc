@@ -59,14 +59,14 @@ class Veiculo extends \HXPHP\System\Model
 
         $errors = $veiculo->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function editar($id, $atributos)
+    public static function editar($idVeiculo, $atributos)
     {
         $resposta = new \stdClass;
         $resposta->veiculo = null;
@@ -79,7 +79,7 @@ class Veiculo extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $veiculo = self::find_by_id($id);
+        $veiculo = self::find_by_id($idVeiculo);
         $veiculo->marca = $atributos['marca'];
         $veiculo->modelo = $atributos['modelo'];
         $veiculo->cor = $atributos['cor'];
@@ -89,13 +89,13 @@ class Veiculo extends \HXPHP\System\Model
 
         $existeRenavam = self::find_by_renavam($atributos['renavam']);
 
-        if(!is_null($existeRenavam) && $id != $existeRenavam->id) {
+        if(!is_null($existeRenavam) && $idVeiculo != $existeRenavam->id) {
             array_push($resposta->errors, 'Já existe um veículo com esse renavam cadastrado.');
         }
 
         $existePlaca = self::find_by_placa($atributos['placa']);
 
-        if(!is_null($existePlaca) && $id != $existePlaca->id) {
+        if(!is_null($existePlaca) && $idVeiculo != $existePlaca->id) {
             array_push($resposta->errors, 'Já existe um veículo com essa placa cadastrada.');
         }
 
@@ -112,20 +112,20 @@ class Veiculo extends \HXPHP\System\Model
 
         $errors = $veiculo->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function ativar($id, $ativar = true)
+    public static function ativar($idVeiculo, $ativar = true)
     {
         $resposta = new \stdClass;
         $resposta->veiculo = null;
         $resposta->status = false;
 
-        $veiculo = self::find_by_id($id);
+        $veiculo = self::find_by_id($idVeiculo);
         $veiculo->is_ativo = ($ativar) ? 1 : 0;
 
         if($veiculo->save(false)) {

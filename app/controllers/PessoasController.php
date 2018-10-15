@@ -100,7 +100,7 @@ class PessoasController extends \HXPHP\System\Controller
         }
     }
 
-    public function editarAction($id = null)
+    public function editarAction($idPessoa = null)
     {
         $this->auth->roleCheck(array('C'));
 
@@ -110,7 +110,7 @@ class PessoasController extends \HXPHP\System\Controller
 
         $post = $this->request->post();
 
-        if(!empty($post) && !empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if(!empty($post) && !empty(filter_var($idPessoa, FILTER_VALIDATE_INT))) {
             $this->load('Services\DateConverter');
 
             $pessoa = array(
@@ -119,7 +119,7 @@ class PessoasController extends \HXPHP\System\Controller
                 'data_nascimento' => $this->dateconverter->toMySqlFormat($post['dataNascimento'])
             );
 
-            $resposta = Pessoa::editar($id, $pessoa, false);
+            $resposta = Pessoa::editar($idPessoa, $pessoa, false);
 
             if($resposta->status) {
                 $pessoa = $resposta->pessoa;
@@ -130,7 +130,7 @@ class PessoasController extends \HXPHP\System\Controller
                     'id_pessoa' => $pessoa->id
                 );
 
-                $resposta = Telefone::editar($id, $telefone);
+                $resposta = Telefone::editar($idPessoa, $telefone);
 
                 if($resposta->status) {
                     $telefone = $resposta->telefone;
@@ -145,7 +145,7 @@ class PessoasController extends \HXPHP\System\Controller
                         'id_pessoa' => $pessoa->id,
                     );
 
-                    $resposta = Endereco::editar($id, $endereco);
+                    $resposta = Endereco::editar($idPessoa, $endereco);
 
                     if($resposta->status) {
                         $resposta = array(
@@ -207,7 +207,7 @@ class PessoasController extends \HXPHP\System\Controller
         echo json_encode($resposta);
     }
 
-    public function getPessoaAction($id = null)
+    public function getPessoaAction($idPessoa = null)
     {
         $this->auth->roleCheck(array('C', 'O'));
 
@@ -217,8 +217,8 @@ class PessoasController extends \HXPHP\System\Controller
 
         $resposta = array();
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $pessoa = Pessoa::find_by_id($id);
+        if(!empty(filter_var($idPessoa, FILTER_VALIDATE_INT))) {
+            $pessoa = Pessoa::find_by_id($idPessoa);
 
             if(!empty($pessoa)) {
                 $resposta = array(
@@ -242,7 +242,7 @@ class PessoasController extends \HXPHP\System\Controller
 
                 if(!empty($endereco)) {
                     $cidade = Cidade::find_by_id($endereco->id_cidade);
-                    $uf = Uf::find_by_id($cidade->id_uf);
+                    $unidadeFederativa = Uf::find_by_id($cidade->id_uf);
 
                     $resposta['endereco'] = array(
                         'logradouro' => $endereco->logradouro,
@@ -251,8 +251,8 @@ class PessoasController extends \HXPHP\System\Controller
                         'bairro' => $endereco->bairro,
                         'cidade' => $cidade->nome,
                         'idCidade' => $cidade->id,
-                        'uf' => $uf->uf,
-                        'idUf' => $uf->id,
+                        'uf' => $unidadeFederativa->uf,
+                        'idUf' => $unidadeFederativa->id,
                         'cep' => $endereco->cep
                     );
                 }

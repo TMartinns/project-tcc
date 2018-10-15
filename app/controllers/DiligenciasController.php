@@ -89,6 +89,8 @@ class DiligenciasController extends \HXPHP\System\Controller
 
                     Evento::cadastrar($evento);
                 } else {
+                    $mandado->delete();
+
                     $this->load('Helpers\Alert', array(
                         'danger',
                         'Não foi possível completar o cadastro!',
@@ -106,12 +108,12 @@ class DiligenciasController extends \HXPHP\System\Controller
         }
     }
 
-    public function visualizarAction($id = null)
+    public function visualizarAction($idDiligencia = null)
     {
         $this->auth->roleCheck(array('C', 'O'));
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $diligencia = Diligencia::find_by_id($id);
+        if (!empty(filter_var($idDiligencia, FILTER_VALIDATE_INT))) {
+            $diligencia = Diligencia::find_by_id($idDiligencia);
 
             if (!empty($diligencia)) {
                 $mandado = Mandado::find_by_id($diligencia->id_mandado);
@@ -137,15 +139,15 @@ class DiligenciasController extends \HXPHP\System\Controller
         }
     }
 
-    public function emAndamentoAction($id = null)
+    public function emAndamentoAction($idDiligencia = null)
     {
         $this->auth->roleCheck(array('C'));
 
         $this->view->setFile('index');
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($idDiligencia, FILTER_VALIDATE_INT))) {
 
-            $resposta = Diligencia::editarStatus($id, 'A');
+            $resposta = Diligencia::editarStatus($idDiligencia, 'A');
 
             if ($resposta->status) {
                 $mandado = Mandado::find_by_id($resposta->diligencia->id_mandado);
@@ -159,15 +161,15 @@ class DiligenciasController extends \HXPHP\System\Controller
         }
     }
 
-    public function emEsperaAction($id = null)
+    public function emEsperaAction($idDiligencia = null)
     {
         $this->auth->roleCheck(array('C'));
 
         $this->view->setFile('index');
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($idDiligencia, FILTER_VALIDATE_INT))) {
 
-            $resposta = Diligencia::editarStatus($id, 'E');
+            $resposta = Diligencia::editarStatus($idDiligencia, 'E');
 
             if ($resposta->status) {
                 $mandado = Mandado::find_by_id($resposta->diligencia->id_mandado);
@@ -181,15 +183,15 @@ class DiligenciasController extends \HXPHP\System\Controller
         }
     }
 
-    public function cumpridaAction($id = null)
+    public function cumpridaAction($idDiligencia = null)
     {
         $this->auth->roleCheck(array('O'));
 
         $this->view->setFile('index');
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
+        if (!empty(filter_var($idDiligencia, FILTER_VALIDATE_INT))) {
 
-            $resposta = Diligencia::editarStatus($id, 'C');
+            $resposta = Diligencia::editarStatus($idDiligencia, 'C');
 
             if ($resposta->status) {
                 $mandado = Mandado::find_by_id($resposta->diligencia->id_mandado);
@@ -298,17 +300,17 @@ class DiligenciasController extends \HXPHP\System\Controller
                             if ($this->auth->getUserRole() == 'C') {
                                 $diligencia = Diligencia::find_by_id($diligencia);
 
-                                $tipoDiligenciaUrgente = TipoDiligencia::find_by_tipo('Urgente');
-                                if ($diligencia->id_tipo_diligencia == $tipoDiligenciaUrgente->id) {
+                                $diligenciaUrgente = TipoDiligencia::find_by_tipo('Urgente');
+                                if ($diligencia->id_tipo_diligencia == $diligenciaUrgente->id) {
 
-                                    $tipoNotificacaoUrgente = TipoNotificacao::find_by_tipo('Urgente');
+                                    $notificacaoUrgente = TipoNotificacao::find_by_tipo('Urgente');
 
                                     $notificacao = array(
                                         'id_diligencia' => $diligencia->id,
                                         'id_destinatario' => $idDestinatario,
                                         'mensagem' => 'Uma diligência urgente foi emitida, clique para visualizá-la.',
                                         'data' => date('Y-m-d H:i:s'),
-                                        'id_tipo_notificacao' => $tipoNotificacaoUrgente->id
+                                        'id_tipo_notificacao' => $notificacaoUrgente->id
                                     );
 
                                     Notificacao::cadastrar($notificacao);

@@ -39,14 +39,14 @@ class Usuario extends \HXPHP\System\Model
 
         $errors = $usuario->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function editar($id, array $atributos)
+    public static function editar($idPessoa, array $atributos)
     {
         $resposta = new \stdClass;
         $resposta->usuario = null;
@@ -59,12 +59,12 @@ class Usuario extends \HXPHP\System\Model
             return $resposta;
         }
 
-        $usuario = self::find_by_id_pessoa($id);
+        $usuario = self::find_by_id_pessoa($idPessoa);
         $usuario->email = $atributos['email'];
 
         $existeEmail = self::find_by_email($atributos['email']);
 
-        if(!is_null($existeEmail) && $id != $existeEmail->id) {
+        if(!is_null($existeEmail) && $idPessoa != $existeEmail->id) {
             array_push($resposta->errors, 'Já existe um usuário com esse e-mail cadastrado.');
         }
 
@@ -81,20 +81,20 @@ class Usuario extends \HXPHP\System\Model
 
         $errors = $usuario->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function alterarSenha($id, $senha)
+    public static function alterarSenha($idPessoa, $senha)
     {
         $resposta = new \stdClass;
         $resposta->usuario = null;
         $resposta->status = false;
 
-        $usuario = self::find_by_id_pessoa($id);
+        $usuario = self::find_by_id_pessoa($idPessoa);
         $usuario->senha = $senha;
 
         if($usuario->save(false)) {
@@ -106,13 +106,13 @@ class Usuario extends \HXPHP\System\Model
         return $resposta;
     }
 
-    public static function ativar($id, $ativar = true)
+    public static function ativar($idPessoa, $ativar = true)
     {
         $resposta = new \stdClass;
         $resposta->usuario = null;
         $resposta->status = false;
 
-        $usuario = self::find_by_id_pessoa($id);
+        $usuario = self::find_by_id_pessoa($idPessoa);
         $usuario->is_ativo = ($ativar) ? 1 : 0;
 
         if($usuario->save(false)) {

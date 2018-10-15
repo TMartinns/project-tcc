@@ -32,20 +32,20 @@ class Diligencia extends \HXPHP\System\Model
 
         $errors = $diligencia->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 
         return $resposta;
     }
 
-    public static function editarStatus($id, $status)
+    public static function editarStatus($idDiligencia, $status)
     {
         $resposta = new \stdClass;
         $resposta->diligencia = null;
         $resposta->status = false;
 
-        $diligencia = self::find_by_id($id);
+        $diligencia = self::find_by_id($idDiligencia);
         $diligencia->status = $status;
 
         if($diligencia->save(false)) {
@@ -58,14 +58,14 @@ class Diligencia extends \HXPHP\System\Model
         return $resposta;
     }
 
-    public static function getAllByRemessa($id)
+    public static function getAllByRemessa($idRemessa)
     {
         return self::find_by_sql(
             "select diligencias.*
             from diligencias
             inner join aux_diligencias_remessas
             on diligencias.id = aux_diligencias_remessas.id_diligencia
-            where aux_diligencias_remessas.id_remessa = $id"
+            where aux_diligencias_remessas.id_remessa = $idRemessa"
         );
     }
 }

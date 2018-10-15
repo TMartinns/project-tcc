@@ -132,7 +132,7 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
-    public function editarAction($id = null)
+    public function editarAction($idVeiculo = null)
     {
         $this->auth->roleCheck(array('C'));
 
@@ -140,8 +140,8 @@ class VeiculosController extends \HXPHP\System\Controller
 
         $post = $this->request->post();
 
-        if (!empty($post) && !empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $resposta = Veiculo::editar($id, $post);
+        if (!empty($post) && !empty(filter_var($idVeiculo, FILTER_VALIDATE_INT))) {
+            $resposta = Veiculo::editar($idVeiculo, $post);
 
             if ($resposta->status) {
                 $resposta = $this->imagemUpload($resposta->veiculo);
@@ -177,12 +177,12 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
-    public function visualizarAction($id = null)
+    public function visualizarAction($idVeiculo = null)
     {
         $this->auth->roleCheck(array('C', 'O'));
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $veiculo = Veiculo::find_by_id($id);
+        if (!empty(filter_var($idVeiculo, FILTER_VALIDATE_INT))) {
+            $veiculo = Veiculo::find_by_id($idVeiculo);
 
             if (!empty($veiculo)) {
                 $this->view->setVar('veiculo', $veiculo);
@@ -194,7 +194,7 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
-    public function registrarUsoVeiculoAction($id = null)
+    public function registrarUsoVeiculoAction($idVeiculo = null)
     {
         $this->auth->roleCheck(array('O'));
 
@@ -202,13 +202,13 @@ class VeiculosController extends \HXPHP\System\Controller
             ->setFile('index')
             ->setTemplate(false);
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $veiculoUtilizado = VeiculoUtilizado::find_by_id_veiculo_and_id_oficial_and_data_termino($id, $this->auth->getUserId(), null);
+        if (!empty(filter_var($idVeiculo, FILTER_VALIDATE_INT))) {
+            $veiculoUtilizado = VeiculoUtilizado::find_by_id_veiculo_and_id_oficial_and_data_termino($idVeiculo, $this->auth->getUserId(), null);
 
             if(empty($veiculoUtilizado)) {
                 VeiculoUtilizado::cadastrar(array(
                     'data_inicio' => date('Y-m-d H:i:s'),
-                    'id_veiculo' => $id,
+                    'id_veiculo' => $idVeiculo,
                     'id_oficial' => $this->auth->getUserId()
                 ));
             } else {
@@ -219,14 +219,14 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
-    public function desativarAction($id = null)
+    public function desativarAction($idVeiculo = null)
     {
         $this->auth->roleCheck(array('C'));
 
         $this->view->setFile('index');
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $resposta = Veiculo::ativar($id, false);
+        if (!empty(filter_var($idVeiculo, FILTER_VALIDATE_INT))) {
+            $resposta = Veiculo::ativar($idVeiculo, false);
 
             $modelo = $resposta->veiculo->modelo;
 
@@ -240,14 +240,14 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
-    public function ativarAction($id = null)
+    public function ativarAction($idVeiculo = null)
     {
         $this->auth->roleCheck(array('C'));
 
         $this->view->setFile('index');
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $resposta = Veiculo::ativar($id);
+        if (!empty(filter_var($idVeiculo, FILTER_VALIDATE_INT))) {
+            $resposta = Veiculo::ativar($idVeiculo);
 
             $modelo = $resposta->veiculo->modelo;
 
@@ -261,7 +261,7 @@ class VeiculosController extends \HXPHP\System\Controller
         }
     }
 
-    public function getVeiculoAction($id = null)
+    public function getVeiculoAction($idVeiculo = null)
     {
         $this->auth->roleCheck(array('O'));
 
@@ -271,8 +271,8 @@ class VeiculosController extends \HXPHP\System\Controller
 
         $resposta = array();
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $veiculo = Veiculo::find_by_id_and_is_ativo($id, 1);
+        if (!empty(filter_var($idVeiculo, FILTER_VALIDATE_INT))) {
+            $veiculo = Veiculo::find_by_id_and_is_ativo($idVeiculo, 1);
 
             if (!empty($veiculo)) {
                 $resposta = array(
@@ -282,7 +282,7 @@ class VeiculosController extends \HXPHP\System\Controller
                     'utilizado' => false
                 );
 
-                $veiculoUtilizado = VeiculoUtilizado::find_by_id_veiculo_and_id_oficial_and_data_termino($id, $this->auth->getUserId(), null);
+                $veiculoUtilizado = VeiculoUtilizado::find_by_id_veiculo_and_id_oficial_and_data_termino($idVeiculo, $this->auth->getUserId(), null);
 
                 if(!empty($veiculoUtilizado))
                     $resposta['utilizado'] = true;

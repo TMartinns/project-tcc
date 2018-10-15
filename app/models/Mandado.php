@@ -47,7 +47,7 @@ class Mandado extends \HXPHP\System\Model
 
         $errors = $mandado->errors->get_raw_errors();
 
-        foreach ($errors as $key => $message) {
+        foreach ($errors as $message) {
             array_push($resposta->errors, $message[0]);
         }
 

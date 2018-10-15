@@ -25,15 +25,15 @@ class NotificacoesController extends \HXPHP\System\Controller
             ->setTemplate(false);
     }
 
-    public function vistoAction($id = null)
+    public function vistoAction($idNotificacao = null)
     {
         $this->view->setPath('blank', true)
             ->setFile('index')
             ->setTemplate(false);
 
-        if(!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            if(!empty(Notificacao::find_by_id($id))) {
-                Notificacao::visto($id);
+        if(!empty(filter_var($idNotificacao, FILTER_VALIDATE_INT))) {
+            if(!empty(Notificacao::find_by_id($idNotificacao))) {
+                Notificacao::visto($idNotificacao);
             }
         }
     }

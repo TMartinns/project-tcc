@@ -18,14 +18,14 @@ class RemessasController extends \HXPHP\System\Controller
         $this->auth->roleCheck(array('C', 'O'));
     }
 
-    public function indexAction($id = null)
+    public function indexAction($idRemessa = null)
     {
         $this->view->setPath('blank', true)
             ->setFile('index')
             ->setTemplate(false);
 
-        if (!empty(filter_var($id, FILTER_VALIDATE_INT))) {
-            $remessa = Remessa::find_by_id($id);
+        if (!empty(filter_var($idRemessa, FILTER_VALIDATE_INT))) {
+            $remessa = Remessa::find_by_id($idRemessa);
 
             if (!empty($remessa)) {
                 $remetente = Pessoa::find_by_id($remessa->id_remetente);
