@@ -10,9 +10,9 @@ class MandadoTest extends TestCase
     public function testCadastrar()
     {
         $this->assertTrue(Mandado::cadastrar(array(
-            'descricao' => 'Ofício 800/2018',
-            'numero_protocolo' => '012345678950',
-            'id_interessado' => 81,
+            'descricao' => 'Mandado de averiguação 09/18',
+            'numero_protocolo' => '201800001142',
+            'id_interessado' => 86,
             'id_promotoria' => 1
         ))->status);
     }

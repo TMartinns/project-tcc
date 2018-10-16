@@ -9,19 +9,42 @@ class TelefoneTest extends TestCase
 
     public function testCadastrar()
     {
-        $this->assertTrue(Telefone::cadastrar(array(
+        $array = array(
             'ddd' => '64',
-            'numero' => '996487145',
-            'id_pessoa' => 81
-        ))->status);
+            'numero' => '987473509',
+            'id_pessoa' => 88
+        );
+
+        $this->assertObjectHasAttribute('status', Telefone::cadastrar($array));
+
+        $this->assertObjectHasAttribute('telefone', Telefone::cadastrar($array));
+
+        $this->assertObjectHasAttribute('errors', Telefone::cadastrar($array));
+
+        $this->assertTrue(Telefone::cadastrar($array)->status);
+
+        $this->assertNotNull(Telefone::cadastrar($array)->telefone);
+
+        $this->assertEmpty(Telefone::cadastrar($array)->errors);
     }
 
     public function testEditar()
     {
-        $this->assertTrue(Telefone::editar(78, array(
-            'ddd' => '65',
-            'numero' => '15412456',
-            'id_pessoa' => 78
-        ))->status);
+        $array = array(
+            'ddd' => '64',
+            'numero' => '996202631'
+        );
+
+        $this->assertObjectHasAttribute('telefone', Telefone::editar(83, $array));
+
+        $this->assertObjectHasAttribute('status', Telefone::editar(83, $array));
+
+        $this->assertObjectHasAttribute('errors', Telefone::editar(83, $array));
+
+        $this->assertTrue(Telefone::editar(83, $array)->status);
+
+        $this->assertNotNull(Telefone::editar(83, $array)->telefone);
+
+        $this->assertEmpty(Telefone::editar(83, $array)->errors);
     }
 }

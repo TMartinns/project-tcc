@@ -9,21 +9,39 @@ class DiligenciaTest extends TestCase
 
     public function testEditarStatus()
     {
-        $this->assertTrue(Diligencia::editarStatus(34, 'E')->status);
+        $this->assertObjectHasAttribute('diligencia', Diligencia::editarStatus(51, 'E'));
+
+        $this->assertObjectHasAttribute('status', Diligencia::editarStatus(51, 'E'));
+
+        $this->assertTrue(Diligencia::editarStatus(51, 'E')->status);
+
+        $this->assertNotNull(Diligencia::editarStatus(51, 'E')->diligencia);
     }
 
     public function testCadastrar()
     {
-        $this->assertTrue(Diligencia::cadastrar(array(
+        $array = array(
             'prazo_cumprimento' => date('Y-m-d'),
             'status' => 'A',
-            'id_mandado' => 37,
+            'id_mandado' => 42,
             'id_tipo_diligencia' => 1
-        ))->status);
+        );
+
+        $this->assertObjectHasAttribute('status', Diligencia::cadastrar($array));
+
+        $this->assertObjectHasAttribute('diligencia', Diligencia::cadastrar($array));
+
+        $this->assertObjectHasAttribute('errors', Diligencia::cadastrar($array));
+
+        $this->assertTrue(Diligencia::cadastrar($array)->status);
+
+        $this->assertNotNull(Diligencia::cadastrar($array)->diligencia);
+
+        $this->assertEmpty(Diligencia::cadastrar($array)->errors);
     }
 
     public function testGetAllByRemessa()
     {
-        $this->assertNotEmpty(Diligencia::getAllByRemessa(113));
+        $this->assertNotEmpty(Diligencia::getAllByRemessa(123));
     }
 }

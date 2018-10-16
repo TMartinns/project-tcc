@@ -98,7 +98,7 @@ class Usuario extends \HXPHP\System\Model
         $usuario->senha = $senha;
 
         if($usuario->save(false)) {
-            $resposta->uuario = $usuario;
+            $resposta->usuario = $usuario;
             $resposta->status = true;
             return $resposta;
         }
