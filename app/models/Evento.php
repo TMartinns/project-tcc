@@ -6,6 +6,8 @@ class Evento extends \HXPHP\System\Model
 
     public static function cadastrar(array $atributos)
     {
-        self::create($atributos);
+        $eventos = self::create($atributos);
+
+        return $eventos->is_valid();
     }
 }

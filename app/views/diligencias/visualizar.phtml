@@ -107,6 +107,10 @@ $this->partial('modalInteressado');
                         <p class="card-text"><h6>Prazo para cumprimento</h6><?php
                         echo $view_diligencia->prazo_cumprimento->format('d/m/Y');
                         ?></p>
+
+                        <p class="card-text"><h6>Situação</h6>
+                        <?php echo $view_diligencia->status == 'A' ? 'Em Andamento' : ($view_diligencia->status == 'E' ? 'Em Espera' : 'Cumprida') ;
+                        ?></p>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,9 @@ class Notificacao extends \HXPHP\System\Model
 
     public static function cadastrar(array $atributos)
     {
-        self::create($atributos);
+        $notificacao = self::create($atributos);
+
+        return $notificacao->is_valid();
     }
 
     public static function visto($idNotificacao)
@@ -14,6 +16,6 @@ class Notificacao extends \HXPHP\System\Model
         $notificacao = self::find_by_id($idNotificacao);
         $notificacao->visto = 1;
 
-        $notificacao->save(false);
+        return $notificacao->save(false);
     }
 }

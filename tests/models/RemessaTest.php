@@ -33,4 +33,9 @@ class RemessaTest extends TestCase
 
         $this->assertEmpty(Remessa::cadastrar($array)->errors);
     }
+
+    public function testReceber()
+    {
+        $this->assertTrue(Remessa::receber(123));
+    }
 }

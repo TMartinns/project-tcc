@@ -6,6 +6,8 @@ class AuxDiligenciasRemessas extends \HXPHP\System\Model
 
     public static function cadastrar(array $atributos)
     {
-        self::create($atributos);
+        $auxDiligenciasRemessas = self::create($atributos);
+
+        return $auxDiligenciasRemessas->is_valid();
     }
 }

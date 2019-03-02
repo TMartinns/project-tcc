@@ -41,7 +41,7 @@ class Remessa extends \HXPHP\System\Model
 
         $remessa->status = 'R';
 
-        $remessa->save(false);
+        return $remessa->save(false);
     }
 
     public static function getByDiligenciaAndStatus($idDiligencia, $status)

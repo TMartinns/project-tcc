@@ -41,7 +41,7 @@ $configs->env->development->menu->setMenus(array(
     'Início/fas fa-home' => '%baseURI%/inicio/',
     'Diligências/fas fa-tasks' => '%baseURI%/diligencias/',
     'Registrar uso do veículo/fas fa-car-side' => '#'
-), 'Oficial');
+), 'O');
 
 $configs->env->development->menu->setMenus(array(
     'Início/fas fa-home' => '%baseURI%/inicio/',
@@ -49,6 +49,6 @@ $configs->env->development->menu->setMenus(array(
     'Diligências/fas fa-tasks' => '%baseURI%/diligencias/',
     'Veículos/fas fa-car' => '%baseURI%/veiculos/',
     'Relatórios/fas fa-file-alt' => '%baseURI%/relatorios/'
-), 'Coordenador');
+), 'C');
 
 return $configs;
