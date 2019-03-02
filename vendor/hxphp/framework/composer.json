@@ -1,0 +1,54 @@
+{
+    "name": "hxphp/framework",
+    "description": "HXPHP - O seu primeiro framework.",
+    "type": "library",
+    "homepage": "http://www.hxphp.com.br/",
+    "keywords": ["framework", "hxphp"],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.0.0",
+        "filp/whoops": "~2.1",
+        "monolog/monolog": "~1.23",
+        "nesbot/carbon": "~1.27",
+        "php-activerecord/php-activerecord": "*",
+        "symfony/http-foundation": "3.4.*",
+        "symfony/var-dumper": "~3",
+        "vlucas/phpdotenv": "~2.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    },
+    "authors": [
+        {
+            "name": "Bruno Campos Santos",
+            "email": "bruno@plug.ag",
+            "role": "Developer"
+        },
+        {
+            "name": "Gilglécio Santos",
+            "email": "gilglecio_765@hotmail.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/hxphp/framework/issues",
+        "wiki": "https://hxphp.github.io/docs/3.0/index.html"
+    },
+    "autoload": {
+        "psr-4": {
+            "HXPHP\\": "src/HXPHP"
+        },
+        "files": [
+            "src/HXPHP/System/Support/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/HXPHP"
+        }
+    },
+    "config": {
+        "discard-changes": "stash",
+        "optimize-autoloader": true
+    }
+}
